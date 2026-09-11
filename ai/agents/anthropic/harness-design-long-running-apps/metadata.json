@@ -1,0 +1,37 @@
+{
+  "title": "面向长时应用开发的 Harness 设计",
+  "source": "Anthropic",
+  "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+  "source_title": "Harness design for long-running application development",
+  "author": "Prithvi Rajasekaran",
+  "published_date": "2026-03-24",
+  "learned_date": "2026-09-12",
+  "language": "zh-CN",
+  "source_language": "en",
+  "status": "summarized",
+  "domain": "ai",
+  "category": "agents",
+  "topics": [
+    "harness-engineering",
+    "long-running-agents",
+    "multi-agent-evaluation",
+    "software-engineering"
+  ],
+  "core_conclusion": "将规划、生成和评估分开；先约定怎样才算完成，再让评估者像用户一样操作运行中的应用，形成反馈闭环。模型升级后，还要逐项移除 Harness 组件，验证哪些仍有必要。",
+  "outline": [
+    {"id": "conclusion", "title": "Harness 的价值，在于把不可靠环节纳入可检查的反馈闭环", "source_location": "引言与全文归纳"},
+    {"id": "failures", "title": "只让一个 Agent 长时间运行，会同时削弱连贯性和判断力", "source_location": "Why naive implementations fall short"},
+    {"id": "feedback", "title": "把抽象的“好不好”拆成具体的评估标准", "source_location": "Frontend design: making subjective quality gradable"},
+    {"id": "architecture", "title": "产品方案确定方向，编码前约定完成标准，实际操作负责验收", "source_location": "Scaling to full-stack coding / The architecture"},
+    {"id": "evidence", "title": "成本更高、耗时更长，也得到了更完整、更可用的结果", "source_location": "Running the harness; Results from the updated harness"},
+    {"id": "evolution", "title": "模型升级后，要重新验证每个 Harness 组件", "source_location": "Iterating on the harness; Removing the sprint construct"},
+    {"id": "boundaries", "title": "独立评估能改善判断，但不能保证验收可靠", "source_location": "全文限制归纳"},
+    {"id": "source", "title": "原文定位", "source_location": "原文章节索引"}
+  ],
+  "visuals": [
+    {"id": "thesis-caption", "type": "html-css", "purpose": "三种职责如何形成可检查反馈闭环", "provenance": "依据原文制作的阅读归纳"},
+    {"id": "grading-caption", "type": "html-css", "purpose": "将主观质量转为明确标准、实际页面操作与迭代反馈", "provenance": "依据前端设计实验制作"},
+    {"id": "architecture-caption", "type": "html-css", "purpose": "产品方案、本轮验收约定、构建与 QA 的信息流", "provenance": "依据第一版全栈 Harness 架构制作"},
+    {"id": "evolution-caption", "type": "html-css", "purpose": "模型升级后重新判断各 Harness 组件是否仍有必要", "provenance": "依据原文实验顺序制作的阅读归纳"}
+  ]
+}

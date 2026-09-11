@@ -1,0 +1,356 @@
+{
+  "schema_version": 2,
+  "updated_date": "2026-09-12",
+  "terms": [
+    {
+      "id": "harness",
+      "source_terms": [
+        "harness",
+        "agent harness"
+      ],
+      "preferred_zh": "Harness",
+      "definition": "围绕模型组织工具、上下文、约束、执行循环与反馈机制的运行支撑系统。",
+      "scope": "Agent 系统与自主软件工程",
+      "avoid": [
+        {
+          "term": "脚手架",
+          "reason": "容易被理解为一次性代码模板，弱化持续运行、约束与反馈的含义。",
+          "scope": "Agent 系统与自主软件工程；仅限本文记录的语境，不作为全局禁用词"
+        }
+      ],
+      "usages": [
+        {
+          "article_title": "Harness 工程：在 Agent 优先的世界中运用 Codex",
+          "article_path": "ai/agents/openai/harness-engineering/",
+          "source_url": "https://openai.com/index/harness-engineering/",
+          "source_location": "全文；重点为 Increasing application legibility 至 Increasing levels of autonomy",
+          "context_meaning": "工程师为 Agent 建设的工作环境，重点由知识入口、可执行约束和观察反馈共同支撑自主交付。",
+          "chosen_zh": "Harness / 工程环境",
+          "rationale": "保留行业原词，同时用“工程环境”说明这篇文章强调的环境建设职责。",
+          "local_anchor": "route",
+          "review": {
+            "source": "pending",
+            "wording": "reviewed",
+            "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
+          }
+        },
+        {
+          "article_title": "Agent Harness 设计：释放 Claude 智能的三种模式",
+          "article_path": "ai/agents/anthropic/harnessing-claudes-intelligence/",
+          "source_url": "https://claude.com/blog/harnessing-claudes-intelligence",
+          "source_location": "引言与全文",
+          "context_meaning": "模型周围的循环、工具、上下文管理与护栏；其中部分结构包含对模型能力的假设，需要随模型升级重测。",
+          "chosen_zh": "Harness",
+          "rationale": "文章讨论的是一组广泛的运行结构，单一中文词难以稳定覆盖其范围。",
+          "local_anchor": "overview",
+          "review": {
+            "source": "pending",
+            "wording": "reviewed",
+            "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
+          }
+        },
+        {
+          "article_title": "面向长时应用开发的 Harness 设计",
+          "article_path": "ai/agents/anthropic/harness-design-long-running-apps/",
+          "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+          "source_location": "The architecture；Iterating on the harness",
+          "context_meaning": "把 Planner、Generator、Evaluator、阶段性验收和反馈组织成可持续运行的应用开发流程。",
+          "chosen_zh": "Harness",
+          "rationale": "这里特指多角色执行与验收系统，保留原词可与前两篇建立联系，但不能套用成同一种具体架构。",
+          "local_anchor": "architecture",
+          "review": {
+            "source": "pending",
+            "wording": "reviewed",
+            "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "product-spec",
+      "source_terms": [
+        "product spec",
+        "full product spec"
+      ],
+      "preferred_zh": "完整的产品方案文档",
+      "definition": "把简短需求扩展为供实现和评估共同使用的产品方案。",
+      "scope": "长时应用开发 Harness",
+      "avoid": [
+        {
+          "term": "产品规格",
+          "reason": "在该文语境中容易让人只想到参数或约束，覆盖不了产品背景、功能范围、用户故事和总体技术方案。",
+          "scope": "长时应用开发 Harness；仅限本文记录的语境，不作为全局禁用词"
+        }
+      ],
+      "usages": [
+        {
+          "article_title": "面向长时应用开发的 Harness 设计",
+          "article_path": "ai/agents/anthropic/harness-design-long-running-apps/",
+          "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+          "source_location": "Scaling to full-stack coding；The architecture",
+          "context_meaning": "Planner 根据 1–4 句需求形成的完整方案，包含产品背景、功能范围、用户故事和总体技术方案，并为 Generator 与 Evaluator 提供共同方向。",
+          "chosen_zh": "完整的产品方案文档",
+          "rationale": "强调它是覆盖产品意图与总体设计的方案载体，而非参数清单。",
+          "local_anchor": "architecture",
+          "review": {
+            "source": "pending",
+            "wording": "reviewed",
+            "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sprint-contract",
+      "source_terms": [
+        "sprint contract"
+      ],
+      "preferred_zh": "本轮验收约定",
+      "definition": "Generator 与 Evaluator 在编码前共同确认的工作范围和完成标准。",
+      "scope": "Anthropic 三 Agent 全栈 Harness",
+      "avoid": [
+        {
+          "term": "契约定义当前完成",
+          "reason": "中文语序生硬，也没有表达双方在编码前共同约定验收标准。",
+          "scope": "Anthropic 三 Agent 全栈 Harness；仅限本文记录的语境，不作为全局禁用词"
+        },
+        {
+          "term": "冲刺合同",
+          "reason": "逐词直译会掩盖它在本文中把用户故事转成可验收行为的作用。",
+          "scope": "Anthropic 三 Agent 全栈 Harness；仅限本文记录的语境，不作为全局禁用词"
+        }
+      ],
+      "usages": [
+        {
+          "article_title": "面向长时应用开发的 Harness 设计",
+          "article_path": "ai/agents/anthropic/harness-design-long-running-apps/",
+          "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+          "source_location": "The architecture",
+          "context_meaning": "Generator 与 Evaluator 在每轮编码前协商要做什么、怎样才算完成，直到双方达成一致。",
+          "chosen_zh": "本轮验收约定",
+          "rationale": "“本轮”对应 sprint 的局部范围，“验收约定”直接说明该对象在流程中的功能。",
+          "local_anchor": "architecture",
+          "review": {
+            "source": "pending",
+            "wording": "reviewed",
+            "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "evaluator",
+      "source_terms": [
+        "Evaluator",
+        "QA agent"
+      ],
+      "preferred_zh": "评估者",
+      "definition": "与生成职责分离、依据预先约定的标准检查产物并反馈问题的角色。",
+      "scope": "多 Agent 评估",
+      "avoid": [],
+      "usages": [
+        {
+          "article_title": "面向长时应用开发的 Harness 设计",
+          "article_path": "ai/agents/anthropic/harness-design-long-running-apps/",
+          "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+          "source_location": "Frontend design；The architecture；Running the harness",
+          "context_meaning": "使用 Playwright 像用户一样操作运行中的应用，逐项验证标准并把具体问题反馈给 Generator。",
+          "chosen_zh": "Evaluator / 评估者",
+          "rationale": "首次出现保留角色名，叙述中用“评估者”突出独立验收职责。",
+          "local_anchor": "architecture",
+          "review": {
+            "source": "pending",
+            "wording": "reviewed",
+            "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "running-application",
+      "source_terms": [
+        "running application"
+      ],
+      "preferred_zh": "运行中的应用",
+      "definition": "已经启动、可以通过界面或接口进行实际交互的应用实例。",
+      "scope": "应用验收",
+      "avoid": [
+        {
+          "term": "真实应用",
+          "reason": "这里的重点是应用处于可运行、可操作状态，而不是与“虚假应用”相对。",
+          "scope": "应用验收；仅限本文记录的语境，不作为全局禁用词"
+        }
+      ],
+      "usages": [
+        {
+          "article_title": "面向长时应用开发的 Harness 设计",
+          "article_path": "ai/agents/anthropic/harness-design-long-running-apps/",
+          "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+          "source_location": "Frontend design；The architecture",
+          "context_meaning": "Evaluator 通过浏览器导航、截图和操作已经启动的应用，以真实交互结果而非代码或静态页面判断完成情况。",
+          "chosen_zh": "运行中的应用",
+          "rationale": "准确保留 running 所强调的可操作状态。",
+          "local_anchor": "architecture",
+          "review": {
+            "source": "pending",
+            "wording": "reviewed",
+            "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hard-threshold",
+      "source_terms": [
+        "hard threshold"
+      ],
+      "preferred_zh": "最低通过线",
+      "definition": "决定本轮能否通过的强制评分下限。",
+      "scope": "自动化评估与验收",
+      "avoid": [
+        {
+          "term": "硬阈值",
+          "reason": "字面翻译没有直接说明该阈值在验收流程中的作用。",
+          "scope": "自动化评估与验收；仅限本文记录的语境，不作为全局禁用词"
+        }
+      ],
+      "usages": [
+        {
+          "article_title": "面向长时应用开发的 Harness 设计",
+          "article_path": "ai/agents/anthropic/harness-design-long-running-apps/",
+          "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+          "source_location": "The architecture",
+          "context_meaning": "四个评估维度中的任意一项未达到阈值，本轮 sprint 就判定为未通过并返回反馈。",
+          "chosen_zh": "最低通过线",
+          "rationale": "直接表达 threshold 的判定作用及未达标后果。",
+          "local_anchor": "architecture",
+          "review": {
+            "source": "pending",
+            "wording": "reviewed",
+            "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "product-depth",
+      "source_terms": [
+        "product depth"
+      ],
+      "preferred_zh": "功能范围与实现深度",
+      "definition": "评估产品是否覆盖足够的核心能力，以及这些能力是否实现到可用深度。",
+      "scope": "生成应用的质量评估",
+      "avoid": [
+        {
+          "term": "产品深度",
+          "reason": "中文含义模糊，没有说明评估同时关注功能覆盖和实现完整程度。",
+          "scope": "生成应用的质量评估；仅限本文记录的语境，不作为全局禁用词"
+        }
+      ],
+      "usages": [
+        {
+          "article_title": "面向长时应用开发的 Harness 设计",
+          "article_path": "ai/agents/anthropic/harness-design-long-running-apps/",
+          "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+          "source_location": "The architecture",
+          "context_meaning": "Evaluator 对全栈应用评分时使用的维度之一，关注功能覆盖面及其实现是否足够深入。",
+          "chosen_zh": "功能范围与实现深度",
+          "rationale": "展开抽象名词，使读者能直接理解评分对象。",
+          "local_anchor": "architecture",
+          "review": {
+            "source": "pending",
+            "wording": "reviewed",
+            "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "context-compaction",
+      "source_terms": [
+        "compaction",
+        "context compaction",
+        "auto-compaction"
+      ],
+      "preferred_zh": "上下文压缩",
+      "definition": "把过程信息提炼为更短的保留内容，使任务可以在有限上下文窗口内继续。",
+      "scope": "Agent 上下文管理",
+      "avoid": [],
+      "usages": [
+        {
+          "article_title": "Agent Harness 设计：释放 Claude 智能的三种模式",
+          "article_path": "ai/agents/anthropic/harnessing-claudes-intelligence/",
+          "source_url": "https://claude.com/blog/harnessing-claudes-intelligence",
+          "source_location": "第 2 节长期记忆讨论",
+          "context_meaning": "由模型选择值得保留的过程信息并形成摘要，与记忆文件并列作为跨窗口延续任务的方式。",
+          "chosen_zh": "压缩 / 上下文压缩",
+          "rationale": "图中用短标签“压缩”，正文补足它处理的是上下文。",
+          "local_anchor": "memory",
+          "review": {
+            "source": "pending",
+            "wording": "reviewed",
+            "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
+          }
+        },
+        {
+          "article_title": "面向长时应用开发的 Harness 设计",
+          "article_path": "ai/agents/anthropic/harness-design-long-running-apps/",
+          "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+          "source_location": "Iterating on the harness",
+          "context_meaning": "较新模型的自动压缩足以维持连续会话，因此团队可以移除原有的上下文重置结构。",
+          "chosen_zh": "自动压缩",
+          "rationale": "该段重点是模型原生自动执行压缩，并由此改变 Harness 组件的必要性。",
+          "local_anchor": "evolution",
+          "review": {
+            "source": "pending",
+            "wording": "reviewed",
+            "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "context-reset",
+      "source_terms": [
+        "context reset",
+        "context resets"
+      ],
+      "preferred_zh": "上下文重置",
+      "definition": "结束或替换当前上下文窗口，再依靠交接信息继续任务的补偿机制。",
+      "scope": "长时 Agent 运行",
+      "avoid": [],
+      "usages": [
+        {
+          "article_title": "Agent Harness 设计：释放 Claude 智能的三种模式",
+          "article_path": "ai/agents/anthropic/harnessing-claudes-intelligence/",
+          "source_url": "https://claude.com/blog/harnessing-claudes-intelligence",
+          "source_location": "末节 Sonnet 4.5 / Opus 4.5 案例",
+          "context_meaning": "为缓解较早模型接近上下文限制时提前收尾而加入的补偿；模型升级后原行为消失，重置也失去理由。",
+          "chosen_zh": "上下文重置",
+          "rationale": "表达清晰且在两篇相关文章中含义一致。",
+          "local_anchor": "limits",
+          "review": {
+            "source": "pending",
+            "wording": "reviewed",
+            "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
+          }
+        },
+        {
+          "article_title": "面向长时应用开发的 Harness 设计",
+          "article_path": "ai/agents/anthropic/harness-design-long-running-apps/",
+          "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+          "source_location": "Iterating on the harness",
+          "context_meaning": "早期 Harness 为每个 sprint 重置上下文，以降低 context anxiety；Opus 4.5 配合自动压缩后移除。",
+          "chosen_zh": "上下文重置",
+          "rationale": "沿用同概念的稳定表达，并通过局部语境说明被移除的原因。",
+          "local_anchor": "evolution",
+          "review": {
+            "source": "pending",
+            "wording": "reviewed",
+            "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
+          }
+        }
+      ]
+    }
+  ]
+}

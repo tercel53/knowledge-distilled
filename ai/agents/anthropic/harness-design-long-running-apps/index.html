@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Anthropic 长时应用开发 Harness 设计文章的中文蒸馏：拆分规划、生成和评估职责，先约定怎样才算完成，再让评估者操作运行中的应用，并随模型升级重新验证各组件的必要性。">
+  <title>面向长时应用开发的 Harness 设计 · Knowledge Distilled</title>
+  <link rel="stylesheet" href="../../../../assets/css/style.css?v=2">
+  <link rel="stylesheet" href="note.css?v=1">
+  <script src="note.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳至正文</a>
+  <div class="container">
+    <header class="site-header">
+      <a class="brand" href="../../../../">Knowledge Distilled<span>Source · Understand · Distill</span></a>
+      <a class="back-link" href="../../../../#knowledge-map">全部笔记 ↗</a>
+    </header>
+
+    <main id="main">
+      <header class="article-header">
+        <div class="eyebrow">Anthropic / Agent Harness / 2026-03-24</div>
+        <h1>面向长时应用开发的<br><span>Harness 设计</span></h1>
+        <p class="original-title" lang="en">Harness design for long-running application development</p>
+        <p class="subtitle">将规划、生成和评估分开；先约定怎样才算完成，再让评估者像用户一样操作运行中的应用，形成反馈闭环。模型升级后，还要逐项移除 Harness 组件，验证哪些仍有必要。</p>
+        <p class="note-status">Prithvi Rajasekaran · 整理于 2026-09-12 · 中文蒸馏</p>
+      </header>
+
+      <div class="reading-layout">
+        <nav class="contents" aria-label="文章目录">
+          <div class="eyebrow">Reading path</div>
+          <a href="#conclusion">核心结论</a>
+          <a href="#failures">问题诊断</a>
+          <a href="#feedback">评估主观质量</a>
+          <a href="#architecture">三 Agent 架构</a>
+          <a href="#evidence">实验依据</a>
+          <a href="#evolution">随模型演化</a>
+          <a href="#boundaries">条件与边界</a>
+          <a href="#source">原文定位</a>
+        </nav>
+
+        <div class="reading-main">
+          <section class="section" id="conclusion">
+            <div class="eyebrow">核心结论</div>
+            <h2>Harness 的价值，在于把不可靠环节纳入可检查的反馈闭环</h2>
+            <p class="takeaway">长时自主编码不应由同一个 Agent 一路生成并自我验收。Planner 把简短需求扩展成完整的产品方案文档，Generator 负责实现，Evaluator 则像用户一样操作运行中的应用，按照预先约定的标准验收并反馈问题，由此推动下一轮修复或调整方向。</p>
+
+            <figure class="thesis-map" aria-labelledby="thesis-caption">
+              <div class="input-node">一句话需求<small>信息有限，范围未定</small></div>
+              <div class="map-arrow" aria-hidden="true">→</div>
+              <div class="harness-frame">
+                <div class="role planner"><span>01</span><strong>Planner</strong><small>形成完整产品方案</small></div>
+                <div class="role generator"><span>02</span><strong>Generator</strong><small>逐步构建应用</small></div>
+                <div class="role evaluator"><span>03</span><strong>Evaluator</strong><small>像用户一样操作并验收</small></div>
+                <div class="feedback-line">发现差距 → 具体反馈 → 修复或转向 ↺</div>
+              </div>
+              <div class="map-arrow" aria-hidden="true">→</div>
+              <div class="output-node">经过验证的应用<small>仍可能存在未覆盖风险</small></div>
+              <figcaption id="thesis-caption">阅读归纳：三种职责将开放式生成组织成可以反复检查的闭环；箭头表示信息和反馈的流向，不表示一次就能通过。</figcaption>
+            </figure>
+          </section>
+
+          <section class="section" id="failures">
+            <div class="eyebrow">问题诊断</div>
+            <h2>只让一个 Agent 长时间运行，会同时削弱连贯性和判断力</h2>
+            <div class="failure-grid">
+              <article>
+                <div class="failure-mark">A</div>
+                <h3>上下文越长，执行越容易漂移</h3>
+                <p>随着上下文不断累积，模型可能逐渐失去连贯性；Sonnet 4.5 甚至会在认为自己接近上下文上限时提前结束工作。清空上下文，再由结构化交接文件把必要状态传给新的 Agent，可以让后续工作从干净的上下文继续。</p>
+                <div class="mechanism"><span>上下文累积</span><b>→</b><span>结构化交接</span><b>→</b><strong>新会话继续</strong></div>
+                <small>代价：编排复杂度、token 与延迟上升；交接文件必须保留足够状态。</small>
+              </article>
+              <article>
+                <div class="failure-mark">B</div>
+                <h3>让同一个 Agent 生成并自评，容易高估结果</h3>
+                <p>同一个 Agent 往往会宽容地评价自己的成果；这一倾向在主观设计中最明显，在结果可验证的软件任务中也会出现。将生成和评估交给不同 Agent，更容易单独把评估者调校得严格。</p>
+                <div class="mechanism"><span>生成</span><b>≠</b><span>独立评估</span><b>→</b><strong>可执行反馈</strong></div>
+                <small>分离本身并不自动带来严格判断，评估者仍需标准、示例与持续校准。</small>
+              </article>
+            </div>
+            <p class="source-pointer"><a href="#source-naive">依据：Why naive implementations fall short ↗</a></p>
+          </section>
+
+          <section class="section" id="feedback">
+            <div class="eyebrow">让主观质量可以评估</div>
+            <h2>把抽象的“好不好”拆成具体的评估标准</h2>
+            <p>作者先在前端设计上验证这一思路：美感不能被一个分数完全概括，但可以把设计原则和个人偏好写成清晰的评估标准，再由评估者操作真实页面并逐项指出问题。</p>
+
+            <figure class="grading-loop" aria-labelledby="grading-caption">
+              <div class="criteria-panel">
+                <div class="criteria-title">共同的评价标准</div>
+                <div class="criterion priority"><strong>设计质量</strong><span>整体是否形成独特气质</span></div>
+                <div class="criterion priority"><strong>原创性</strong><span>是否体现有意识的设计选择</span></div>
+                <div class="criterion"><strong>工艺</strong><span>字体、间距、色彩与对比</span></div>
+                <div class="criterion"><strong>功能</strong><span>能否理解并完成任务</span></div>
+                <div class="weight-note">前两项权重更高</div>
+              </div>
+              <div class="loop-panel">
+                <div class="loop-node generate"><strong>Generator</strong><small>创建或修改页面</small></div>
+                <div class="loop-step down">↓ 运行页面</div>
+                <div class="loop-node inspect"><strong>Evaluator + Playwright</strong><small>导航、截图、操作、评分</small></div>
+                <div class="loop-step decision">↓ 详细批评</div>
+                <div class="fork-row"><span>评分持续改善<br><b>继续打磨</b></span><span>当前方向无效<br><b>切换设计方向</b></span></div>
+                <div class="return-line">迭代 5–15 轮；评分提高后逐渐趋于稳定 ↺</div>
+              </div>
+              <figcaption id="grading-caption">原文实践：作者用少量带评分示例校准评估者。评估标准的措辞也会影响生成风格，结果并不保证每一轮都比上一轮更好。</figcaption>
+            </figure>
+
+            <details class="explanation">
+              <summary>展开实验观察与限制</summary>
+              <p>完整运行最长约四小时。即使在第一轮，明确标准也能让结果优于没有额外提示的基线；后续反馈通常会让设计更鲜明。在荷兰艺术博物馆案例中，第十轮从常规落地页转变为空间化的 3D 画廊体验。</p>
+              <p>但作者有时更喜欢中间轮次，方案复杂度也会随迭代上升。“museum quality”一类措辞还会让设计趋向特定风格，说明评分并不是客观、中立的审美尺度。</p>
+              <a href="#source-frontend">依据：Frontend design: making subjective quality gradable ↗</a>
+            </details>
+          </section>
+
+          <section class="section" id="architecture">
+            <div class="eyebrow">扩展到全栈编码</div>
+            <h2>产品方案确定方向，编码前约定完成标准，实际操作负责验收</h2>
+            <p class="term-note"><strong>术语说明：</strong>原文的 <span lang="en">product spec</span> 指包含产品背景、功能范围、用户故事和总体技术方案的完整方案文档；<span lang="en">sprint contract</span> 指 Generator 与 Evaluator 在编码前共同确认的本轮验收约定。</p>
+            <figure class="architecture" aria-labelledby="architecture-caption">
+              <div class="spec-track">
+                <div class="arch-node user"><small>输入</small><strong>1–4 句需求</strong></div>
+                <div class="arch-arrow" aria-hidden="true">→</div>
+                <div class="arch-node plan"><small>Planner</small><strong>完整产品方案</strong><span>明确功能范围和总体技术方案</span></div>
+              </div>
+              <div class="contract-zone">
+                <div class="arch-node build"><small>Generator 提案</small><strong>计划做什么、怎样验证</strong></div>
+                <div class="contract"><span>反复协商，直至一致</span><strong>Sprint Contract</strong><small>本轮验收约定：怎样才算完成</small></div>
+                <div class="arch-node review"><small>Evaluator 审查</small><strong>是否符合产品方案</strong></div>
+              </div>
+              <div class="execution-zone">
+                <div class="arch-node build"><small>Generator</small><strong>实现一项功能</strong><span>代码与运行状态</span></div>
+                <div class="arch-arrow" aria-hidden="true">→</div>
+                <div class="running-app"><strong>运行中的应用</strong><span>UI · API · 数据库</span></div>
+                <div class="arch-arrow" aria-hidden="true">→</div>
+                <div class="arch-node review"><small>Evaluator + Playwright</small><strong>像用户一样操作</strong><span>逐条验证完成标准</span></div>
+              </div>
+              <div class="gate-row"><span class="fail">任一评分未达到门槛：反馈具体缺陷 ↺</span><span class="pass">全部达标：进入下一项功能</span></div>
+              <div class="artifact-rail">不同角色通过文件交换产品方案、本轮验收约定和反馈</div>
+              <figcaption id="architecture-caption">原文第一版全栈架构：Planner、Generator 和 Evaluator 分别承担规划、实现和评估职责；Generator 与 Evaluator 在编码前约定本轮怎样才算完成，QA 再像用户一样操作运行中的应用。各角色通过文件交换方案、约定和反馈。</figcaption>
+            </figure>
+
+            <details class="explanation">
+              <summary>为什么 Planner 不应提前写死实现细节？</summary>
+              <p>作者担心前期写错技术细节会影响后续实现，因此让 Planner 聚焦产品背景、功能范围和总体技术方案，把具体实现路径留给后续工作。Generator 将工作拆成较小的功能块，Evaluator 则从功能范围与实现深度、功能可用性、视觉设计和代码质量四个方面设定最低通过线。</p>
+              <a href="#source-architecture">依据：Scaling to full-stack coding / The architecture ↗</a>
+            </details>
+          </section>
+
+          <section class="section" id="evidence">
+            <div class="eyebrow">原文实践与证据</div>
+            <h2>成本更高、耗时更长，也得到了更完整、更可用的结果</h2>
+            <div class="experiment-grid">
+              <article>
+                <div class="experiment-head"><span>Retro game maker</span><strong>Opus 4.5</strong></div>
+                <div class="cost-compare">
+                  <div><small>Solo</small><b>20 min · $9</b><span>游戏模式无法正常操作</span></div>
+                  <div class="full"><small>Full harness</small><b>6 hr · $200</b><span>16 项功能 / 10 个 sprint；核心玩法可运行</span></div>
+                </div>
+                <p>完整 Harness 的成本超过单 Agent 方案的 20 倍。Evaluator 能准确定位拖拽填充、删除条件和 API 路由顺序等缺陷；但操作流程不清楚、物理碰撞异常和关卡无法通过等问题仍然存在。</p>
+              </article>
+              <article>
+                <div class="experiment-head"><span>Browser DAW</span><strong>Opus 4.6</strong></div>
+                <div class="metric"><b>3 hr 50 min</b><span>$124.70 token 成本</span></div>
+                <div class="phase-bar" aria-label="总时长中，构建阶段明显长于 QA 与规划阶段的示意图">
+                  <i class="plan-phase"></i><i class="build-phase"></i><i class="qa-phase"></i>
+                </div>
+                <p>Generator 连续工作两小时以上；QA 仍发现录音只是占位功能、片段不能拖动、缩放或切分、效果器缺少可视化编辑等核心缺口。最终应用已经具备编排、混音、播放和 Agent 工具调用，但离专业级 DAW 仍有很大距离。</p>
+              </article>
+            </div>
+            <p class="evidence-limit">证据性质：这是作者对少量构建案例的经验报告，不是受控基准。成本与结果受模型、提示、应用类型和验收标准影响，不能外推为固定收益。</p>
+          </section>
+
+          <section class="section" id="evolution">
+            <div class="eyebrow">随模型能力演化</div>
+            <h2>模型升级后，要重新验证每个 Harness 组件</h2>
+            <figure class="evolution" aria-labelledby="evolution-caption">
+              <div class="era">
+                <div class="era-head"><span>早期 Harness</span><strong>Sonnet 4.5</strong></div>
+                <div class="scaffold"><b>Initializer</b><b>单功能构建</b><b>上下文重置</b><b>结构化交接</b></div>
+                <p>缓解模型接近上下文上限时提前收尾的问题，并维持跨会话的连贯性。</p>
+              </div>
+              <div class="evolution-arrow" aria-hidden="true">能力提升 →</div>
+              <div class="era">
+                <div class="era-head"><span>三 Agent Harness</span><strong>Opus 4.5</strong></div>
+                <div class="scaffold"><b>Planner</b><b>逐 Sprint 构建</b><b>逐 Sprint QA</b><s>上下文重置</s></div>
+                <p>自动压缩已经足以维持连续工作，因此不再重置上下文。</p>
+              </div>
+              <div class="evolution-arrow" aria-hidden="true">逐项消融 →</div>
+              <div class="era current">
+                <div class="era-head"><span>简化版 Harness</span><strong>Opus 4.6</strong></div>
+                <div class="scaffold"><b>Planner</b><b>连续完成构建</b><b>构建后 QA 循环</b><s>Sprint 结构</s></div>
+                <p>模型已经能自行拆分任务；当任务接近能力边界时，独立评估仍有明显价值。</p>
+              </div>
+              <figcaption id="evolution-caption">阅读归纳：结构变化与原文的实验顺序相对应。删除线表示作者在后续版本中取消的组件，不表示所有团队都应该同步删除。</figcaption>
+            </figure>
+            <div class="decision-rule">
+              <span>任务位于模型的可靠范围内</span><strong>评估者带来的价值可能低于成本</strong>
+              <span>任务接近或超出可靠边界</span><strong>独立评估仍能发现关键缺口</strong>
+            </div>
+            <p>作者没有一次性大幅修改 Harness，而是先阅读真实运行记录，找出模型判断与人工判断的分歧；然后一次只移除一个组件，观察最终结果，避免误判性能变化的原因。</p>
+          </section>
+
+          <section class="section" id="boundaries">
+            <div class="eyebrow">条件与边界</div>
+            <h2>独立评估能改善判断，但不能保证验收可靠</h2>
+            <div class="boundary-list">
+              <article><strong>评估者也会放宽标准</strong><p>早期 QA 会先找到真实问题，又说服自己问题并不严重，最后仍然放行；测试也常停留在表面。作者通过阅读日志、寻找判断分歧和修改提示，经过数轮才把评估者校准到可接受的水平。</p></article>
+              <article><strong>达到最低通过线不等于测试充分</strong><p>最终应用仍有布局瑕疵、不自然的交互和未经测试的深层 bug。评估只能覆盖它实际探索过、且评估标准明确要求检查的部分。</p></article>
+              <article><strong>可观测信号限制了评估范围</strong><p>在 DAW 案例中，Claude 无法真正听见音乐，因此很难评价音乐品味；Playwright 擅长检查可操作界面，但不能自动覆盖听觉等其他现实信号。</p></article>
+              <article><strong>复杂度必须靠增益证明</strong><p>Planner、Evaluator、重置与 Sprint 都增加成本。是否保留，取决于当前模型在当前任务上的可靠边界，而不是架构潮流。</p></article>
+            </div>
+          </section>
+
+          <section class="section source-section" id="source">
+            <div class="eyebrow">按需查阅与来源</div>
+            <h2>原文定位</h2>
+            <p>以下为原文章节与本笔记主张的对应关系。图解是阅读归纳，不是 Anthropic 原图复刻。</p>
+            <div class="source-list">
+              <article id="source-naive"><strong>Why naive implementations fall short</strong><p>长上下文失稳、context anxiety、重置与压缩的差别，以及同一 Agent 生成并自评时容易放宽标准的问题。</p></article>
+              <article id="source-frontend"><strong>Frontend design: making subjective quality gradable</strong><p>四项评分标准、少量带评分示例、5–15 轮生成—评估反馈，以及结果不一定逐轮改善的观察。</p></article>
+              <article id="source-architecture"><strong>Scaling to full-stack coding / The architecture</strong><p>Planner、Generator、Evaluator 的职责，编码前的本轮验收约定、文件通信和最低通过线。</p></article>
+              <article id="source-running"><strong>Running the harness</strong><p>复古游戏制作器的 Solo / Full harness 对比及评估者发现的具体缺陷。</p></article>
+              <article id="source-iterate"><strong>Iterating on the harness / Removing the sprint construct</strong><p>逐项移除组件并观察结果；使用 Opus 4.6 后取消 Sprint，并根据任务是否接近模型能力边界判断评估者是否值得保留。</p></article>
+              <article id="source-results"><strong>Results from the updated harness</strong><p>浏览器 DAW 的分阶段成本、QA 反馈、最终能力，以及 Claude 无法直接听取音乐所带来的评估限制。</p></article>
+            </div>
+            <p><a href="https://www.anthropic.com/engineering/harness-design-long-running-apps" target="_blank" rel="noreferrer">阅读 Anthropic 原文 ↗</a></p>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer article-footer"><span>Knowledge Distilled</span><span>原文事实 · 阅读归纳 · 条件边界</span></footer>
+  </div>
+</body>
+</html>
