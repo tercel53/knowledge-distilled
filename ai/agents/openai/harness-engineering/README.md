@@ -1,4 +1,6 @@
-# Harness Engineering
+# Harness 工程：在 Agent 优先的世界中运用 Codex
+
+英文原标题：Harness engineering: leveraging Codex in an agent-first world
 
 工程师通过设计环境、约束与反馈，让 Agent 逐步承担完整的软件交付。
 

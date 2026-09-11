@@ -1,0 +1,105 @@
+{
+  "title": "Agent Harness 设计：释放 Claude 智能的三种模式",
+  "source": "Anthropic",
+  "source_url": "https://claude.com/blog/harnessing-claudes-intelligence",
+  "source_title": "Agent Harness Design: 3 Patterns for Harnessing Claude's Intelligence",
+  "author": "Lance Martin",
+  "published_date": "2026-04-02",
+  "learned_date": "2026-09-12",
+  "language": "zh-CN",
+  "source_language": "en",
+  "status": "summarized",
+  "domain": "ai",
+  "category": "agents",
+  "topics": [
+    "harness-engineering",
+    "context-engineering",
+    "tool-orchestration"
+  ],
+  "core_conclusion": "Harness 包含对模型能力的假设；模型进步后，应重测这些假设，删减失效的补偿，同时落实应用仍需要的边界。",
+  "outline": [
+    {
+      "id": "overview",
+      "title": "为什么已有的 Harness 会过时？",
+      "source_location": "引言与第 1 节"
+    },
+    {
+      "id": "tools",
+      "title": "通用工具为什么能成为放手的基础？",
+      "source_location": "第 1 节"
+    },
+    {
+      "id": "delegate",
+      "title": "把“模型不能做”拆开验证",
+      "source_location": "第 2 节"
+    },
+    {
+      "id": "boundaries",
+      "title": "模型会做，不等于应用要求已落实",
+      "source_location": "第 3 节"
+    },
+    {
+      "id": "limits",
+      "title": "模型升级后，再问一次：这段逻辑还需要吗？",
+      "source_location": "末节"
+    }
+  ],
+  "reading_structure": [
+    "为什么已有的 Harness 会过时？",
+    "通用工具为什么能成为放手的基础？",
+    "把“模型不能做”拆开验证",
+    "模型会做，不等于应用要求已落实",
+    "模型升级后，再问一次：这段逻辑还需要吗？",
+    "原文定位"
+  ],
+  "visuals": [
+    {
+      "id": "map-caption",
+      "type": "html-css",
+      "purpose": "能力变化触发重新评估",
+      "provenance": "依据已确认内容制作的阅读图解"
+    },
+    {
+      "id": "tools-caption",
+      "type": "html-css",
+      "purpose": "通用工具组合多种行为",
+      "provenance": "依据已确认内容制作的阅读图解"
+    },
+    {
+      "id": "flow-caption",
+      "type": "html-css",
+      "purpose": "整表回传与先筛选后回传对照",
+      "provenance": "依据已确认内容制作的阅读图解"
+    },
+    {
+      "id": "context-caption",
+      "type": "html-css",
+      "purpose": "全部预装与按需加载对照，区分加载移除隔离",
+      "provenance": "依据已确认内容制作的阅读图解"
+    },
+    {
+      "id": "memory-caption",
+      "type": "html-css",
+      "purpose": "压缩与文件记忆延续上下文",
+      "provenance": "依据已确认内容制作的阅读图解"
+    },
+    {
+      "id": "cache-caption",
+      "type": "html-css",
+      "purpose": "稳定前缀复用与追加更新",
+      "provenance": "依据已确认内容制作的阅读图解"
+    },
+    {
+      "id": "gate-caption",
+      "type": "html-css",
+      "purpose": "环境承接动作边界",
+      "provenance": "依据已确认内容制作的阅读图解"
+    },
+    {
+      "id": "upgrade-caption",
+      "type": "html-css",
+      "purpose": "模型升级使原补偿理由失效",
+      "provenance": "依据已确认内容制作的阅读图解"
+    }
+  ]
+}

@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Harness 设计：释放 Claude 智能的三种模式 · Knowledge Distilled</title>
+<link rel="stylesheet" href="../../../../assets/css/style.css">
+<link rel="stylesheet" href="note.css">
+<script src="note.js" defer>
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+<div class="container">
+<header class="site-header">
+<a class="brand" href="../../../../">Knowledge Distilled<span>Source · Understand · Distill</span>
+</a>
+<a class="back-link" href="../../../../#knowledge-map">全部笔记 ↗</a>
+</header>
+<main id="main">
+<header class="article-header">
+<div class="eyebrow">Anthropic / Agents / 2026-04-02</div>
+<h1>Agent Harness 设计：<br>
+<span>释放 Claude 智能的三种模式</span>
+</h1>
+<p class="original-title" lang="en">Agent Harness Design: 3 Patterns for Harnessing Claude's Intelligence</p>
+<p class="subtitle">Harness 包含对模型能力的假设；模型进步后，应重测这些假设，删减失效的补偿，同时落实应用仍需要的边界。</p>
+<p class="note-status">Lance Martin · 整理于 2026-09-12 · 中文蒸馏</p>
+</header>
+<div class="reading-layout">
+<nav class="contents" aria-label="文章目录">
+<div class="eyebrow">Reading path</div>
+<a href="#overview">出发点</a>
+<a href="#tools">模式一 · 利用已有能力</a>
+<a href="#delegate">模式二 · 检验旧假设</a>
+<a href="#boundaries">模式三 · 明确保留项</a>
+<a href="#limits">回到起点</a>
+<a href="#source">原文定位</a>
+</nav>
+<div class="reading-main">
+<section class="section" id="overview">
+<div class="eyebrow">出发点</div>
+<h2>为什么已有的 Harness 会过时？</h2>
+<figure class="reassessment" aria-labelledby="map-caption">
+<div class="trigger">模型能力发生变化</div>
+<div class="down" aria-hidden="true">↓</div>
+<div class="question">重新检验 Harness 的设计理由</div>
+<div class="branches">
+<a href="#delegate">
+<small>补偿能力不足</small>
+<strong>模型现在能接管吗？</strong>
+<span>检验编排、上下文、记忆</span>
+</a>
+<a href="#boundaries">
+<small>落实应用要求</small>
+<strong>边界仍需要吗？</strong>
+<span>检查成本、交互、安全</span>
+</a>
+</div>
+<div class="return">↺ 下次能力升级，继续重测</div>
+<figcaption id="map-caption">阅读归纳：箭头表示重新评估的关系，分支表示两类设计理由，不代表自动删除或固定执行步骤。</figcaption>
+</figure>
+<details class="explanation">
+<summary>展开解释与原文依据</summary>
+<p>Harness 是模型周围的循环、工具、上下文管理与护栏。作者关注的是：其中一些结构建立在“模型不能自行完成某事”的假设上，而模型能力会变化。</p>
+<p>因此，设计工作既包括搭建支撑，也包括判断何时可以撤掉支撑。下面三种模式围绕这一问题展开，彼此关联，并非固定实施步骤。</p>
+</details>
+</section>
+<section class="section" id="tools">
+<div class="eyebrow">模式一 · 利用已有能力</div>
+<h2>通用工具为什么能成为放手的基础？</h2>
+<figure class="visual" aria-labelledby="tools-caption">
+<div class="composition">
+<div class="tool-pair">
+<div>
+<img src="../../../../assets/icons/wrench.svg" alt="" width="24" height="24">
+<strong>Bash</strong>
+</div>
+<b>+</b>
+<div>
+<img src="../../../../assets/icons/file-earmark-text.svg" alt="" width="24" height="24">
+<strong>文件编辑</strong>
+</div>
+</div>
+<div class="composition-label">Claude 组合使用</div>
+<div class="composed">
+<span>Skills</span>
+<span>程序化调用</span>
+<span>记忆</span>
+</div>
+</div>
+<figcaption id="tools-caption">通用底座可组合出多种行为；分支表示组合关系，不代表三步执行。</figcaption>
+</figure>
+<details class="explanation">
+<summary>展开解释与原文依据</summary>
+<p>模型已经熟悉 Bash 和文件编辑，就能用它们组合行为。原文将 Skills、程序化工具调用和记忆列为这种组合的例子。</p>
+<p class="reading-note">阅读归纳：先说明模型已有可利用的能力，才有理由检验外围逻辑是否仍需替它做决定。熟悉工具并不意味着可以省掉应用边界。</p>
+<a class="evidence" href="#source-1">原文依据 · 正文第 1 节 ↗</a>
+</details>
+</section>
+<section class="section" id="delegate">
+<div class="eyebrow">模式二 · 检验旧假设</div>
+<h2>把“模型不能做”拆开验证</h2>
+<p>原文依次检查动作编排、当前上下文和跨窗口记忆。关键变化是让模型获得选择权；下面按“旧假设 → 代价 → 替代方式”展开。</p>
+<article class="case" id="orchestration">
+<h3>动作编排：中间数据必须经过模型吗？</h3>
+<p class="visual-lead">只问一列，就不必让模型读完整张表。</p>
+<figure class="visual" aria-labelledby="flow-caption">
+<div class="comparison">
+<div class="lane before">
+<div class="lane-label">旧假设 · 全部回传</div>
+<div class="data-route">
+<div class="data-source">
+<div class="data-grid" aria-label="示意表格，第二列为任务所需">
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+</div>
+<small>整张工具结果表</small>
+</div>
+<div class="route-arrow" aria-hidden="true">→</div>
+<div class="context-box">
+<span>模型上下文</span>
+<div class="data-grid" aria-label="示意表格，第二列为任务所需">
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+</div>
+<small>所需 + 无关数据</small>
+</div>
+</div>
+</div>
+<div class="lane after">
+<div class="lane-label">替代方式 · 先处理再回传</div>
+<div class="data-route">
+<div class="data-source">
+<div class="data-grid" aria-label="示意表格，第二列为任务所需">
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+<i class="wanted">
+</i>
+<i class="unneeded">
+</i>
+<i class="unneeded">
+</i>
+</div>
+<small>同一张表</small>
+</div>
+<div class="route-arrow" aria-hidden="true">→</div>
+<div class="filter">
+<span>执行环境</span>
+<strong>代码筛选</strong>
+<small>模型编写逻辑</small>
+</div>
+<div class="route-arrow" aria-hidden="true">→</div>
+<div class="context-box slim">
+<span>模型上下文</span>
+<div class="selected-column">
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+</div>
+<small>仅所需输出</small>
+</div>
+</div>
+</div>
+</div>
+<div class="legend">
+<i>
+</i>蓝色列＝任务所需；其余格＝无关数据（非数据量比例）</div>
+<figcaption id="flow-caption">选择权移给模型，数据处理留在执行环境；工具仍由环境执行。</figcaption>
+</figure>
+<div class="result">
+<strong>45.3% <span>→</span> 61.6%</strong>
+<span>Opus 4.6 · BrowseComp<br>原文过滤工具输出评测；不代表通用收益。</span>
+</div>
+<details class="explanation">
+<summary>展开解释与原文依据</summary>
+<dl class="reasoning">
+<div>
+<dt>旧假设</dt>
+<dd>每个工具结果都回传模型，再决定下一步。</dd>
+</div>
+<div>
+<dt>问题在哪里</dt>
+<dd>大表只需一列，其余数据仍占用上下文并增加处理成本。</dd>
+</div>
+<div>
+<dt>替代方式</dt>
+<dd>让模型写代码筛选、串联工具，执行环境处理数据，仅所需输出回传。</dd>
+</div>
+</dl>
+
+<p class="evidence-text">原文报告：Opus 4.6 在 BrowseComp 中自行过滤工具输出后，准确率由 45.3% 升至 61.6%。这是该评测结果，不能当作所有任务的预期提升。</p>
+<a class="evidence" href="#source-2">原文依据 · 第 2 节 ↗</a>
+</details>
+</article>
+<article class="case" id="context">
+<h3>当前上下文：所有任务知识都要预装吗？</h3>
+<p class="visual-lead">把上下文当成按需组装的工作区。</p>
+<figure class="visual" aria-labelledby="context-caption">
+<div class="comparison context-comparison">
+<div class="lane before">
+<div class="lane-label">预装所有正文</div>
+<div class="window packed">
+<div class="window-title">当前上下文</div>
+<div class="documents">
+<span>任务 A<br>完整指令</span>
+<span>任务 B<br>完整指令</span>
+<span>任务 C<br>完整指令</span>
+</div>
+<small>少用的指令也持续占用上下文</small>
+</div>
+</div>
+<div class="lane after">
+<div class="lane-label">先看索引，再按需读正文</div>
+<div class="window">
+<div class="window-title">当前上下文</div>
+<div class="skill-index">
+<span>A 简介</span>
+<span class="chosen">B 简介</span>
+<span>C 简介</span>
+</div>
+<div class="load-line">↓ 本次任务需要 B</div>
+<div class="loaded">只读取 B 的正文</div>
+</div>
+</div>
+</div>
+<div class="context-operations">
+<div>
+<span class="operation">加载</span>
+<strong>Skills</strong>
+<small>需要时读入</small>
+</div>
+<div>
+<span class="operation">移除</span>
+<strong>上下文编辑</strong>
+<small>清理过时内容</small>
+</div>
+<div>
+<span class="operation">隔离</span>
+<strong>子代理</strong>
+<small>使用独立窗口</small>
+</div>
+</div>
+<figcaption id="context-caption">三个动作分别管理内容的进入、离开与隔离；A/B/C 仅示意不同任务知识。</figcaption>
+</figure>
+<details class="explanation">
+<summary>展开解释与原文依据</summary>
+<dl class="reasoning">
+<div>
+<dt>旧假设</dt>
+<dd>预先在提示中放入各类任务指令。</dd>
+</div>
+<div>
+<dt>问题在哪里</dt>
+<dd>多任务下持续占用注意力，少用的指令也要付出上下文代价。</dd>
+</div>
+<div>
+<dt>替代方式</dt>
+<dd>Skills 先提供简短描述，再按需读取正文；上下文编辑移除旧内容，子代理用独立窗口隔离工作。</dd>
+</div>
+</dl>
+<p class="evidence-text">原文第 2 节的上下文讨论：这些机制分别解决加载、清理和隔离问题。</p>
+<a class="evidence" href="#source-2">原文依据 · 第 2 节 ↗</a>
+</details>
+</article>
+<article class="case" id="memory">
+<h3>长期记忆：必须在模型外决定保留什么吗？</h3>
+<p class="visual-lead">要解决的不只是“存在哪”，还有“值得记住什么”。</p>
+<figure class="visual" aria-labelledby="memory-caption">
+<div class="memory-route">
+<div class="window memory-window">
+<div class="window-title">当前窗口</div>
+<div class="transcript">
+<span>过程记录</span>
+<span>工具结果</span>
+<span>失败经验</span>
+</div>
+<div class="selector">Claude 选择保留项</div>
+</div>
+<div class="memory-transfer">
+<div class="memory-channel">
+<small>压缩</small>
+<span>摘要</span>
+</div>
+<div class="memory-channel file-channel">
+<img src="../../../../assets/icons/book-fill.svg" alt="" width="24" height="24">
+<strong>记忆文件</strong>
+<small>写入 / 按需读取</small>
+</div>
+</div>
+<div class="window memory-window next">
+<div class="window-title">后续窗口</div>
+<div class="loaded">可用上下文</div>
+<div class="continue">继续任务</div>
+</div>
+</div>
+<div class="memory-example">
+<span>原文游戏案例</span>
+<div>
+<span>较早模型<br>
+<strong>记录对话</strong>
+</span>
+<b aria-hidden="true">→</b>
+<span>较新模型<br>
+<strong>提炼战术</strong>
+</span>
+</div>
+</div>
+<figcaption id="memory-caption">压缩与文件记忆是两种延续方式，并非必须串行执行。游戏案例说明内容选择随能力变化。</figcaption>
+</figure>
+<details class="explanation">
+<summary>展开解释与原文依据</summary>
+<dl class="reasoning">
+<div>
+<dt>旧假设</dt>
+<dd>长期记忆依赖围绕模型搭建的检索基础设施。</dd>
+</div>
+<div>
+<dt>问题在哪里</dt>
+<dd>跨窗口任务需要选择保留内容，单有存储并不解释如何选择。</dd>
+</div>
+<div>
+<dt>替代方式</dt>
+<dd>提供压缩与记忆文件，让模型选择摘要内容、写入并按需读取。</dd>
+</div>
+</dl>
+<p class="evidence-text">原文游戏案例中，较早模型偏向记录对话，较新模型能保存战术经验。阅读理解：工具相近时，记忆的有效使用仍取决于模型能力。</p>
+<a class="evidence" href="#source-2">原文依据 · 第 2 节 ↗</a>
+</details>
+</article>
+</section>
+<section class="section" id="boundaries">
+<div class="eyebrow">模式三 · 明确保留项</div>
+<h2>模型会做，不等于应用要求已落实</h2>
+<figure class="visual" aria-labelledby="cache-caption">
+<div class="diagram-heading">成本 · 保持可复用的前缀</div>
+<div class="cache-rows">
+<div>
+<span>本轮请求</span>
+<div class="stable">稳定前缀</div>
+<div class="dynamic">变化内容</div>
+</div>
+<div>
+<span>后续请求</span>
+<div class="stable">复用相同前缀</div>
+<div class="dynamic">追加更新</div>
+</div>
+</div>
+<div class="cache-caption">
+<span>系统指令 / 工具等稳定内容</span>
+<span>消息更新 / 缓存断点维护</span>
+</div>
+<figcaption id="cache-caption">稳定内容在前，变化在后，让可复用的部分保持稳定；宽度不表示 token 比例。</figcaption>
+</figure>
+<figure class="visual" aria-labelledby="gate-caption">
+<div class="diagram-heading">交互与安全 · 环境承接具体动作</div>
+<div class="gate-route">
+<div class="actor">
+<img src="../../../../assets/icons/robot.svg" alt="" width="24" height="24">
+<strong>Claude</strong>
+<small>提出动作</small>
+</div>
+<div class="route-arrow" aria-hidden="true">→</div>
+<div class="gate">
+<div class="gate-title">
+<img src="../../../../assets/icons/shield-fill-check.svg" alt="" width="24" height="24">
+<strong>Harness</strong>
+</div>
+<span class="typed">专用工具 · 类型化参数</span>
+<div class="checks">
+<span>确认</span>
+<span>呈现</span>
+<span>审计</span>
+<span>新旧检查</span>
+</div>
+<small>按动作要求处理</small>
+</div>
+<div class="route-arrow" aria-hidden="true">→</div>
+<div class="actor">
+<img src="../../../../assets/icons/wrench.svg" alt="" width="24" height="24">
+<strong>执行</strong>
+<small>满足条件时</small>
+</div>
+</div>
+<figcaption id="gate-caption">模型提出动作，环境落实要求；这些检查按需采用，并非每次调用都要全部执行。</figcaption>
+</figure>
+<details class="explanation">
+<summary>展开解释与原文依据</summary>
+<p>Claude 未必知道产品的安全边界或界面要求。Harness 接收并执行工具调用，因而可以在动作发生时落实这些要求。</p>
+<div class="boundary-list">
+<article>
+<h3>成本</h3>
+<p>上下文每轮重新打包，稳定前缀有助于复用缓存。</p>
+<p>
+<strong>保留的支撑：</strong>稳定内容在前、变化在后；更新采用追加消息，并维护缓存断点。</p>
+</article>
+<article>
+<h3>交互与安全</h3>
+<p>Bash 只有命令字符串，应用需要识别具体动作。</p>
+<p>
+<strong>保留的支撑：</strong>专用工具提供类型化参数，用于确认、界面呈现、审计或编辑前的新旧检查。</p>
+</article>
+</div>
+<a class="evidence" href="#source-3">原文依据 · 正文第 3 节 ↗</a>
+</details>
+</section>
+<section class="section" id="limits">
+<div class="eyebrow">回到起点</div>
+<h2>模型升级后，再问一次：这段逻辑还需要吗？</h2>
+<figure class="visual" aria-labelledby="upgrade-caption">
+<div class="upgrade">
+<div class="era">
+<div class="lane-label">Sonnet 4.5</div>
+<div class="behavior">接近上下文限制</div>
+<div class="warning">提前收尾</div>
+<div class="patch">加入上下文重置<br>
+<small>补偿当时的问题</small>
+</div>
+</div>
+<div class="upgrade-arrow">
+<span>模型升级</span>
+<b aria-hidden="true">→</b>
+<span>重新检验</span>
+</div>
+<div class="era">
+<div class="lane-label">Opus 4.5</div>
+<div class="behavior">原行为不再出现</div>
+<div class="resolved">补偿理由失效</div>
+<div class="patch retired">
+<s>上下文重置</s>
+<br>
+<small>原补偿成为多余结构</small>
+</div>
+</div>
+</div>
+<a class="review-return" href="#overview">↺ 回到起点：下一次能力变化，继续重测</a>
+<figcaption id="upgrade-caption">原文末节案例：重测的是补偿的理由，不能据此取消所有任务的边界与支撑。</figcaption>
+</figure>
+<details class="explanation">
+<summary>展开解释与原文依据</summary>
+<p>原文末节给出直接例子：Sonnet 4.5 接近上下文限制时会提前收尾，团队曾加入重置来补偿；Opus 4.5 不再出现该行为，旧补偿就失去了作用。</p>
+<p class="reading-note">阅读归纳：这回应了开篇：保留结构的理由需要随能力变化重新成立。不能由这些案例推出所有任务都应删掉编排、记忆检索或专用工具。</p>
+<p>作者也保留了限制：自动审查 Bash 的方案以用户信任任务方向为前提，高风险动作仍可能需要专用工具。本文是设计经验与特定评测的报告，不是通用收益保证。</p>
+<a class="evidence" href="#source-4">原文依据 · 正文末节；第 3 节末尾 ↗</a>
+</details>
+</section>
+<section class="section" id="source">
+<div class="eyebrow">Source</div>
+<h2>回到原文的论证位置</h2>
+<p>
+<a href="https://claude.com/blog/harnessing-claudes-intelligence">阅读 Anthropic 原文 ↗</a> · <a href="README.md">Markdown 版本</a>
+</p>
+<details>
+<summary>展开章节与论证作用</summary>
+<div class="source-item" id="source-1">
+<strong>引言与第 1 节</strong>
+<p>先指出能力假设会过时，再说明可依托模型熟悉的工具。</p>
+</div>
+<div class="source-item" id="source-2">
+<strong>第 2 节</strong>
+<p>围绕动作编排、当前上下文、长期记忆，检验三类假设。</p>
+</div>
+<div class="source-item" id="source-3">
+<strong>第 3 节</strong>
+<p>解释缓存与专用工具为何仍服务于应用要求。</p>
+</div>
+<div class="source-item" id="source-4">
+<strong>末节</strong>
+<p>用上下文重置失效的案例回应开篇，提出持续重测。</p>
+</div>
+<p>图解与标注“阅读归纳／阅读理解”的说明属于整理者解释；其余为原文转述。</p>
+</details>
+</section>
+</div>
+</div>
+</main>
+<footer class="site-footer">
+<span>Knowledge Distilled</span>
+<span>Source → Understand → Review</span>
+</footer>
+</div>
+</body>
+</html>
