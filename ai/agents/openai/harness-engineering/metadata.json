@@ -1,15 +1,150 @@
 {
   "title": "Harness Engineering",
   "source": "OpenAI",
-  "source_url": "",
-  "published_date": "",
+  "source_url": "https://openai.com/index/harness-engineering/",
+  "published_date": "2026-02-11",
   "learned_date": "2026-09-11",
   "topics": [
+    "harness-engineering",
     "agent",
-    "harness",
-    "context-engineering",
-    "evals"
+    "software-engineering",
+    "feedback-loops"
   ],
-  "status": "example",
-  "language": "en"
+  "status": "summarized",
+  "language": "zh-CN",
+  "author": "Ryan Lopopolo",
+  "source_title": "Harness engineering: leveraging Codex in an agent-first world",
+  "source_language": "en",
+  "domain": "ai",
+  "category": "agents",
+  "outline": [
+    {
+      "id": "chapter-1",
+      "title": "从空仓库开始",
+      "original_heading": "We started with an empty git repository",
+      "stage": "实验与角色"
+    },
+    {
+      "id": "chapter-2",
+      "title": "重新定义工程师角色",
+      "original_heading": "Redefining the role of the engineer",
+      "stage": "实验与角色"
+    },
+    {
+      "id": "chapter-3",
+      "title": "提高应用的可理解性",
+      "original_heading": "Increasing application legibility",
+      "stage": "环境可理解"
+    },
+    {
+      "id": "chapter-4",
+      "title": "将仓库知识作为记录中心",
+      "original_heading": "We made repository knowledge the system of record",
+      "stage": "环境可理解"
+    },
+    {
+      "id": "chapter-5",
+      "title": "让 Agent 能理解系统",
+      "original_heading": "Agent legibility is the goal",
+      "stage": "环境可理解"
+    },
+    {
+      "id": "chapter-6",
+      "title": "落实架构与工程偏好",
+      "original_heading": "Enforcing architecture and taste",
+      "stage": "质量可约束"
+    },
+    {
+      "id": "chapter-7",
+      "title": "吞吐量改变合并理念",
+      "original_heading": "Throughput changes the merge philosophy",
+      "stage": "交付与自主"
+    },
+    {
+      "id": "chapter-8",
+      "title": "Agent 生成的完整范围",
+      "original_heading": "What “agent-generated” actually means",
+      "stage": "交付与自主"
+    },
+    {
+      "id": "chapter-9",
+      "title": "不断提高自主程度",
+      "original_heading": "Increasing levels of autonomy",
+      "stage": "交付与自主"
+    },
+    {
+      "id": "chapter-10",
+      "title": "熵增与垃圾回收",
+      "original_heading": "Entropy and garbage collection",
+      "stage": "持续治理"
+    },
+    {
+      "id": "chapter-11",
+      "title": "仍在探索的问题",
+      "original_heading": "What we’re still learning",
+      "stage": "持续治理"
+    }
+  ],
+  "reading_structure": [
+    "核心观点",
+    "三个机制及简短论据",
+    "按机制展开原文实践",
+    "条件与边界"
+  ],
+  "core_decomposition": [
+    {
+      "id": "understand",
+      "capability": "读懂任务",
+      "barrier": "不知道依据什么做",
+      "mechanism": "把知识变成可用上下文",
+      "supporting_chapters": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "constrain",
+      "capability": "守住要求",
+      "barrier": "不知道哪些做法不被允许",
+      "mechanism": "把要求变成可执行检查",
+      "supporting_chapters": [
+        6
+      ]
+    },
+    {
+      "id": "verify",
+      "capability": "判断结果",
+      "barrier": "不知道做完是否正确",
+      "mechanism": "让结果可观察、可反馈",
+      "supporting_chapters": [
+        3,
+        9
+      ]
+    }
+  ],
+  "auxiliary_indexes": [
+    "原文11章节"
+  ],
+  "visuals": [
+    {
+      "id": "map-caption",
+      "type": "html-css",
+      "purpose": "人、环境、Agent、交付及持续改进的关系"
+    },
+    {
+      "id": "knowledge-title",
+      "type": "svg",
+      "purpose": "知识入口与按需查找"
+    },
+    {
+      "id": "rules-title",
+      "type": "svg",
+      "purpose": "规则检查的分支与修正回路"
+    },
+    {
+      "id": "feedback-title",
+      "type": "svg",
+      "purpose": "观察反馈循环"
+    }
+  ]
 }

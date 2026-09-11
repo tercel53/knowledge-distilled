@@ -1,32 +1,152 @@
 # Harness Engineering
 
-> Example knowledge note. Replace this content with your own understanding.
+工程师通过设计环境、约束与反馈，让 Agent 逐步承担完整的软件交付。
 
-## One-sentence takeaway
+来源：[OpenAI 原文](https://openai.com/index/harness-engineering/)
 
-The usefulness of an agent depends not only on the model, but also on the runtime environment built around it.
+Ryan Lopopolo · 发布 2026-02-11 · 整理 2026-09-11
 
-## Problem
+[打开 HTML 阅读版](./index.html)
 
-Why can a strong model still produce a weak agent?
+## 核心观点的因果拆解
 
-## Core ideas
+工程师通过设计环境、约束与反馈，让 Agent 逐步承担完整的软件交付。以下是阅读归纳，不是原文逐字表述。
 
-- Model capability is only one part of the system.
-- Context, tools, memory, evaluation and feedback determine agent behavior.
-- Harness design is a core engineering discipline.
+- **读懂任务**：不知道依据什么做 → 把知识变成可用上下文 → 能理解目标与系统。仓库里的文档、计划与清晰抽象，给任务提供可查找的依据。 对应原文章节 4、5。
+- **守住要求**：不知道哪些做法不被允许 → 把要求变成可执行检查 → 能在约束内实现。架构边界与质量要求进入工具，让违规能被发现并纠正。 对应原文章节 6。
+- **判断结果**：不知道做完是否正确 → 让结果可观察、可反馈 → 能验证并修正结果。界面、日志与指标提供证据，让实现进入验证与修复循环。 对应原文章节 3、9。
 
-## My understanding
+人的工作是定义目标与建设这些机制（章节 02）；三类能力共同支撑实现、验证、修正与交付；持续清理维护这些条件（章节 10）。这不保证所有任务都能自动完成。
 
-I treat the model as a reasoning engine and the harness as its operating environment.
+阅读顺序：核心观点 → 三个机制及简短论据 → 按机制展开原文实践 → 条件与边界。保留原文核心章节作为按需查阅的补充。
 
-## Connections
+## 按机制展开原文实践
 
-- Context Engineering
-- MCP
-- Agent Evals
-- Tool Design
+### 让知识在任务发生时可被使用
 
-## Source
+- 原文做法（摘要）：短入口连接结构化文档与计划；系统知识需要进入 Agent 能读取和理解的环境。
+- 阅读理解：信息有了稳定入口，Agent 才能找到行动依据；清晰的抽象进一步降低理解成本。
+- 对应原文章节 04、05
 
-Replace with the original article URL.
+### 让工程要求参与每次执行
+
+- 原文做法（摘要）：用自动检查落实架构边界与质量要求。
+- 阅读理解：要求成为执行过程中的反馈，才能被反复应用；工程师无需每次重新口头解释。
+- 对应原文章节 06
+
+### 让结果成为下一步行动的依据
+
+- 原文做法（摘要）：向 Agent 开放界面、日志和指标，并串起实现、验证、评审与修复。
+- 阅读理解：看见结果后才能发现偏差；修正后再次验证，交付过程才能形成闭环。
+- 对应原文章节 03、09
+
+## 原文章节对照
+
+实验与角色 → 环境可理解 → 质量可约束 → 交付与自主 → 持续治理。
+
+## 01 从空仓库开始
+
+We started with an empty git repository
+
+- 问题：实验从什么条件出发？
+- 做法 / 状态：从零构建产品，人工不直接写代码。
+- 阅读理解：这是实践背景，不能直接推广为普遍效率结论。
+
+## 02 重新定义工程师角色
+
+Redefining the role of the engineer
+
+- 问题：工程师还负责什么？
+- 做法 / 状态：定义目标，补足 Agent 缺失的能力。
+- 阅读理解：失败也暴露环境缺口，不只是一次实现错误。
+
+## 03 提高应用的可理解性
+
+Increasing application legibility
+
+- 问题：谁来验证运行结果？
+- 做法 / 状态：让 Agent 访问界面、日志和指标。
+- 阅读理解：观察能力使自主验证成为可能。
+
+## 04 将仓库知识作为记录中心
+
+We made repository knowledge the system of record
+
+- 问题：知识怎样进入任务？
+- 做法 / 状态：用短入口连接结构化文档与计划。
+- 阅读理解：上下文需要组织，也需要维护。
+
+## 05 让 Agent 能理解系统
+
+Agent legibility is the goal
+
+- 问题：仅有文档是否足够？
+- 做法 / 状态：让系统知识与抽象可被 Agent 理解。
+- 阅读理解：可理解性决定它能否有效使用信息。
+
+## 06 落实架构与工程偏好
+
+Enforcing architecture and taste
+
+- 问题：怎样维持代码一致性？
+- 做法 / 状态：把边界与质量要求落实为检查规则。
+- 阅读理解：人的经验因此能在后续任务中复用。
+
+## 07 吞吐量改变合并理念
+
+Throughput changes the merge philosophy
+
+- 问题：等待与修正如何取舍？
+- 做法 / 状态：在高吞吐条件下调整合并策略。
+- 阅读理解：这是特定条件下的权衡，不是取消质量要求。
+
+## 08 Agent 生成的完整范围
+
+What “agent-generated” actually means
+
+- 问题：Agent 的工作止于代码吗？
+- 做法 / 状态：生成范围覆盖开发配套工作；人仍判断方向。
+- 阅读理解：人的参与位置改变，并非消失。
+
+## 09 不断提高自主程度
+
+Increasing levels of autonomy
+
+- 问题：何时能端到端推进？
+- 做法 / 状态：串起实现、验证、评审与修复。
+- 阅读理解：自主性依赖前面的环境投入。
+
+## 10 熵增与垃圾回收
+
+Entropy and garbage collection
+
+- 问题：坏模式会不会扩散？
+- 做法 / 状态：持续清理代码与文档中的退化。
+- 阅读理解：一次交付成功不等于长期稳定。
+
+## 11 仍在探索的问题
+
+What we’re still learning
+
+- 问题：哪些结论仍待检验？
+- 做法 / 状态：长期维护效果尚未得到充分验证。
+- 阅读理解：实践有效与普遍成立之间仍有距离。
+
+## 两个概念模型
+
+经验沉淀：发现问题 → 判断缺口 → 补充机制 → 后续复用。
+
+交付闭环：任务 → 实现 → 验证 → 评审 → 交付；验证或评审发现问题时返回实现，需要人的判断时升级。
+
+仅依据原文正文整理；图示与阅读理解是概念整理。原图 overview.png 和 docs/design/harness 中的旧验收记录保留为历史设计资料，当前正文采用已确认的“核心观点—机制—实践—边界”结构。
+
+## 阅读图解
+
+HTML 阅读版使用可编辑关系图：
+
+- 总览：工程师建设环境 → 知识、规则、反馈共同支撑 Agent → 实现、验证与交付；新问题用于持续改进环境。
+- 知识：文档、计划、系统结构通过短入口供 Agent 按需查找。
+- 规则：实现进入规则检查；通过后继续，违规则修正并重新检查。
+- 反馈：实现 → 观察结果 → 发现偏差 → 修正 → 再次实现；验证通过才交付，需要判断时升级给人。
+
+图解是概念整理，不是作者的原始架构图。节点文字与连接线均可直接修改，图标沿用仓库的 Bootstrap Icons。
