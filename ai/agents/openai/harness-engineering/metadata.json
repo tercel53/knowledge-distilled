@@ -1,0 +1,15 @@
+{
+  "title": "Harness Engineering",
+  "source": "OpenAI",
+  "source_url": "",
+  "published_date": "",
+  "learned_date": "2026-09-11",
+  "topics": [
+    "agent",
+    "harness",
+    "context-engineering",
+    "evals"
+  ],
+  "status": "example",
+  "language": "en"
+}

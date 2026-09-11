@@ -1,0 +1,3 @@
+.DS_Store
+# Local visual QA report contains machine-specific screenshot paths.
+/design-qa.md

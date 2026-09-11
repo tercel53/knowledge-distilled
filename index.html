@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="关于 AI、软件工程与科技前沿的个人知识库。将长文提炼为可复用的思维模型。">
+  <title>Knowledge Distilled · 理解技术，连接未来</title>
+  <link rel="stylesheet" href="./assets/css/style.css?v=2">
+  <script src="./assets/js/home.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳至内容</a>
+  <div class="container">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Knowledge Distilled 首页">Knowledge Distilled<span>Personal Knowledge Base</span></a>
+      <nav class="site-nav" aria-label="知识领域">
+        <a href="#knowledge-map" data-category="ai" aria-current="true">AI Engineering</a>
+        <a href="#knowledge-map" data-category="software">Software</a>
+        <a href="#knowledge-map" data-category="frontiers">Frontiers</a>
+        <a class="github-link" href="https://github.com/tercel53/knowledge-distilled" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="home-hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="eyebrow">Ideas for a more open tomorrow</div>
+          <h1 id="hero-title">理解技术，<br><span>连接未来。</span></h1>
+          <p class="hero-subtitle">关于 AI、软件工程与科技前沿的个人知识库。</p>
+          <article class="featured">
+            <div class="eyebrow">OpenAI · 示例笔记</div>
+            <h2>Harness Engineering</h2>
+            <p>一个强大的模型之所以可能表现平庸，往往不只是模型本身的问题，<br class="desktop-break">而是其周围的运行环境没有被正确构建。</p>
+            <a class="button" href="./ai/agents/openai/harness-engineering/">阅读笔记</a>
+          </article>
+        </div>
+        <figure class="hero-art">
+          <div class="art-process eyebrow">Distill<br>Understand<br>Connect<br>Build</div>
+          <img src="./assets/images/harness-optics.png" alt="透明光学板围绕蓝色核心展开，呈现模型与运行环境之间的关系" width="1200" height="1000" fetchpriority="high">
+          <figcaption class="eyebrow">Better agents<br>through better systems</figcaption>
+        </figure>
+      </section>
+      <section class="knowledge-map" id="knowledge-map" aria-labelledby="map-heading">
+        <div class="section-heading"><h2 class="eyebrow" id="map-heading">Knowledge Map</h2><span class="eyebrow" id="category-label">AI Engineering</span></div>
+        <div class="topic-grid" id="topics-ai">
+          <article class="topic"><span class="topic-number">01</span><div><h3>Agents &amp; Harness</h3><p>Agent runtime, tools, context,<br>evaluation, feedback loops.</p><a href="./ai/agents/openai/harness-engineering/">阅读笔记</a></div></article>
+          <article class="topic"><span class="topic-number">02</span><div><h3>Context Engineering</h3><p>Coming soon.</p><span class="pending">内容整理中</span></div></article>
+          <article class="topic"><span class="topic-number">03</span><div><h3>Evals</h3><p>Coming soon.</p><span class="pending">内容整理中</span></div></article>
+        </div>
+        <div class="empty-state" id="topics-empty" hidden aria-live="polite"><h3 id="empty-title"></h3><p>这个领域的笔记正在酝酿中。先从 AI Engineering 开始探索。</p><button type="button" data-category="ai">浏览 AI 笔记</button></div>
+      </section>
+    </main>
+    <footer class="site-footer"><span>Built for a deeper understanding</span><span>Source · Understand · Distill · Connect · Review</span></footer>
+  </div>
+</body>
+</html>

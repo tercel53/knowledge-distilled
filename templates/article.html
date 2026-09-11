@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{TITLE}} · Knowledge Distilled</title>
+  <link rel="stylesheet" href="{{RELATIVE_PATH}}assets/css/style.css?v=2">
+</head>
+<body class="article-page">
+  <a class="skip-link" href="#reading-main">Skip to content</a>
+  <div class="container">
+    <header class="site-header">
+      <a class="brand" href="{{RELATIVE_PATH}}">Knowledge Distilled<span>Personal Knowledge Base</span></a>
+      <a class="back-link" href="{{RELATIVE_PATH}}">返回知识库</a>
+    </header>
+    <header class="article-header">
+      <div class="hero">
+        <div class="breadcrumb"><a href="{{RELATIVE_PATH}}">知识库</a> / AI Engineering / Knowledge note</div>
+        <div class="eyebrow">{{SOURCE}} · {{PUBLISHED_DATE}}</div>
+        <h1>{{TITLE}}</h1>
+        <p class="subtitle">{{SUBTITLE}}</p>
+      </div>
+    </header>
+
+<div class="reading-layout">
+      <aside class="contents" aria-label="On this page"><div class="eyebrow">On this page</div><a href="#part-1">01 / Takeaway</a><a href="#part-2">02 / The problem</a><a href="#part-3">03 / Core ideas</a><a href="#part-4">04 / Mental model</a><a href="#part-5">05 / My understanding</a><a href="#part-6">06 / Implications</a><a href="#part-7">07 / Connections</a><a href="#part-8">08 / Source</a></aside>
+    <main class="reading-main" id="reading-main">
+      <section class="section" id="part-1">
+        <div class="eyebrow">1 · One-sentence takeaway</div>
+        <p class="takeaway">{{ONE_SENTENCE_TAKEAWAY}}</p>
+      </section>
+
+      <section class="section" id="part-2">
+        <div class="eyebrow">2 · The problem</div>
+        <h2>What problem is this article solving?</h2>
+        <p>{{PROBLEM}}</p>
+      </section>
+
+      <section class="section" id="part-3">
+        <div class="eyebrow">3 · Core ideas</div>
+        <h2>Core ideas</h2>
+        <ul>
+          <li>{{CORE_IDEA_1}}</li>
+          <li>{{CORE_IDEA_2}}</li>
+          <li>{{CORE_IDEA_3}}</li>
+        </ul>
+      </section>
+
+      <section class="section" id="part-4">
+        <div class="eyebrow">4 · Mental model</div>
+        <h2>Architecture / mental model</h2>
+        <div class="diagram">{{DIAGRAM}}</div>
+      </section>
+
+      <section class="section" id="part-5">
+        <div class="eyebrow">5 · My understanding</div>
+        <h2>How I understand it</h2>
+        <p>{{MY_UNDERSTANDING}}</p>
+      </section>
+
+      <section class="section" id="part-6">
+        <div class="eyebrow">6 · Implications</div>
+        <h2>What changes for me?</h2>
+        <ul>
+          <li>{{IMPLICATION_1}}</li>
+          <li>{{IMPLICATION_2}}</li>
+          <li>{{IMPLICATION_3}}</li>
+        </ul>
+      </section>
+
+      <section class="section" id="part-7">
+        <div class="eyebrow">7 · Connections</div>
+        <h2>Connections to existing knowledge</h2>
+        <p>{{CONNECTIONS}}</p>
+      </section>
+
+      <section class="section" id="part-8">
+        <div class="eyebrow">8 · Source</div>
+        <h2>Original article</h2>
+        <p><a href="{{SOURCE_URL}}" target="_blank" rel="noreferrer">{{SOURCE_URL}}</a></p>
+        <div>
+          <span class="tag">{{TAG_1}}</span>
+          <span class="tag">{{TAG_2}}</span>
+          <span class="tag">{{TAG_3}}</span>
+        </div>
+      </section>
+    </main>
+    </div>
+
+    <footer class="site-footer article-footer">
+      Distilled for personal understanding. Original content belongs to its respective author and publisher.
+    </footer>
+  </div>
+</body>
+</html>

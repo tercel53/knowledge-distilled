@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Harness Engineering · Knowledge Distilled</title>
+  <link rel="stylesheet" href="../../../../assets/css/style.css?v=2">
+</head>
+<body class="article-page">
+  <a class="skip-link" href="#reading-main">Skip to content</a>
+  <div class="container">
+    <header class="site-header">
+      <a class="brand" href="../../../../">Knowledge Distilled<span>Personal Knowledge Base</span></a>
+      <a class="back-link" href="../../../../">返回知识库</a>
+    </header>
+    <header class="article-header">
+      <div class="hero">
+        <div class="breadcrumb"><a href="../../../../">知识库</a> / AI Engineering / Knowledge note</div>
+        <div class="eyebrow">OpenAI · Example knowledge note</div>
+        <h1>Harness Engineering</h1>
+        <p class="subtitle">An example of how to turn a long article into a reusable mental model.</p>
+      </div>
+    </header>
+
+<div class="reading-layout">
+      <aside class="contents" aria-label="On this page"><div class="eyebrow">On this page</div><a href="#part-1">01 / Takeaway</a><a href="#part-2">02 / The problem</a><a href="#part-3">03 / Core ideas</a><a href="#part-4">04 / Mental model</a><a href="#part-5">05 / My understanding</a><a href="#part-6">06 / Implications</a><a href="#part-7">07 / Connections</a><a href="#part-8">08 / Source</a></aside>
+    <main class="reading-main" id="reading-main">
+      <section class="section" id="part-1">
+        <div class="eyebrow">1 · One-sentence takeaway</div>
+        <p class="takeaway">The usefulness of an agent depends not only on the model, but also on the runtime environment built around it.</p>
+      </section>
+
+      <section class="section" id="part-2">
+        <div class="eyebrow">2 · The problem</div>
+        <h2>Why can a strong model still produce a weak agent?</h2>
+        <p>A model does not operate in isolation. Tool access, context, memory, feedback, task decomposition and evaluation all affect the final system behavior.</p>
+      </section>
+
+      <section class="section" id="part-3">
+        <div class="eyebrow">3 · Core ideas</div>
+        <h2>Core ideas</h2>
+        <ul>
+          <li>Model capability is only one layer of an agent system.</li>
+          <li>The harness determines what information and actions are available to the model.</li>
+          <li>Evaluation and feedback loops are part of the system architecture, not an afterthought.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="part-4">
+        <div class="eyebrow">4 · Mental model</div>
+        <h2>Agent as model + operating environment</h2>
+        <div class="diagram">User
+  │
+  ▼
+Agent Runtime
+  ├── Context
+  ├── Tools
+  ├── Memory
+  ├── Skills / Procedures
+  ├── Evaluation
+  └── Feedback
+  │
+  ▼
+Model</div>
+      </section>
+
+      <section class="section" id="part-5">
+        <div class="eyebrow">5 · My understanding</div>
+        <h2>How I understand it</h2>
+        <p>I treat the model as a reasoning engine and the harness as its operating environment. Improving the model helps, but changing what the model can see, do and verify may improve the system even more.</p>
+      </section>
+
+      <section class="section" id="part-6">
+        <div class="eyebrow">6 · Implications</div>
+        <h2>What changes for me?</h2>
+        <ul>
+          <li>When an agent fails, inspect the harness before blaming the model.</li>
+          <li>Context engineering deserves first-class architectural attention.</li>
+          <li>Agent evaluation should be designed alongside tools and workflows.</li>
+        </ul>
+      </section>
+
+      <section class="section" id="part-7">
+        <div class="eyebrow">7 · Connections</div>
+        <h2>Connections to existing knowledge</h2>
+        <p>Harness engineering connects naturally to context engineering, tool design, MCP, agent evaluation and software architecture.</p>
+      </section>
+
+      <section class="section" id="part-8">
+        <div class="eyebrow">8 · Source</div>
+        <h2>Original article</h2>
+        <p>Replace this example with the real article URL.</p>
+        <span class="tag">agent</span>
+        <span class="tag">harness</span>
+        <span class="tag">context-engineering</span>
+      </section>
+    </main>
+    </div>
+
+    <footer class="site-footer article-footer">
+      Example note — replace with your own interpretation.
+    </footer>
+  </div>
+</body>
+</html>
