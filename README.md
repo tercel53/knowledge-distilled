@@ -32,16 +32,24 @@ Typical sources include:
 
 ## Knowledge page structure
 
-Each article is distilled into eight parts:
+Use a progressively deeper reading path, adapting it to the article:
 
 1. One-sentence takeaway
-2. What problem is the article solving?
-3. Core ideas
-4. Mental model / architecture
-5. My understanding
-6. What this changes for me
-7. Connections to existing knowledge
-8. Original source
+2. Visual explanation of the core relationships, with brief supporting evidence
+3. Practices or findings organized around the same ideas
+4. Conditions, trade-offs, and limits
+
+Keep original chapter summaries available on demand and link to the source. Avoid repeating the same content as a separate theme mapping or including repository-maintenance advice in the reader-facing note.
+
+## Article distillation skill
+
+The repository skill lives at [.agents/skills/article-distillation/SKILL.md](.agents/skills/article-distillation/SKILL.md).
+
+Example invocation:
+
+> 使用 $article-distillation 蒸馏这篇文章：<文章 URL>。生成可编辑图解优先的 HTML 笔记，并同步 Markdown 和元数据。
+
+For planning only, add “先规划，暂不实现”. The skill follows the requested scope and does not automatically commit, push, or publish.
 
 ## Repository structure
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "文章蒸馏"
+  short_description: "从文章正文提炼核心观点与证据，生成图解优先、可追溯的知识笔记"
+  default_prompt: "使用 $article-distillation 蒸馏这篇文章：先提炼核心观点与原文依据，再用可编辑图解呈现，并保存到当前知识库。"

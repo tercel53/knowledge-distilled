@@ -4,6 +4,10 @@
 
 将外部技术文章整理为可快速理解的知识笔记。保持来源可追溯，区分原文事实、阅读推论与本项目应用建议。同步维护 HTML、Markdown 和 metadata.json。
 
+## 文章蒸馏 Skill
+
+处理文章蒸馏、知识笔记落地及其图解优化时，读取 [.agents/skills/article-distillation/SKILL.md](.agents/skills/article-distillation/SKILL.md)。它包含正文提取、观点与证据组织、图形优先展示以及验收流程。仅要求总结或规划时遵循相应范围，不自动实现或发布。
+
 ## 参考图转可编辑图解：视觉保真是验收条件
 
 当用户认可参考图，并要求用 HTML、CSS、JavaScript/TypeScript、SVG 实现时，目标是忠实还原其视觉特征，同时实现可编辑性。不能仅保留节点关系后自由重设计。
