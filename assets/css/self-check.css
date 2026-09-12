@@ -1,0 +1,11 @@
+/* Native disclosure: questions remain visible; answers need no script. */
+.self-check-section{padding-top:32px;margin-top:32px;border-top:1px solid var(--border);scroll-margin-top:24px}
+.self-check-section>p{font-size:14px;color:var(--muted);line-height:1.8}
+.self-check-question{padding:22px 0;border-bottom:1px solid var(--border);scroll-margin-top:24px}
+.self-check-question h3{font-size:18px;line-height:1.7;margin:0 0 12px}
+.self-check-question summary{cursor:pointer;color:var(--accent);font-size:14px;padding:10px 0;line-height:1.6}
+.self-check-answer{padding:4px 18px;background:var(--surface,#f3f5f8);border-left:2px solid var(--accent);overflow-wrap:anywhere}
+.self-check-answer p{font-size:14px;line-height:1.85}
+.self-check-answer a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.self-check-question summary:focus-visible,.self-check-answer a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:2px}
+@media(max-width:800px){.self-check-question h3{font-size:17px}.self-check-answer{padding:4px 12px}}

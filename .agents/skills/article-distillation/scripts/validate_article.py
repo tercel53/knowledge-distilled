@@ -24,7 +24,7 @@ class ArticleParser(HTMLParser):
         self.nav_depth = 0
         self.nav_link: dict[str, object] | None = None
         self.nav_links: list[tuple[str, str]] = []
-        self.section_stack: list[str | None] = []
+        self.section_stack: list[tuple[str, str | None]] = []
         self.capture: dict[str, object] | None = None
         self.eyebrows: dict[str, str] = {}
         self.headings: dict[str, str] = {}
@@ -52,14 +52,14 @@ class ArticleParser(HTMLParser):
         if self.nav_depth and tag == "a" and (values.get("href") or "").startswith("#"):
             self.nav_link = {"target": values["href"][1:], "text": []}
 
-        if tag == "section":
-            self.section_stack.append(element_id)
+        if tag in {"section", "article", "header"}:
+            self.section_stack.append((tag, element_id))
 
-        section_id = next((item for item in reversed(self.section_stack) if item), None)
+        section_id = next((item for _, item in reversed(self.section_stack) if item), None)
         if section_id and self.capture is None:
-            if "eyebrow" in classes and section_id not in self.eyebrows:
+            if classes & {"eyebrow", "thesis-label", "chapter-kicker"}:
                 self.capture = {"kind": "eyebrow", "id": section_id, "tag": tag, "text": []}
-            elif tag == "h2" and section_id not in self.headings:
+            elif tag in {"h1", "h2", "h3"} and section_id not in self.headings:
                 self.capture = {"kind": "heading", "id": section_id, "tag": tag, "text": []}
 
     def handle_endtag(self, tag: str) -> None:
@@ -72,7 +72,7 @@ class ArticleParser(HTMLParser):
             target[str(self.capture["id"])] = normalize(self.capture["text"])
             self.capture = None
 
-        if tag == "section" and self.section_stack:
+        if self.section_stack and tag == self.section_stack[-1][0]:
             self.section_stack.pop()
         if tag == "nav" and self.nav_depth:
             self.nav_depth -= 1

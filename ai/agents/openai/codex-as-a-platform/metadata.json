@@ -20,6 +20,7 @@
     {"id": "layers", "title": "按产品需要的交互方式和控制程度选择集成层", "source_location": "Choose the right integration layer"},
     {"id": "relay", "title": "示例把总图中的抽象职责，落实到一次运单恢复任务", "source_location": "Example: Relay"},
     {"id": "evidence", "title": "模式已经被采用，但文章没有证明它适用于所有任务", "source_location": "What developers are building; 全文限制归纳"},
+    {"id": "self-check", "title": "自测：我理解了吗？", "source_location": "依据正文编写的静态自评，非原文问答"},
     {"id": "source", "title": "原文定位", "source_location": "原文章节索引"}
   ],
   "visuals": [

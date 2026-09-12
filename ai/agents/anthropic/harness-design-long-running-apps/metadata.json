@@ -26,6 +26,7 @@
     {"id": "evidence", "title": "成本更高、耗时更长，也得到了更完整、更可用的结果", "source_location": "Running the harness; Results from the updated harness"},
     {"id": "evolution", "title": "模型升级后，要重新验证每个 Harness 组件", "source_location": "Iterating on the harness; Removing the sprint construct"},
     {"id": "boundaries", "title": "独立评估能改善判断，但不能保证验收可靠", "source_location": "全文限制归纳"},
+    {"id": "self-check", "title": "自测：我理解了吗？", "source_location": "依据正文编写的静态自评，非原文问答"},
     {"id": "source", "title": "原文定位", "source_location": "原文章节索引"}
   ],
   "visuals": [

@@ -1,4 +1,4 @@
-﻿# Agent Harness 设计：释放 Claude 智能的三种模式
+# Agent Harness 设计：释放 Claude 智能的三种模式
 
 英文原标题：Agent Harness Design: 3 Patterns for Harnessing Claude's Intelligence
 
@@ -89,6 +89,70 @@ Bash 只有命令字符串，应用需要识别具体动作。
 作者也保留了限制：自动审查 Bash 的方案以用户信任任务方向为前提，高风险动作仍可能需要专用工具。本文是设计经验与特定评测的报告，不是通用收益保证。
 
 依据：[正文末节；第 3 节末尾](https://claude.com/blog/harnessing-claudes-intelligence)
+
+## 自测：我理解了吗？
+
+先用自己的话回答，再按需展开参考答案。重点对照含义和依据，不必逐字一致；你可以理解作者后仍持不同意见。
+
+### 1. 任务只需要工具结果表中的一列，为什么让模型写代码先筛选再回传，会改变原来的编排方式？
+
+<details>
+<summary>展开参考答案与对照要点</summary>
+
+**参考解释：**模型决定哪些结果需要保留或交给下一个工具，执行环境运行筛选逻辑，只有所需输出进入上下文。这样移走的是无关中间数据的回传和部分外围编排决定，工具执行本身仍由环境承接。
+
+**对照要点：**是否分清模型作出选择、环境处理数据和输出进入上下文的职责。
+
+**容易误解：**不是让模型先读完整张表再概括；特定评测的提升也不能直接当作所有任务的收益。
+
+**回查：**[HTML · 动作编排](./index.html#orchestration) · [原文依据](https://claude.com/blog/harnessing-claudes-intelligence)（章节：第 2 节 · Let Claude orchestrate its own actions）。
+
+</details>
+
+### 2. 假设应用预装了许多任务的完整指令，但当前只处理其中一类任务。按需加载 Skills 与清理旧内容、使用子代理分别解决什么问题？
+
+<details>
+<summary>展开参考答案与对照要点</summary>
+
+**参考解释：**Skills 先提供简介，在任务需要时读取正文，减少无关指令预装；上下文编辑移除过时内容；子代理用独立窗口隔离工作。它们分别管理内容的进入、离开与隔离，不能互相当作同一操作。
+
+**对照要点：**是否解释了三种机制各自处理的上下文问题。
+
+**容易误解：**按需加载不是完全不给任务知识，也不是要求三种机制每次都按固定顺序执行。
+
+**回查：**[HTML · 当前上下文](./index.html#context) · [原文依据](https://claude.com/blog/harnessing-claudes-intelligence)（章节：第 2 节 · Let Claude manage its own context）。
+
+</details>
+
+### 3. 模型已经很会用 Bash，是否就可以取消应用中的专用工具和动作确认？
+
+<details>
+<summary>展开参考答案与对照要点</summary>
+
+**参考解释：**不能由工具熟练度推出这个结论。应用仍可能需要识别具体动作并执行确认、呈现、审计或新旧检查；带类型化参数的专用工具提供这种入口。是否保留取决于应用边界，而不是只看模型会不会写命令。
+
+**对照要点：**是否区分模型能力与应用要求，并说明专用工具的作用。
+
+**容易误解：**不是每个动作都要经过所有检查；作者也没有要求对所有场景取消专用工具。
+
+**回查：**[HTML · 应用边界](./index.html#boundaries) · [原文依据](https://claude.com/blog/harnessing-claudes-intelligence)（章节：第 3 节 · Use declarative tools for UX, observability, or security boundaries）。
+
+</details>
+
+### 4. 某次升级后模型不再提前收尾，因此删除了旧的上下文重置。能否推断后续所有 Harness 组件都应该越少越好？
+
+<details>
+<summary>展开参考答案与对照要点</summary>
+
+**参考解释：**不能。这个案例说明应重测某项补偿所依赖的能力假设：问题消失后，原补偿可能成为负担。其他组件还可能承担上下文管理、成本或应用边界职责，需要分别判断，下一次能力变化后还要再检验。
+
+**对照要点：**是否把“删除失效补偿”与“无条件减少组件”区分开。
+
+**容易误解：**一个模型版本的案例不是普遍删减流程，三种设计模式也不是固定实施步骤。
+
+**回查：**[HTML · 模型升级后的重测](./index.html#limits) · [原文依据](https://claude.com/blog/harnessing-claudes-intelligence)（章节：The future of agent harness design；第 3 节）。
+
+</details>
 
 ## 原文定位
 

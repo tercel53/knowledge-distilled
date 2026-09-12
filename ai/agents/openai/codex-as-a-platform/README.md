@@ -75,6 +75,70 @@ Relay 使用虚构的种子数据。它验证的是集成模式，不是物流�
 
 OpenAI 开源的是 CLI、app-server、SDK 所构成的 Harness 与集成面，模型访问和托管服务仍然分离。运行位置、工具权限、审批规则、可观测方式以及记录写入仍由宿主应用治理。调查—建议—批准—执行的结构可以迁移，但具体业务规则不能照搬。
 
+## 自测：我理解了吗？
+
+先用自己的话回答，再按需展开参考答案。重点对照含义和依据，不必逐字一致；你可以理解作者后仍持不同意见。
+
+### 1. 为什么把 Codex 嵌入业务看板后，应用仍需要提供当前对象、业务上下文和工具？
+
+<details>
+<summary>展开参考答案与对照要点</summary>
+
+**参考解释：**Codex 提供持续推理、维护状态和调用工具的执行循环，应用则知道用户正在处理什么，并掌握业务数据、权限与记录。把两者连接起来，Agent 才能围绕当前工作调查，结果也能回到原界面。
+
+**对照要点：**是否区分执行循环与业务现场，并说明上下文和结果如何衔接。
+
+**容易误解：**接入开放 Harness 不等于业务规则自动齐备，也不表示模型访问和托管服务一并开源。
+
+**回查：**[HTML · 系统怎样工作](./index.html#system) · [原文依据](https://developers.openai.com/blog/codex-as-a-platform)（章节：The reusable part is the agent loop；An open harness developers can inspect and adapt；Build software around the workflow）。
+
+</details>
+
+### 2. 在 Relay 示例中，Agent 已比较方案并建议重新订舱，但用户尚未批准。它此时能直接改写运单吗？
+
+<details>
+<summary>展开参考答案与对照要点</summary>
+
+**参考解释：**不能。调查数据、解释建议和改写记录是不同阶段；重新订舱是需要批准的写操作。未批准就保留原记录，批准后才调用应用工具写入，并由应用刷新业务视图。
+
+**对照要点：**是否保留调查、批准、执行和记录回流之间的边界。
+
+**容易误解：**建议看起来合理不等于已获批准；读取运营数据也不能被当成写入授权。
+
+**回查：**[HTML · Relay 示例](./index.html#relay) · [原文依据](https://developers.openai.com/blog/codex-as-a-platform)（章节：Example: Relay）。
+
+</details>
+
+### 3. 假设任务只是 CI 中的一次有界后台处理；另一个产品却需要持续会话、中断和审批交互。为什么不应仅按运行时长选同一种接入方式？
+
+<details>
+<summary>展开参考答案与对照要点</summary>
+
+**参考解释：**前者可考虑 codex exec，后者更符合 app-server 对产品生命周期和交互的直接控制。SDK 适合应用代码启动、续接或接收任务流。选择依据是交互方式与控制需求，不能把三者当成耗时档位或能力排名。
+
+**对照要点：**是否把场景要求对应到集成层，并解释选择理由。
+
+**容易误解：**不是凡耗时长就必须用 app-server；短任务也可能需要产品内审批。
+
+**回查：**[HTML · 接入方式](./index.html#layers) · [原文依据](https://developers.openai.com/blog/codex-as-a-platform)（章节：Choose the right integration layer）。
+
+</details>
+
+### 4. Relay 跑通运单恢复流程，是否就证明相同方案能在真实物流业务中稳定提高效率？
+
+<details>
+<summary>展开参考答案与对照要点</summary>
+
+**参考解释：**不能。Relay 使用虚构种子数据，展示的是上下文、工具、审批和记录回流的集成模式。真实业务的规则、风险和效果仍需验证；其他采用案例或单个试点也不能替所有任务提供效果保证。
+
+**对照要点：**是否区分集成示例、局部实践和普遍效果证据。
+
+**容易误解：**无法直接外推不代表模式没有参考价值；应迁移职责关系，而不是照搬业务规则。
+
+**回查：**[HTML · 证据与边界](./index.html#evidence) · [原文依据](https://developers.openai.com/blog/codex-as-a-platform)（章节：Example: Relay；What developers are building）。
+
+</details>
+
 ## 原文定位
 
 - **The reusable part is the agent loop**：Harness 如何管理状态、工具、边界、审批和跨轮工作。

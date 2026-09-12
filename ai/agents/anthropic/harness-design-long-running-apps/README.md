@@ -1,4 +1,4 @@
-﻿# 面向长时应用开发的 Harness 设计
+# 面向长时应用开发的 Harness 设计
 
 英文原标题：Harness design for long-running application development
 
@@ -68,7 +68,7 @@
 - Opus 4.5：context anxiety 大幅减弱，自动压缩足以维持连续会话，因此去掉重置；保留 Planner、sprint 和每个 sprint 结束后的 QA。
 - Opus 4.6：原生长程规划和代码审查更强，作者移除 sprint，改为连续完成整项构建，再通过 QA 反馈反复修正。
 
-是否需要 Evaluator 不是一个固定答案：任务处在模型的可靠范围内时，评估者带来的价值可能低于成本；任务接近或超出能力边界时，独立评估仍能发现关键缺口。维护 Harness 时，应阅读真实运行记录，找出模型判断与人工判断的分歧，然后一次只移除一个组件并检查最终影响。
+是否需要 Evaluator 不是一个固定答案：任务处在模型的可靠范围内时，评估者带来的价值可能低于成本；任务接近或超出能力边界时，独立评估仍能发现关键缺口。作者最初大幅简化 Harness 未能复现原有表现，也难以分辨哪些组件仍在发挥作用；随后改为一次只移除一个组件，观察最终结果。阅读真实运行记录、核对模型与人工判断的分歧，则用于持续校准评估者。
 
 依据：原文 **Iterating on the harness** 与 **Removing the sprint construct**。
 
@@ -78,6 +78,70 @@
 - 达到最低通过线不等于测试充分；深层交互和未探索的功能仍可能漏检。
 - Playwright 只能覆盖它可以观察和操作的信号；Claude 无法听见音乐，因此很难可靠评价 DAW 的音乐质量。
 - Planner、Evaluator、重置和 sprint 都增加成本，必须用当前模型、当前任务上的真实增益证明其必要性。
+
+## 自测：我理解了吗？
+
+先用自己的话回答，再按需展开参考答案。重点对照含义和依据，不必逐字一致；你可以理解作者后仍持不同意见。
+
+### 1. 已经有 Planner 写出的产品方案，为什么第一版 Harness 仍让 Generator 和 Evaluator 在编码前协商本轮验收约定？
+
+<details>
+<summary>展开参考答案与对照要点</summary>
+
+**参考解释：**产品方案给出方向和范围，验收约定则把用户故事落实为本轮可验证的行为。生成者提出做什么、怎样验证，评估者检查是否符合方案，达成一致后再实现，减少做完后才争论完成标准的情况。
+
+**对照要点：**是否区分产品方向与可验证行为，并说清双方为何在编码前对齐。
+
+**容易误解：**这不要求 Planner 提前写死全部实现细节，也不意味着所有后续模型都要保留 sprint。
+
+**回查：**[HTML · 三 Agent 架构](./index.html#architecture) · [原文依据](https://www.anthropic.com/engineering/harness-design-long-running-apps)（章节：Scaling to full-stack coding / The architecture；Removing the sprint construct）。
+
+</details>
+
+### 2. 假设一个独立 Evaluator 只看页面截图，认为“整体不错”就放行。仅仅与 Generator 分开，是否已经满足本文的评估思路？
+
+<details>
+<summary>展开参考答案与对照要点</summary>
+
+**参考解释：**还没有。独立角色更容易单独校准判断，但仍需明确标准、示例和实际操作。评估者应像用户一样检查运行中的应用，给出具体缺陷供修复；只看截图无法证明交互可用，独立身份也不保证判断严格。
+
+**对照要点：**是否同时说明职责分离、共同标准、实际操作和反馈的作用。
+
+**容易误解：**评分或截图不能替代行为验证；达到通过线也不等于没有未覆盖的问题。
+
+**回查：**[HTML · 评估的条件与边界](./index.html#boundaries) · [原文依据](https://www.anthropic.com/engineering/harness-design-long-running-apps)（章节：Why naive implementations fall short；Frontend design: making subjective quality gradable；Running the harness）。
+
+</details>
+
+### 3. 模型升级后连续开发能力变强，是否应一次性删掉重置、sprint 和 Evaluator？怎样判断？
+
+<details>
+<summary>展开参考答案与对照要点</summary>
+
+**参考解释：**不应仅凭升级就全部删除。应逐项移除组件并观察最终影响，避免一次大改后无法判断原因；阅读运行记录、比较模型与人工判断，则有助于校准评估者。旧补偿可能失效，而接近模型能力边界的任务仍可能需要独立评估；保留与否要比较当前任务上的收益和成本。
+
+**对照要点：**是否解释了逐项验证的目的，并保留任务能力边界。
+
+**容易误解：**作者在特定版本取消某个组件，不是对所有项目的统一删减指令。
+
+**回查：**[HTML · 随模型演化](./index.html#evolution) · [原文依据](https://www.anthropic.com/engineering/harness-design-long-running-apps)（章节：Iterating on the harness；Removing the sprint construct）。
+
+</details>
+
+### 4. 假设浏览器 DAW 已通过一轮 QA，能否据此认定它达到专业级音乐制作质量？
+
+<details>
+<summary>展开参考答案与对照要点</summary>
+
+**参考解释：**不能。验收只覆盖实际检查过的行为和可观测信号，深层功能仍可能漏检；Claude 不能真正听见音乐，也限制了音乐质量判断。作者的少量案例说明部分能力改善，同时保留成本与功能缺口，不是专业质量的保证。
+
+**对照要点：**是否区分界面与功能检查、听觉判断，以及实际测试覆盖范围。
+
+**容易误解：**通过 QA 不等于全部功能完整，更不等于在所有任务中获得固定收益。
+
+**回查：**[HTML · 条件与边界](./index.html#boundaries) · [原文依据](https://www.anthropic.com/engineering/harness-design-long-running-apps)（章节：Running the harness；Results from the updated harness）。
+
+</details>
 
 ## HTML 图解阅读索引
 

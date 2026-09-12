@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="note.css">
 <script src="note.js" defer>
 </script>
-</head>
+<link rel="stylesheet" href="../../../../assets/css/self-check.css?v=1"></head>
 <body>
 <a class="skip-link" href="#main">跳到正文</a>
 <div class="container">
@@ -35,7 +35,7 @@
 <a href="#delegate">模式二 · 检验旧假设</a>
 <a href="#boundaries">模式三 · 明确保留项</a>
 <a href="#limits">回到起点</a>
-<a href="#source">原文定位</a>
+<a href="#self-check">自测</a><a href="#source">原文定位</a>
 </nav>
 <div class="reading-main">
 <section class="section" id="overview">
@@ -559,8 +559,8 @@
 <a class="evidence" href="#source-4">原文依据 · 正文末节；第 3 节末尾 ↗</a>
 </details>
 </section>
-<section class="section" id="source">
-<div class="eyebrow">Source</div>
+<section class="section self-check-section" id="self-check"><div class="eyebrow">自测</div><h2>自测：我理解了吗？</h2><p>先用自己的话回答，再按需展开参考答案。重点对照含义和依据，不必逐字一致；你可以理解作者后仍持不同意见。</p><article class="self-check-question" id="check-filter"><h3>1. 任务只需要工具结果表中的一列，为什么让模型写代码先筛选再回传，会改变原来的编排方式？</h3><details><summary>展开参考答案与对照要点</summary><div class="self-check-answer"><p><strong>参考解释：</strong>模型决定哪些结果需要保留或交给下一个工具，执行环境运行筛选逻辑，只有所需输出进入上下文。这样移走的是无关中间数据的回传和部分外围编排决定，工具执行本身仍由环境承接。</p><p><strong>对照要点：</strong>是否分清模型作出选择、环境处理数据和输出进入上下文的职责。</p><p><strong>容易误解：</strong>不是让模型先读完整张表再概括；特定评测的提升也不能直接当作所有任务的收益。</p><p><strong>回查：</strong><a href="#orchestration">动作编排</a> · <a href="https://claude.com/blog/harnessing-claudes-intelligence" target="_blank" rel="noreferrer">原文依据</a>（章节：第 2 节 · Let Claude orchestrate its own actions）。</p></div></details></article><article class="self-check-question" id="check-context"><h3>2. 假设应用预装了许多任务的完整指令，但当前只处理其中一类任务。按需加载 Skills 与清理旧内容、使用子代理分别解决什么问题？</h3><details><summary>展开参考答案与对照要点</summary><div class="self-check-answer"><p><strong>参考解释：</strong>Skills 先提供简介，在任务需要时读取正文，减少无关指令预装；上下文编辑移除过时内容；子代理用独立窗口隔离工作。它们分别管理内容的进入、离开与隔离，不能互相当作同一操作。</p><p><strong>对照要点：</strong>是否解释了三种机制各自处理的上下文问题。</p><p><strong>容易误解：</strong>按需加载不是完全不给任务知识，也不是要求三种机制每次都按固定顺序执行。</p><p><strong>回查：</strong><a href="#context">当前上下文</a> · <a href="https://claude.com/blog/harnessing-claudes-intelligence" target="_blank" rel="noreferrer">原文依据</a>（章节：第 2 节 · Let Claude manage its own context）。</p></div></details></article><article class="self-check-question" id="check-boundary"><h3>3. 模型已经很会用 Bash，是否就可以取消应用中的专用工具和动作确认？</h3><details><summary>展开参考答案与对照要点</summary><div class="self-check-answer"><p><strong>参考解释：</strong>不能由工具熟练度推出这个结论。应用仍可能需要识别具体动作并执行确认、呈现、审计或新旧检查；带类型化参数的专用工具提供这种入口。是否保留取决于应用边界，而不是只看模型会不会写命令。</p><p><strong>对照要点：</strong>是否区分模型能力与应用要求，并说明专用工具的作用。</p><p><strong>容易误解：</strong>不是每个动作都要经过所有检查；作者也没有要求对所有场景取消专用工具。</p><p><strong>回查：</strong><a href="#boundaries">应用边界</a> · <a href="https://claude.com/blog/harnessing-claudes-intelligence" target="_blank" rel="noreferrer">原文依据</a>（章节：第 3 节 · Use declarative tools for UX, observability, or security boundaries）。</p></div></details></article><article class="self-check-question" id="check-upgrade"><h3>4. 某次升级后模型不再提前收尾，因此删除了旧的上下文重置。能否推断后续所有 Harness 组件都应该越少越好？</h3><details><summary>展开参考答案与对照要点</summary><div class="self-check-answer"><p><strong>参考解释：</strong>不能。这个案例说明应重测某项补偿所依赖的能力假设：问题消失后，原补偿可能成为负担。其他组件还可能承担上下文管理、成本或应用边界职责，需要分别判断，下一次能力变化后还要再检验。</p><p><strong>对照要点：</strong>是否把“删除失效补偿”与“无条件减少组件”区分开。</p><p><strong>容易误解：</strong>一个模型版本的案例不是普遍删减流程，三种设计模式也不是固定实施步骤。</p><p><strong>回查：</strong><a href="#limits">模型升级后的重测</a> · <a href="https://claude.com/blog/harnessing-claudes-intelligence" target="_blank" rel="noreferrer">原文依据</a>（章节：The future of agent harness design；第 3 节）。</p></div></details></article></section><section class="section" id="source">
+<div class="eyebrow">原文定位</div>
 <h2>回到原文的论证位置</h2>
 <p>
 <a href="https://claude.com/blog/harnessing-claudes-intelligence">阅读 Anthropic 原文 ↗</a> · <a href="README.md">Markdown 版本</a>
