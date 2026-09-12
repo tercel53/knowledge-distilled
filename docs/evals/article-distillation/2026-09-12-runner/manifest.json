@@ -1,0 +1,125 @@
+{
+  "case": {
+    "id": "approval-workflow",
+    "split": "development",
+    "input": "inputs/approval-workflow.md",
+    "task": "根据提供的正文，蒸馏为中文知识笔记。先交付内容骨架与 HTML 展示规划，暂不实现。将结果写入指定输出目录的 plan.md。",
+    "scope": "plan",
+    "expected_files": [
+      "plan.md"
+    ]
+  },
+  "run": 1,
+  "mapping": {
+    "A": "candidate",
+    "B": "baseline"
+  },
+  "archives_sha256": {
+    "baseline-skill.zip": "92e11aa3eb1d4e0d1f0f63a024f811f169cf620d1407f8da92a490af8a81a30d",
+    "candidate-skill.zip": "e25d9498ca8c519942a9c62b63074b2ce8643bda170746124ce4b0c3a76d4fe3",
+    "evaluation-tool.zip": "26e32dd5eac4c8429ef7edea19d797614914cb7954accefe46447aa1c693a674"
+  },
+  "frozen_material_hashes": {
+    "control/versions/baseline": {
+      "SKILL.md": "549b236e8ef58f65ab2bd8710368a0c21ca2fe7d06c569e7c35b14daa5779f49",
+      "agents/openai.yaml": "1b4d0ca507045ad3f71295ff4f828c6bbb0ec3c815d68387a189837e3ab0ee27",
+      "references/repository.md": "0b4c7aa2bfb4d58a973a527a4ea24f6b853cb7c71f0554e23dee70928effc703",
+      "references/terminology.json": "56eb3f949eb8f1934bfdc601b4ef13d5c1078bf00dffcc2708dc786ca9b34224",
+      "references/terminology.md": "f60a658c294eaca03c33b791318c0b924d347971297447d74e4ce494417cce61",
+      "references/visuals.md": "f9f24ffbeeefe7acbb4152b8e08630d80133e2edf4ea160f13322414c02a3111",
+      "scripts/terminology.py": "835c89069a05c0915a3cd21d86afff7159536dfb9694900491b402319fbc91ee",
+      "scripts/validate_article.py": "20134c20396ad9fda2b5e292a4ec249aa80aa421e4ea63403f5454a5930a7618"
+    },
+    "control/versions/candidate": {
+      "SKILL.md": "6ff4ca257b7943445b1d57f8ef9b1bd826019fb129d5fb0cd8b37de308dc345f",
+      "agents/openai.yaml": "1b4d0ca507045ad3f71295ff4f828c6bbb0ec3c815d68387a189837e3ab0ee27",
+      "references/independent-review.md": "96b16aacf535eddc7e5ae3d9464059687712be484f42a2a12a36de94ccab4fe5",
+      "references/repository.md": "0b4c7aa2bfb4d58a973a527a4ea24f6b853cb7c71f0554e23dee70928effc703",
+      "references/terminology.json": "56eb3f949eb8f1934bfdc601b4ef13d5c1078bf00dffcc2708dc786ca9b34224",
+      "references/terminology.md": "f60a658c294eaca03c33b791318c0b924d347971297447d74e4ce494417cce61",
+      "references/visuals.md": "f9f24ffbeeefe7acbb4152b8e08630d80133e2edf4ea160f13322414c02a3111",
+      "scripts/terminology.py": "835c89069a05c0915a3cd21d86afff7159536dfb9694900491b402319fbc91ee",
+      "scripts/validate_article.py": "20134c20396ad9fda2b5e292a4ec249aa80aa421e4ea63403f5454a5930a7618"
+    },
+    "control/suite/cases": {
+      "cases.json": "248986ecd7ae532417c5d5c1c9f3a57d39eb4d72f91e197f9070647f6be66add",
+      "inputs/adaptive-cache.md": "0a59a4f6f02f8330bb343db35a2a8888c66f1aac36b79b895ca8d91f992f1245",
+      "inputs/approval-workflow.md": "89899c7906c5421cb4acf08216d4e27af97c87aea1109a825a5aafe7612a206c",
+      "inputs/parallel-experiment.md": "61308cbc453e9c04818ab67cea1126ee27b0cffbfad9d6d22ea4e2acbec0a1be"
+    },
+    "control/suite/rubrics": {
+      "cases.json": "8f7396c9ffcdf44d190f07e9eddb1314aea25082009d5ac096221e4618a1ad32",
+      "review.md": "0e62d0f231098a323b4527fd30d298cecd9f61c0b3a934d08d01d63e5ccb9d65"
+    },
+    "control/suite/runner.py": "550f6b035469fa5a83f74e9f2fa3e4c317810ad157eac9bba7fea37d37b3cdfb",
+    "control/suite/summarize.py": "f3cc9168183f9681ad40a8fcc28a38c9ee109076fdf5b2e0312102259b4605c0",
+    "control/suite/check_article.py": "20134c20396ad9fda2b5e292a4ec249aa80aa421e4ea63403f5454a5930a7618",
+    "work/4671e7829680/skill": {
+      "SKILL.md": "6ff4ca257b7943445b1d57f8ef9b1bd826019fb129d5fb0cd8b37de308dc345f",
+      "agents/openai.yaml": "1b4d0ca507045ad3f71295ff4f828c6bbb0ec3c815d68387a189837e3ab0ee27",
+      "references/independent-review.md": "96b16aacf535eddc7e5ae3d9464059687712be484f42a2a12a36de94ccab4fe5",
+      "references/repository.md": "0b4c7aa2bfb4d58a973a527a4ea24f6b853cb7c71f0554e23dee70928effc703",
+      "references/terminology.json": "56eb3f949eb8f1934bfdc601b4ef13d5c1078bf00dffcc2708dc786ca9b34224",
+      "references/terminology.md": "f60a658c294eaca03c33b791318c0b924d347971297447d74e4ce494417cce61",
+      "references/visuals.md": "f9f24ffbeeefe7acbb4152b8e08630d80133e2edf4ea160f13322414c02a3111",
+      "scripts/terminology.py": "835c89069a05c0915a3cd21d86afff7159536dfb9694900491b402319fbc91ee",
+      "scripts/validate_article.py": "20134c20396ad9fda2b5e292a4ec249aa80aa421e4ea63403f5454a5930a7618"
+    },
+    "work/4671e7829680/source.md": "89899c7906c5421cb4acf08216d4e27af97c87aea1109a825a5aafe7612a206c",
+    "work/b65b18639451/skill": {
+      "SKILL.md": "549b236e8ef58f65ab2bd8710368a0c21ca2fe7d06c569e7c35b14daa5779f49",
+      "agents/openai.yaml": "1b4d0ca507045ad3f71295ff4f828c6bbb0ec3c815d68387a189837e3ab0ee27",
+      "references/repository.md": "0b4c7aa2bfb4d58a973a527a4ea24f6b853cb7c71f0554e23dee70928effc703",
+      "references/terminology.json": "56eb3f949eb8f1934bfdc601b4ef13d5c1078bf00dffcc2708dc786ca9b34224",
+      "references/terminology.md": "f60a658c294eaca03c33b791318c0b924d347971297447d74e4ce494417cce61",
+      "references/visuals.md": "f9f24ffbeeefe7acbb4152b8e08630d80133e2edf4ea160f13322414c02a3111",
+      "scripts/terminology.py": "835c89069a05c0915a3cd21d86afff7159536dfb9694900491b402319fbc91ee",
+      "scripts/validate_article.py": "20134c20396ad9fda2b5e292a4ec249aa80aa421e4ea63403f5454a5930a7618"
+    },
+    "work/b65b18639451/source.md": "89899c7906c5421cb4acf08216d4e27af97c87aea1109a825a5aafe7612a206c",
+    "control/frozen/4671e7829680": {
+      "plan.md": "09278c2133783157e69169f5003dff03571e56ffeabcdebbc46227d52eb7f5c8"
+    },
+    "work/4671e7829680/output": {
+      "plan.md": "09278c2133783157e69169f5003dff03571e56ffeabcdebbc46227d52eb7f5c8"
+    },
+    "control/frozen/b65b18639451": {
+      "plan.md": "ff09fe28239a2f58c7ae828bb99fd9052ba534e5c0f3f547583ec6a785e126a1"
+    },
+    "work/b65b18639451/output": {
+      "plan.md": "ff09fe28239a2f58c7ae828bb99fd9052ba534e5c0f3f547583ec6a785e126a1"
+    },
+    "work/421cc9eedf77/A": {
+      "plan.md": "09278c2133783157e69169f5003dff03571e56ffeabcdebbc46227d52eb7f5c8"
+    },
+    "work/421cc9eedf77/B": {
+      "plan.md": "ff09fe28239a2f58c7ae828bb99fd9052ba534e5c0f3f547583ec6a785e126a1"
+    },
+    "control/frozen/421cc9eedf77": {
+      "reader.md": "bc628b3d01d99cdc8f4aa04a8c35557239bf3cd121f211d403621ad25fa9ea9c"
+    },
+    "work/421cc9eedf77/output": {
+      "reader.md": "bc628b3d01d99cdc8f4aa04a8c35557239bf3cd121f211d403621ad25fa9ea9c"
+    },
+    "work/d5f3f0d2c6d0/A": {
+      "plan.md": "09278c2133783157e69169f5003dff03571e56ffeabcdebbc46227d52eb7f5c8"
+    },
+    "work/d5f3f0d2c6d0/B": {
+      "plan.md": "ff09fe28239a2f58c7ae828bb99fd9052ba534e5c0f3f547583ec6a785e126a1"
+    },
+    "work/d5f3f0d2c6d0/reader.md": "bc628b3d01d99cdc8f4aa04a8c35557239bf3cd121f211d403621ad25fa9ea9c",
+    "work/d5f3f0d2c6d0/source.md": "89899c7906c5421cb4acf08216d4e27af97c87aea1109a825a5aafe7612a206c",
+    "work/d5f3f0d2c6d0/rubric.md": "0e62d0f231098a323b4527fd30d298cecd9f61c0b3a934d08d01d63e5ccb9d65",
+    "work/d5f3f0d2c6d0/checks.json": "2ae9ffd4aa1a729f68cc6e7c133550d408104a29d334877055d3c15995ac3a15",
+    "control/frozen/d5f3f0d2c6d0": {
+      "judgment.json": "93edc8cb0cbbfe88c9344079ea1a141b55ddb7db6726142174c3f42470212918"
+    },
+    "work/d5f3f0d2c6d0/output": {
+      "judgment.json": "93edc8cb0cbbfe88c9344079ea1a141b55ddb7db6726142174c3f42470212918"
+    }
+  },
+  "backend": "collaboration.spawn_agent",
+  "contexts": "Four fresh contexts: two generators, one blind reader, one source-grounded judge.",
+  "model": "Inherited; exact model, reasoning, tools and usage metadata unavailable.",
+  "scope": "One development planning case; HTML and holdout cases were not run."
+}

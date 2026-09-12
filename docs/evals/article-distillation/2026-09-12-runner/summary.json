@@ -1,0 +1,230 @@
+{
+  "pairs": 1,
+  "verdicts": {
+    "tie": 1
+  },
+  "blockers": {
+    "candidate": 0,
+    "baseline": 0
+  },
+  "dimensions": {
+    "fidelity": {
+      "baseline": {
+        "mean": 3.0,
+        "n": 1
+      },
+      "candidate": {
+        "mean": 3.0,
+        "n": 1
+      }
+    },
+    "reasoning": {
+      "baseline": {
+        "mean": 3.0,
+        "n": 1
+      },
+      "candidate": {
+        "mean": 3.0,
+        "n": 1
+      }
+    },
+    "language": {
+      "baseline": {
+        "mean": 3.0,
+        "n": 1
+      },
+      "candidate": {
+        "mean": 3.0,
+        "n": 1
+      }
+    },
+    "structure": {
+      "baseline": {
+        "mean": 3.0,
+        "n": 1
+      },
+      "candidate": {
+        "mean": 3.0,
+        "n": 1
+      }
+    },
+    "visual": {
+      "baseline": {
+        "mean": null,
+        "n": 0
+      },
+      "candidate": {
+        "mean": null,
+        "n": 0
+      }
+    },
+    "usability": {
+      "baseline": {
+        "mean": null,
+        "n": 0
+      },
+      "candidate": {
+        "mean": null,
+        "n": 0
+      }
+    }
+  },
+  "regressions": [],
+  "note": "Descriptive only; inconclusive pairs excluded from means. No automatic claim of overall improvement.",
+  "groups": {
+    "plan/development": {
+      "pairs": 1,
+      "verdicts": {
+        "tie": 1
+      },
+      "blockers": {
+        "candidate": 0,
+        "baseline": 0
+      },
+      "dimensions": {
+        "fidelity": {
+          "baseline": {
+            "mean": 3.0,
+            "n": 1
+          },
+          "candidate": {
+            "mean": 3.0,
+            "n": 1
+          }
+        },
+        "reasoning": {
+          "baseline": {
+            "mean": 3.0,
+            "n": 1
+          },
+          "candidate": {
+            "mean": 3.0,
+            "n": 1
+          }
+        },
+        "language": {
+          "baseline": {
+            "mean": 3.0,
+            "n": 1
+          },
+          "candidate": {
+            "mean": 3.0,
+            "n": 1
+          }
+        },
+        "structure": {
+          "baseline": {
+            "mean": 3.0,
+            "n": 1
+          },
+          "candidate": {
+            "mean": 3.0,
+            "n": 1
+          }
+        },
+        "visual": {
+          "baseline": {
+            "mean": null,
+            "n": 0
+          },
+          "candidate": {
+            "mean": null,
+            "n": 0
+          }
+        },
+        "usability": {
+          "baseline": {
+            "mean": null,
+            "n": 0
+          },
+          "candidate": {
+            "mean": null,
+            "n": 0
+          }
+        }
+      },
+      "regressions": [],
+      "note": "Descriptive only; inconclusive pairs excluded from means. No automatic claim of overall improvement."
+    }
+  },
+  "cases": {
+    "approval-workflow": {
+      "pairs": 1,
+      "runs": [
+        1
+      ]
+    }
+  },
+  "coverage": {
+    "expected_pairs": 1,
+    "judged_pairs": 1,
+    "missing": []
+  },
+  "structural_failures": [],
+  "decision": "no_demonstrated_improvement",
+  "conditions": {
+    "requested_model": "inherited; exact model/settings not recorded",
+    "observed": [
+      {
+        "job": "4671e7829680",
+        "kind": "generate",
+        "backend": "collaboration.spawn_agent",
+        "model": null,
+        "reasoning": null,
+        "tools": null
+      },
+      {
+        "job": "b65b18639451",
+        "kind": "generate",
+        "backend": "collaboration.spawn_agent",
+        "model": null,
+        "reasoning": null,
+        "tools": null
+      },
+      {
+        "job": "421cc9eedf77",
+        "kind": "read",
+        "backend": "collaboration.spawn_agent",
+        "model": null,
+        "reasoning": null,
+        "tools": null
+      },
+      {
+        "job": "d5f3f0d2c6d0",
+        "kind": "judge",
+        "backend": "collaboration.spawn_agent",
+        "model": null,
+        "reasoning": null,
+        "tools": null
+      }
+    ],
+    "mismatches": [],
+    "verification": "unknown"
+  },
+  "timing": [
+    {
+      "job": "4671e7829680",
+      "kind": "generate",
+      "wall_seconds": 157.7,
+      "usage": null
+    },
+    {
+      "job": "b65b18639451",
+      "kind": "generate",
+      "wall_seconds": 157.7,
+      "usage": null
+    },
+    {
+      "job": "421cc9eedf77",
+      "kind": "read",
+      "wall_seconds": 80.89,
+      "usage": null
+    },
+    {
+      "job": "d5f3f0d2c6d0",
+      "kind": "judge",
+      "wall_seconds": 132.21,
+      "usage": null
+    }
+  ]
+}

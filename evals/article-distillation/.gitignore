@@ -1,0 +1,4 @@
+# Runtime state contains local paths and provider receipts; export reviewed reports separately.
+runs/
+__pycache__/
+tests/__pycache__/

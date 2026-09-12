@@ -1,0 +1,50 @@
+{
+  "baseline": {
+    "files": {
+      "SKILL.md": "549b236e8ef58f65ab2bd8710368a0c21ca2fe7d06c569e7c35b14daa5779f49",
+      "agents/openai.yaml": "1b4d0ca507045ad3f71295ff4f828c6bbb0ec3c815d68387a189837e3ab0ee27",
+      "references/repository.md": "0b4c7aa2bfb4d58a973a527a4ea24f6b853cb7c71f0554e23dee70928effc703",
+      "references/terminology.json": "56eb3f949eb8f1934bfdc601b4ef13d5c1078bf00dffcc2708dc786ca9b34224",
+      "references/terminology.md": "f60a658c294eaca03c33b791318c0b924d347971297447d74e4ce494417cce61",
+      "references/visuals.md": "f9f24ffbeeefe7acbb4152b8e08630d80133e2edf4ea160f13322414c02a3111",
+      "scripts/terminology.py": "835c89069a05c0915a3cd21d86afff7159536dfb9694900491b402319fbc91ee",
+      "scripts/validate_article.py": "20134c20396ad9fda2b5e292a4ec249aa80aa421e4ea63403f5454a5930a7618"
+    },
+    "archive_sha256": "9fd73d663211cfb8930b1c879c98e4adb8db5e8d9c9ad7030e6253e67828553b"
+  },
+  "candidate": {
+    "files": {
+      "SKILL.md": "f7f1f2e081bdb9f0a83f9d14f30e359a761f158021f5a8c4ca1de2e7e779e558",
+      "agents/openai.yaml": "1b4d0ca507045ad3f71295ff4f828c6bbb0ec3c815d68387a189837e3ab0ee27",
+      "evals/cases.json": "413db7f43bf91f9ad212ebf07aa7a154e56b5e1af7ae5fd62cb8cd6d38128487",
+      "evals/inputs/adaptive-cache.md": "0a59a4f6f02f8330bb343db35a2a8888c66f1aac36b79b895ca8d91f992f1245",
+      "evals/inputs/approval-workflow.md": "89899c7906c5421cb4acf08216d4e27af97c87aea1109a825a5aafe7612a206c",
+      "evals/inputs/parallel-experiment.md": "61308cbc453e9c04818ab67cea1126ee27b0cffbfad9d6d22ea4e2acbec0a1be",
+      "references/evaluation.md": "43ee0b096c885c3578392af015da2093fbe6dde3d2784eaed8e9adc7fee8f3cc",
+      "references/independent-review.md": "96b16aacf535eddc7e5ae3d9464059687712be484f42a2a12a36de94ccab4fe5",
+      "references/repository.md": "0b4c7aa2bfb4d58a973a527a4ea24f6b853cb7c71f0554e23dee70928effc703",
+      "references/terminology.json": "56eb3f949eb8f1934bfdc601b4ef13d5c1078bf00dffcc2708dc786ca9b34224",
+      "references/terminology.md": "f60a658c294eaca03c33b791318c0b924d347971297447d74e4ce494417cce61",
+      "references/visuals.md": "f9f24ffbeeefe7acbb4152b8e08630d80133e2edf4ea160f13322414c02a3111",
+      "scripts/summarize_eval.py": "115a46b6de70f7b682b896d9d0365158fd19db94530f13e0327c4d54c6f5fe4c",
+      "scripts/terminology.py": "835c89069a05c0915a3cd21d86afff7159536dfb9694900491b402319fbc91ee",
+      "scripts/validate_article.py": "20134c20396ad9fda2b5e292a4ec249aa80aa421e4ea63403f5454a5930a7618"
+    },
+    "archive_sha256": "ddebd8e80a22c7fe72edaa149c0d37d819a542cd28eddd1590c66f2156777582"
+  },
+  "input_sha256": "89899c7906c5421cb4acf08216d4e27af97c87aea1109a825a5aafe7612a206c",
+  "model": "Inherited parent model for all agents; exact model ID and reasoning setting not exposed in run metadata.",
+  "scope": "plan",
+  "case_id": "approval-workflow",
+  "runs_per_version": 1,
+  "mapping": {
+    "A": "baseline",
+    "B": "candidate"
+  },
+  "generation_request": "根据提供的正文，蒸馏为中文知识笔记。先交付内容骨架与 HTML 展示规划，暂不实现。结果写入各自输出目录的 plan.md。只读本组 skill 及按需引用（不读 evaluation、evals 或 independent-review）和固定正文；不读现有文章、git、聊天历史或对组产物；不调用其他代理，不自评分。",
+  "limitations": [
+    "One development case, one run per version; no HTML rendering or holdout run.",
+    "Snapshots preserve the exact skills supplied during generation. Later evaluation-protocol corrections did not alter generation instructions in SKILL.md.",
+    "Filesystem access was instruction-restricted, not a security sandbox."
+  ]
+}

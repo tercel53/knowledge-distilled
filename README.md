@@ -51,6 +51,16 @@ Example invocation:
 
 For planning only, add “先规划，暂不实现”. The skill follows the requested scope and does not automatically commit, push, or publish.
 
+## Skill evaluation
+
+The independent [article distillation evaluation tool](evals/article-distillation/README.md) compares frozen skill versions using fixed cases and isolated, anonymous reviews. It keeps test cases and scoring rules outside the production skill. See its guide for subAgent dispatch, process-worker integration, resumable runs, and reports.
+
+Run the evaluation tool's own tests without calling a model:
+
+```bash
+python3 -m unittest discover -s evals/article-distillation/tests -v
+```
+
 ## Repository structure
 
 ```text

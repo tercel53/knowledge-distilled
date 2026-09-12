@@ -1,0 +1,58 @@
+[
+  {
+    "id": "adaptive-cache",
+    "split": "development",
+    "input": "inputs/adaptive-cache.md",
+    "task": "根据提供的正文，蒸馏为中文知识笔记。先交付内容骨架与 HTML 展示规划，暂不实现。将结果写入指定输出目录的 plan.md。",
+    "scope": "plan",
+    "expected_files": [
+      "plan.md"
+    ]
+  },
+  {
+    "id": "approval-workflow",
+    "split": "development",
+    "input": "inputs/approval-workflow.md",
+    "task": "根据提供的正文，蒸馏为中文知识笔记。先交付内容骨架与 HTML 展示规划，暂不实现。将结果写入指定输出目录的 plan.md。",
+    "scope": "plan",
+    "expected_files": [
+      "plan.md"
+    ]
+  },
+  {
+    "id": "parallel-experiment",
+    "split": "holdout",
+    "input": "inputs/parallel-experiment.md",
+    "task": "根据提供的正文，蒸馏为中文知识笔记。先交付内容骨架与 HTML 展示规划，暂不实现。将结果写入指定输出目录的 plan.md。",
+    "scope": "plan",
+    "expected_files": [
+      "plan.md"
+    ]
+  },
+  {
+    "id": "approval-workflow-html",
+    "split": "development",
+    "input": "inputs/approval-workflow.md",
+    "task": "根据提供正文，在指定临时输出目录生成独立可预览的中文 HTML 图解笔记、README.md、metadata.json 和内容骨架。采用静态 HTML/CSS/SVG，原生 JavaScript 按需；保留来源为合成材料的说明。不修改仓库首页或术语库，不提交发布。允许通常自检，首次可交付版本完成后停止，不调用独立验收或接收反馈。",
+    "scope": "html",
+    "expected_files": [
+      "index.html",
+      "README.md",
+      "metadata.json",
+      "content-plan.md"
+    ]
+  },
+  {
+    "id": "parallel-experiment-html",
+    "split": "holdout",
+    "input": "inputs/parallel-experiment.md",
+    "task": "根据提供正文，在指定临时输出目录生成独立可预览的中文 HTML 图解笔记、README.md、metadata.json 和内容骨架。采用静态 HTML/CSS/SVG，原生 JavaScript 按需；保留来源为合成材料的说明。不修改仓库首页或术语库，不提交发布。允许通常自检，首次可交付版本完成后停止，不调用独立验收或接收反馈。",
+    "scope": "html",
+    "expected_files": [
+      "index.html",
+      "README.md",
+      "metadata.json",
+      "content-plan.md"
+    ]
+  }
+]

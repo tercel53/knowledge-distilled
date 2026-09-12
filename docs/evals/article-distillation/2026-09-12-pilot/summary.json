@@ -1,0 +1,158 @@
+{
+  "pairs": 1,
+  "verdicts": {
+    "tie": 1
+  },
+  "blockers": {
+    "baseline": 0,
+    "candidate": 0
+  },
+  "dimensions": {
+    "fidelity": {
+      "baseline": {
+        "mean": 3.0,
+        "n": 1
+      },
+      "candidate": {
+        "mean": 3.0,
+        "n": 1
+      }
+    },
+    "reasoning": {
+      "baseline": {
+        "mean": 3.0,
+        "n": 1
+      },
+      "candidate": {
+        "mean": 3.0,
+        "n": 1
+      }
+    },
+    "language": {
+      "baseline": {
+        "mean": 3.0,
+        "n": 1
+      },
+      "candidate": {
+        "mean": 3.0,
+        "n": 1
+      }
+    },
+    "structure": {
+      "baseline": {
+        "mean": 3.0,
+        "n": 1
+      },
+      "candidate": {
+        "mean": 3.0,
+        "n": 1
+      }
+    },
+    "visual": {
+      "baseline": {
+        "mean": null,
+        "n": 0
+      },
+      "candidate": {
+        "mean": null,
+        "n": 0
+      }
+    },
+    "usability": {
+      "baseline": {
+        "mean": null,
+        "n": 0
+      },
+      "candidate": {
+        "mean": null,
+        "n": 0
+      }
+    }
+  },
+  "regressions": [],
+  "note": "Descriptive only; inconclusive pairs excluded from means. No automatic claim of overall improvement.",
+  "groups": {
+    "plan/development": {
+      "pairs": 1,
+      "verdicts": {
+        "tie": 1
+      },
+      "blockers": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "dimensions": {
+        "fidelity": {
+          "baseline": {
+            "mean": 3.0,
+            "n": 1
+          },
+          "candidate": {
+            "mean": 3.0,
+            "n": 1
+          }
+        },
+        "reasoning": {
+          "baseline": {
+            "mean": 3.0,
+            "n": 1
+          },
+          "candidate": {
+            "mean": 3.0,
+            "n": 1
+          }
+        },
+        "language": {
+          "baseline": {
+            "mean": 3.0,
+            "n": 1
+          },
+          "candidate": {
+            "mean": 3.0,
+            "n": 1
+          }
+        },
+        "structure": {
+          "baseline": {
+            "mean": 3.0,
+            "n": 1
+          },
+          "candidate": {
+            "mean": 3.0,
+            "n": 1
+          }
+        },
+        "visual": {
+          "baseline": {
+            "mean": null,
+            "n": 0
+          },
+          "candidate": {
+            "mean": null,
+            "n": 0
+          }
+        },
+        "usability": {
+          "baseline": {
+            "mean": null,
+            "n": 0
+          },
+          "candidate": {
+            "mean": null,
+            "n": 0
+          }
+        }
+      },
+      "regressions": [],
+      "note": "Descriptive only; inconclusive pairs excluded from means. No automatic claim of overall improvement."
+    }
+  },
+  "cases": {
+    "approval-workflow": {
+      "pairs": 1,
+      "runs": [
+        1
+      ]
+    }
+  }
+}
