@@ -1,0 +1,10 @@
+e6a5db3bd187b9a96d2ea8c4de881efe2d249c34d9812964047f79bf8bf11535  life/behavior-change/fix-your-life-in-one-day/index.html
+dee61f3e270a6fe98b24c6763105f26ba43e1a1dd87a5f370540d42739d19e6d  life/behavior-change/fix-your-life-in-one-day/README.md
+dc65eecf4ff8fc283468ca1000a87609a1af0a706b358f600fa61f12f680abfd  life/behavior-change/fix-your-life-in-one-day/metadata.json
+ba3ec6edd67a8ef0925a4a4cd4e63a27211ee89141dbda7dff391d8f83ebb97e  life/behavior-change/fix-your-life-in-one-day/note.css
+a023b25b29506b62f49402a2a8e41f75953eba976610ab572db29c633a055c1e  life/behavior-change/fix-your-life-in-one-day/note.js
+b710faf946093a80345959bd489628ea51c79a57c0cd2382ccc6d8192af6a680  .agents/skills/article-distillation/SKILL.md
+eb62d8c19c2fe18262381444ebbebd6b9419418a3d036f5dd5bfffecd5edc226  .agents/skills/article-distillation/references/roles/reader.md
+b745829e0d2d35b1a2e0bc7b426f8846a287d37548b7045442a25f1a3d25f6cc  .agents/skills/article-distillation/references/roles/evaluator.md
+ba258c63137aa1735588aaaf0a712e20371eb0cb55f7d24590f2597b60982736  .agents/skills/article-distillation/references/independent-review.md
+a70b0db803e1799f94b65edfa0d7b8405555d4962a424ab067fd016564de03e6  docs/design/life-reset/content-plan.md

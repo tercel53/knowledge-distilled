@@ -1,0 +1,4 @@
+e6f515a88b20bf272bbfdfbdacb35cd2562f12c8a9562655c0255985758ba415  life/behavior-change/fix-your-life-in-one-day/index.html
+b377ef5b863a840aa7841462ebd04db7b9e6fed65d0b3cc50f98b848c9ecd1c4  life/behavior-change/fix-your-life-in-one-day/README.md
+9e5ec739865afba92dc5a6571109cd4a828f8b84ce4ec92639aa783c62abfe62  life/behavior-change/fix-your-life-in-one-day/metadata.json
+d85d0332f8a49573577ef436bfdddb3ab543feb5828506b4c1461cb00a0690c3  life/behavior-change/fix-your-life-in-one-day/note.css

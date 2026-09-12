@@ -1,0 +1,1 @@
+function revealHash(){const id=decodeURIComponent(location.hash.slice(1));const el=document.getElementById(id);if(!el)return;for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;}addEventListener('hashchange',revealHash);revealHash();

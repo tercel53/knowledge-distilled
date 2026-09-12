@@ -1,0 +1,75 @@
+{
+  "title": "如何用一天重整整个人生",
+  "source_title": "How to fix your entire life in 1 day",
+  "source": "The Dan Koe Letter",
+  "source_url": "https://letters.thedankoe.com/p/how-to-fix-your-entire-life-in-1",
+  "author": [
+    "Dan Koe"
+  ],
+  "published_date": "2025-12-23",
+  "learned_date": "2026-09-12",
+  "language": "zh-CN",
+  "source_language": "en",
+  "status": "summarized",
+  "domain": "life",
+  "category": "behavior-change",
+  "core_conclusion": "为什么明明想改变，却总回到原来的生活？Dan Koe 的回答是：先辨认行为在保护什么，再重新选择方向，通过行动与反馈让改变发生。一天是重新定向的起点。",
+  "outline": [
+    {
+      "id": "core",
+      "title": "同一个行为，可能服务着两个冲突的目标",
+      "source_location": "II–III；辅助假设"
+    },
+    {
+      "id": "practice",
+      "title": "先让冲突可见，再把方向落实为行动",
+      "source_location": "VI–VII；辅助假设"
+    },
+    {
+      "id": "feedback",
+      "title": "结果与代价，一起用于调整行动",
+      "source_location": "V、VII；阅读归纳与辅助假设"
+    },
+    {
+      "id": "boundaries",
+      "title": "理解作者的解释，不等于接受普遍承诺",
+      "source_location": "V–VI；阅读判断"
+    },
+    {
+      "id": "self-check",
+      "title": "能否把整条思路讲出来？",
+      "source_location": "依据 II、III、V、VI 编写"
+    },
+    {
+      "id": "source",
+      "title": "原文与阅读范围",
+      "source_location": "I–VII"
+    }
+  ],
+  "visuals": [
+    {
+      "id": "conflict-caption",
+      "type": "html-css",
+      "purpose": "解释愿望与保护目标的冲突，以及反思、行动、反馈的连接",
+      "provenance": "辅助假设与 II–III、V–VII 阅读归纳"
+    },
+    {
+      "id": "feedback-caption",
+      "type": "svg",
+      "purpose": "对照目标与约束，调整后回到行动",
+      "provenance": "V、VII 合并阅读归纳"
+    },
+    {
+      "id": "day-caption",
+      "type": "html-css",
+      "purpose": "呈现早晨到晚上的输入输出衔接、目标层级及约束",
+      "provenance": "VI–VII 阅读归纳与写作辅助假设"
+    },
+    {
+      "id": "evidence-caption",
+      "type": "html-css",
+      "purpose": "对照作者提供的依据与不能推出的结论",
+      "provenance": "全文证据类型的阅读判断"
+    }
+  ]
+}

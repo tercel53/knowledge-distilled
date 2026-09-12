@@ -393,6 +393,39 @@
           }
         }
       ]
+    },
+    {
+      "id": "self-identity",
+      "source_terms": [
+        "identity"
+      ],
+      "preferred_zh": "自我认同",
+      "definition": "一个人对自己属于哪种人的认识。",
+      "scope": "个人成长与行为改变语境；不指账户身份",
+      "avoid": [
+        {
+          "term": "身份认证",
+          "reason": "会误指技术上的身份验证。",
+          "scope": "本文行为改变语境"
+        }
+      ],
+      "usages": [
+        {
+          "article_title": "如何用一天重整整个人生",
+          "article_path": "life/behavior-change/fix-your-life-in-one-day/",
+          "source_url": "https://letters.thedankoe.com/p/how-to-fix-your-entire-life-in-1",
+          "source_location": "III，身份形成循环",
+          "context_meaning": "重复行为成为自我认识，并反过来影响所追求的目标。",
+          "chosen_zh": "自我认同",
+          "rationale": "强调自我认识而非社会头衔或数字账户。",
+          "local_anchor": "core",
+          "review": {
+            "source": "verified",
+            "wording": "reviewed",
+            "note": "已核对原文 III 的行为内化与身份塑造目标段落，并独立审读中文。"
+          }
+        }
+      ]
     }
   ]
 }
