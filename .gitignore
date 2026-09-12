@@ -1,3 +1,4 @@
 .DS_Store
+.venv/
 # Local visual QA report contains machine-specific screenshot paths.
 /design-qa.md

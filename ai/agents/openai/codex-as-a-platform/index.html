@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="OpenAI《Codex as a platform》中文蒸馏：Codex 提供通用 Agent 执行内核，业务应用提供界面、上下文、工具和治理。">
+  <title>Codex 作为平台：基于开放 Agent Harness 构建 · Knowledge Distilled</title>
+  <link rel="stylesheet" href="../../../../assets/css/style.css?v=2">
+  <link rel="stylesheet" href="note.css?v=2">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳至正文</a>
+  <div class="container">
+    <header class="site-header">
+      <a class="brand" href="../../../../">Knowledge Distilled<span>Source · Understand · Distill</span></a>
+      <a class="back-link" href="../../../../#knowledge-map">全部笔记 ↗</a>
+    </header>
+    <main id="main">
+      <header class="article-header">
+        <div class="eyebrow">OpenAI / Codex / 2026-08-19</div>
+        <h1>Codex 作为平台：<br><span>基于开放 Agent Harness 构建</span></h1>
+        <p class="original-title" lang="en">Codex as a platform: build on the open agent harness</p>
+        <p class="subtitle">不要把工作迁进一个通用聊天框。让 Codex 进入用户已有的业务界面，在应用给出的上下文、工具与审批边界内完成工作。</p>
+        <p class="note-status">Nicolas Bonamy、Derrick Choi · 整理于 2026-09-12 · 中文蒸馏</p>
+      </header>
+      <div class="reading-layout">
+        <nav class="contents" aria-label="文章目录">
+          <div class="eyebrow">Reading path</div>
+          <a href="#conclusion">一句话结论</a><a href="#system">系统怎样工作</a><a href="#why">为什么不是聊天框</a><a href="#layers">如何选择接入方式</a><a href="#relay">Relay 如何验证</a><a href="#evidence">证据与边界</a><a href="#source">原文定位</a>
+        </nav>
+        <div class="reading-main">
+          <section class="section" id="conclusion">
+            <div class="eyebrow">一句话结论</div>
+            <h2>Codex 提供执行内核，业务应用提供工作现场</h2>
+            <p class="takeaway">Codex Harness 负责让 Agent 持续理解、行动和反馈；业务应用继续负责用户界面、业务上下文、工具、权限与最终控制。两者结合，才构成面向具体工作的 Agent 产品。</p>
+            <p class="reading-note"><strong>阅读归纳：</strong>“执行内核 / 工作现场”用于概括原文的职责关系，不是作者给出的产品术语。</p>
+          </section>
+          <section class="section" id="system">
+            <div class="eyebrow">系统怎样工作</div>
+            <h2>从用户正在处理的对象出发，经过调查与审批，再回到业务记录</h2>
+            <figure class="system-map" aria-labelledby="system-caption">
+              <div class="ownership-legend" aria-label="图例"><span class="legend-app">业务应用负责</span><span class="legend-codex">Codex 负责</span><span class="legend-human">人决定</span></div>
+              <div class="system-entry">
+                <div class="system-node app-node"><small>现有业务界面</small><strong>用户选择工作对象</strong><span>看板 · 编辑器 · 队列 · 地图 · 记录</span></div>
+                <div class="system-arrow"><span>提供当前对象、历史、规则与目标</span><b aria-hidden="true">→</b></div>
+                <div class="system-node app-node"><small>应用注入上下文</small><strong>Agent 知道正在处理什么</strong><span>无需用户从空白提示开始</span></div>
+              </div>
+              <div class="entry-down"><span>任务与上下文</span><b aria-hidden="true">↓</b></div>
+              <div class="harness-box">
+                <div class="harness-head"><small>CODEX HARNESS</small><strong>通用 Agent 执行内核</strong></div>
+                <div class="agent-cycle" role="img" aria-label="理解任务后推理并调用工具，再观察结果；失败或新信息返回理解和推理，完成时输出结果，需要批准时暂停等待人决定">
+                  <div class="cycle-node"><small>01</small><b>理解任务</b><span>维护会话状态</span></div><div class="cycle-next" aria-hidden="true">→</div>
+                  <div class="cycle-node"><small>02</small><b>推理与行动</b><span>调用受限工具</span></div><div class="cycle-next" aria-hidden="true">→</div>
+                  <div class="cycle-node"><small>03</small><b>观察结果</b><span>事件 · 失败 · 新信息</span></div>
+                  <div class="cycle-return"><span>未完成 / 失败：带着结果返回继续</span><b aria-hidden="true">↩</b></div>
+                </div>
+                <div class="harness-capabilities"><span>流式进度</span><span>中断与恢复</span><span>沙箱边界</span><span>跨轮继续</span></div>
+              </div>
+              <div class="tool-bridge"><span>读取数据或提出下一步</span><b aria-hidden="true">↓</b></div>
+              <div class="action-row">
+                <div class="system-node app-node"><small>应用自有 MCP 工具</small><strong>读取业务数据</strong><span>最新状态返回 Agent</span></div><div class="action-arrow" aria-hidden="true">→</div>
+                <div class="system-node codex-node"><small>Codex</small><strong>解释结果并提出建议</strong><span>只读调查可继续</span></div><div class="action-arrow" aria-hidden="true">→</div>
+                <div class="approval-node"><small>涉及有后果的写操作</small><strong>需要人工批准？</strong></div>
+              </div>
+              <div class="decision-branches">
+                <div class="branch no-branch"><span>否 / 未批准</span><strong>不执行写入</strong><small>保持原记录，结果返回界面</small></div>
+                <div class="branch yes-branch"><span>批准</span><strong>MCP 执行业务动作</strong><small>更新系统记录</small></div>
+              </div>
+              <div class="record-return"><b aria-hidden="true">↑</b><span>应用刷新业务视图，用户看到新状态并继续掌控</span></div>
+              <figcaption id="system-caption">依据原文 Figure 1、Relay 示例与相邻正文制作的阅读归纳。蓝色区域表示 Codex 管理通用执行循环；灰色节点仍由业务应用拥有；棕色分支表示有后果的动作需要人决定。箭头表示上下文、工具调用、审批与记录更新的流向。</figcaption>
+            </figure>
+            <div class="responsibility-strip" aria-label="职责摘要"><div><small>业务应用</small><strong>界面 · 上下文 · 工具 · 权限 · 记录</strong></div><div><small>Codex</small><strong>状态 · 推理 · 工具交互 · 进度 · 沙箱</strong></div><div><small>人</small><strong>审阅建议 · 批准有后果的动作</strong></div></div>
+          </section>
+          <section class="section" id="why">
+            <div class="eyebrow">为什么不是聊天框</div>
+            <h2>用户理解工作依赖业务视图，而不是一段脱离现场的对话</h2>
+            <div class="interface-compare"><article class="chat-side"><small>通用聊天框</small><strong>用户重新描述现场</strong><p>工作对象、历史记录和可用动作需要被手工搬进对话，原有界面与控制流程被割裂。</p></article><div class="compare-shift" aria-hidden="true">→</div><article class="workflow-side"><small>Agent 进入既有产品</small><strong>界面直接提供现场</strong><p>用户所选对象、业务数据和审批流程成为 Agent 的上下文，结果仍回到原来的记录系统。</p></article></div>
+            <p>因此，界面不是装饰。它告诉 Agent 用户正在看什么，提供完成任务所需的工具，也给用户留下检查下一步的地方。开放 Harness 的额外价值，是开发者能够检查应用与模型之间的执行层，并按产品需要调整集成。</p>
+            <p class="evidence-callout"><strong>为什么 Harness 会影响结果：</strong>原文引用 ARC-AGI-3 例证——保留推理与上下文压缩使 GPT-5.6 Sol 得分从 13.3% 提升到 38.3%，输出 token 同时减少到原来的六分之一。该结果不能直接外推到所有业务任务。</p>
+          </section>
+          <section class="section" id="layers">
+            <div class="eyebrow">如何选择接入方式</div><h2>按产品需要的交互方式和控制程度选择集成层</h2>
+            <div class="layer-grid"><article><div class="layer-index">01</div><h3><code>codex exec</code></h3><p>适合脚本、CI 任务或一次性后台工作。运行有界的 Agent 工作流，并返回结构化输出。</p><span class="layer-fit">有界任务 · 非交互</span></article><article><div class="layer-index">02</div><h3>Codex SDK</h3><p>适合应用代码启动、续接或流式接收 Codex 任务，简化常见程序化工作流。</p><span class="layer-fit">程序化 · 可续接</span></article><article class="deepest"><div class="layer-index">03</div><h3>Codex app-server</h3><p>适合 Agent 成为产品本身的一部分，由应用直接控制会话、事件、中断、工具和审批体验。</p><span class="layer-fit">产品内嵌 · 直接控制生命周期</span></article></div>
+            <p class="layer-rule">这是接入方式的选择，不是能力排名，也不是按任务耗时划分。</p>
+          </section>
+          <section class="section" id="relay">
+            <div class="eyebrow">Relay 如何验证</div><h2>示例把总图中的抽象职责，落实到一次运单恢复任务</h2>
+            <ol class="relay-story"><li><span>工作现场</span><strong>用户在运单看板选择一条异常记录</strong><p>点击“比较恢复方案”，而不是从空白提示开始描述全部背景。</p></li><li><span>Agent 调查</span><strong>应用提供上下文，Codex 通过 MCP 获取最新数据</strong><p>Agent 比较选项并说明理由，此时可以保持只读。</p></li><li><span>人工控制</span><strong>重新订舱属于有后果的写操作</strong><p>未批准则不写入；批准后才允许工具修改底层记录。</p></li><li><span>回到现场</span><strong>应用刷新运单视图</strong><p>用户从原来的业务界面看到新状态，并决定后续工作。</p></li></ol>
+            <p class="relay-note">Relay 使用虚构的种子数据。它验证的是集成模式，不是物流业务效果。</p>
+          </section>
+          <section class="section" id="evidence">
+            <div class="eyebrow">证据与边界</div><h2>模式已经被采用，但文章没有证明它适用于所有任务</h2>
+            <div class="evidence-grid"><article><strong>GitHub 与 JetBrains</strong><p>把 Codex 带入既有 IDE 工作流。</p></article><article><strong>Cisco Cloud Control</strong><p>在 App Builder 中使用 Codex SDK。</p></article><article><strong>Thrive Holdings 与 Crete</strong><p>税务准备试点处理 7,000 份申报，并将准备时间缩短约三分之一。</p></article></div>
+            <div class="boundary-list"><article><strong>开源范围有限</strong><p>开放的是 CLI、app-server、SDK 所构成的 Harness 与集成面；模型访问和托管服务仍然分离。</p></article><article><strong>治理仍由产品负责</strong><p>运行位置、文件与工具权限、审批规则、可观测方式以及记录写入，都需要宿主应用决定。</p></article><article><strong>案例不能直接外推</strong><p>前两个是采用案例，税务数字来自单个试点；它们不是受控、普遍化的效果证明。</p></article><article><strong>业务规则不能照搬</strong><p>调查—建议—批准—执行的结构可迁移，但每个场景的权限、风险和记录系统不同。</p></article></div>
+          </section>
+          <section class="section source-section" id="source">
+            <div class="eyebrow">原文定位</div><h2>原文定位</h2>
+            <div class="source-list"><article><strong>The reusable part is the agent loop</strong><p>为什么 Agent 不只是提示与回复；Harness 管理状态、工具、边界、审批和跨轮工作。</p></article><article><strong>An open harness developers can inspect and adapt</strong><p>开放代码的价值、产品可控制的部分，以及 Harness 与模型/托管服务的边界。</p></article><article><strong>Choose the right integration layer</strong><p><code>codex exec</code>、Codex SDK 和 Codex app-server 的适用场景。</p></article><article><strong>Build software around the workflow / Example: Relay</strong><p>专用界面的作用，以及调查、建议、批准、执行和刷新记录的完整回路。</p></article><article><strong>What developers are building / Build beyond the obvious</strong><p>公开案例，以及增强现有工作界面而非用通用聊天框替代它的结论。</p></article></div>
+            <p>图解为阅读归纳，不是 OpenAI 原图复刻。<a href="https://developers.openai.com/blog/codex-as-a-platform" target="_blank" rel="noreferrer">阅读 OpenAI 原文 ↗</a></p>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer article-footer"><span>Knowledge Distilled</span><span>执行内核 · 工作现场 · 人工控制</span></footer>
+  </div>
+</body>
+</html>

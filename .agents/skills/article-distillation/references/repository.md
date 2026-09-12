@@ -37,8 +37,15 @@
 - 确认内部 ID 唯一、hash 目标存在、图片及本地样式脚本存在。
 - 检查资源路径时去除查询串和片段，如 note.css?v=2。
 - JSON 能解析不代表内容一致；对照 outline 与 HTML 中的章节，图示元数据与实际图。
+- 目录链接文字与目标章节的眉题默认逐字一致；metadata.outline 的标题对应目标章节主标题。不要依赖人工肉眼发现近义词漂移。
 - 检查删掉的板块没有遗留失效按钮、空 DOM 查询或过时的 Markdown 说明。
 - git diff --check 只检查补丁格式；不能代替浏览器和内容验收。
+
+新建或重构文章后，从仓库根目录运行：
+
+    python3 .agents/skills/article-distillation/scripts/validate_article.py <文章目录>
+
+该检查覆盖 HTML 内部 ID、页内目标、目录/眉题一致性、metadata 大纲与本地资源。若文章有意使用另一套导航分类，可在实现与验收记录中说明理由，人工核对后使用 `--allow-label-differences`；不要为了绕过检查悄悄改动脚本或跳过失败项。
 
 若新增或更新首页入口，摘要须与文章核心结论一致。预览、截图和验收记录不等于已发布到 GitHub Pages。
 

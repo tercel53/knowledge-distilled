@@ -1,0 +1,28 @@
+{
+  "title": "Codex 作为平台：基于开放 Agent Harness 构建",
+  "source": "OpenAI",
+  "source_url": "https://developers.openai.com/blog/codex-as-a-platform",
+  "source_title": "Codex as a platform: build on the open agent harness",
+  "author": ["Nicolas Bonamy", "Derrick Choi"],
+  "published_date": "2026-08-19",
+  "learned_date": "2026-09-12",
+  "language": "zh-CN",
+  "source_language": "en",
+  "status": "summarized",
+  "domain": "ai",
+  "category": "agents",
+  "topics": ["codex", "agent-harness", "app-server", "agent-platform", "workflow-integration"],
+  "core_conclusion": "Codex 提供通用 Agent 执行内核，业务应用提供界面、上下文、工具和治理；两者结合成面向具体工作的 Agent 产品。",
+  "outline": [
+    {"id": "conclusion", "title": "Codex 提供执行内核，业务应用提供工作现场", "source_location": "引言与全文归纳"},
+    {"id": "system", "title": "从用户正在处理的对象出发，经过调查与审批，再回到业务记录", "source_location": "The reusable part is the agent loop; Figure 1; Example: Relay"},
+    {"id": "why", "title": "用户理解工作依赖业务视图，而不是一段脱离现场的对话", "source_location": "Build software around the workflow; Build beyond the obvious"},
+    {"id": "layers", "title": "按产品需要的交互方式和控制程度选择集成层", "source_location": "Choose the right integration layer"},
+    {"id": "relay", "title": "示例把总图中的抽象职责，落实到一次运单恢复任务", "source_location": "Example: Relay"},
+    {"id": "evidence", "title": "模式已经被采用，但文章没有证明它适用于所有任务", "source_location": "What developers are building; 全文限制归纳"},
+    {"id": "source", "title": "原文定位", "source_location": "原文章节索引"}
+  ],
+  "visuals": [
+    {"id": "system-caption", "type": "html-css", "purpose": "在同一张图中展示业务现场、Agent 循环、MCP 调查、人工审批与记录回流，并区分各方职责", "provenance": "依据 The reusable part is the agent loop、原文 Figure 1 与 Example: Relay 制作的阅读归纳"}
+  ]
+}

@@ -63,6 +63,48 @@
             "wording": "reviewed",
             "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
           }
+        },
+        {
+          "article_title": "Codex 作为平台：基于开放 Agent Harness 构建",
+          "article_path": "ai/agents/openai/codex-as-a-platform/",
+          "source_url": "https://developers.openai.com/blog/codex-as-a-platform",
+          "source_location": "The reusable part is the agent loop；An open harness developers can inspect and adapt",
+          "context_meaning": "位于宿主应用与模型之间的开放执行系统，负责会话状态、工具交互、沙箱、审批和跨轮工作，并通过 app-server、SDK 与 CLI 向产品暴露集成面。",
+          "chosen_zh": "Harness / 执行内核",
+          "rationale": "保留与既有文章一致的 Harness，用“执行内核”说明它为不同业务产品复用通用 Agent 循环。",
+          "local_anchor": "system",
+          "review": {
+            "source": "verified",
+            "wording": "reviewed",
+            "note": "已对照原文 The reusable part is the agent loop 与开放组件段落；本文不译为“脚手架”，避免误解为一次性模板。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "agent-loop",
+      "source_terms": [
+        "agent loop"
+      ],
+      "preferred_zh": "Agent 循环",
+      "definition": "让 Agent 在持续任务中反复理解上下文、推理、调用工具、观察结果并根据失败、反馈或审批决定下一步的执行循环。",
+      "scope": "Agent 运行时与任务执行",
+      "avoid": [],
+      "usages": [
+        {
+          "article_title": "Codex 作为平台：基于开放 Agent Harness 构建",
+          "article_path": "ai/agents/openai/codex-as-a-platform/",
+          "source_url": "https://developers.openai.com/blog/codex-as-a-platform",
+          "source_location": "The reusable part is the agent loop",
+          "context_meaning": "Harness 管理的可复用执行过程，覆盖任务理解、上下文维护、信息检查、工具调用、进度、失败、人工审批和结果返回。",
+          "chosen_zh": "Agent 循环",
+          "rationale": "保留 Agent 作为主体，用“循环”直接表达任务跨轮推进和结果反馈回执行的结构。",
+          "local_anchor": "system",
+          "review": {
+            "source": "verified",
+            "wording": "reviewed",
+            "note": "已逐项对照原文对 capable agent 与 Codex harness 职责的描述。"
+          }
         }
       ]
     },
