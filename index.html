@@ -3,10 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="关于 AI、软件工程与科技前沿的个人知识库。将长文提炼为可复用的思维模型。">
-  <title>Knowledge Distilled · 理解技术，连接未来</title>
-  <link rel="stylesheet" href="./assets/css/style.css?v=2">
-  <script src="./assets/js/home.js" defer></script>
+  <meta name="description" content="把 AI、软件工程与学习类长文提炼成可回查、可复习、可连接的个人知识。">
+  <title>Knowledge Distilled · 理解技术，沉淀知识</title>
+  <link rel="stylesheet" href="./assets/css/style.css?v=3">
 </head>
 <body>
   <a class="skip-link" href="#main">跳至内容</a>
@@ -14,23 +13,22 @@
     <header class="site-header">
       <a class="brand" href="./" aria-label="Knowledge Distilled 首页">Knowledge Distilled<span>Personal Knowledge Base</span></a>
       <nav class="site-nav" aria-label="知识领域">
-        <a href="#knowledge-map" data-category="ai" aria-current="true">AI Engineering</a>
-        <a href="#knowledge-map" data-category="software">Software</a>
-        <a href="#knowledge-map" data-category="frontiers">Frontiers</a>
+        <a href="#knowledge-map">AI Engineering</a>
+        <a href="#life-learning">Life &amp; Learning</a>
         <a class="github-link" href="https://github.com/tercel53/knowledge-distilled" target="_blank" rel="noreferrer">GitHub</a>
       </nav>
     </header>
     <main id="main">
       <section class="home-hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <div class="eyebrow">Ideas for a more open tomorrow</div>
-          <h1 id="hero-title">理解技术，<br><span>连接未来。</span></h1>
-          <p class="hero-subtitle">关于 AI、软件工程与科技前沿的个人知识库。</p>
+          <div class="eyebrow">Read less · Understand more · Keep the evidence</div>
+          <h1 id="hero-title">理解技术，<br><span>沉淀知识。</span></h1>
+          <p class="hero-subtitle">把值得读的长文提炼成可回查、可复习、可连接的个人知识。</p>
           <article class="featured">
-            <div class="eyebrow">OpenAI · 阅读笔记</div>
-            <h2>Harness Engineering</h2>
-            <p>工程师设计环境与反馈，Agent 在其中执行任务。<br class="desktop-break">从 OpenAI 的工程实践，理解 Harness 的作用。</p>
-            <a class="button" href="./ai/agents/openai/harness-engineering/">阅读笔记</a>
+            <div class="featured-meta"><span class="eyebrow">Latest Distill</span><span>ShipWithAI · 2026-04-20</span></div>
+            <h2>Claude Code Harness Engineering</h2>
+            <p>Memory、Tools、Permissions、Hooks、Observability 分别解决什么问题？<br class="desktop-break">从“写提示”走向“设计 Agent 的运行系统”。</p>
+            <a class="button" href="./ai/agents/anthropic/claude-code-harness-engineering/">阅读最新笔记</a>
           </article>
         </div>
         <figure class="hero-art">
@@ -40,19 +38,21 @@
         </figure>
       </section>
       <section class="knowledge-map" id="knowledge-map" aria-labelledby="map-heading">
-        <div class="section-heading"><h2 class="eyebrow" id="map-heading">Knowledge Map</h2><span class="eyebrow" id="category-label">AI Engineering</span></div>
+        <div class="section-heading"><div><h2 class="eyebrow" id="map-heading">Knowledge Map</h2><p class="section-intro">按主题浏览已经蒸馏的文章；每篇都保留原文入口与证据边界。</p></div><span class="eyebrow" id="category-label">AI Engineering · 6 notes</span></div>
         <div class="topic-grid" id="topics-ai">
-          <article class="topic"><span class="topic-number">01</span><div><h3>Agents &amp; Harness</h3><p>Agent runtime, tools, context,<br>evaluation, feedback loops.</p><a href="./ai/agents/openai/harness-engineering/">阅读笔记</a></div></article>
-          <article class="topic"><span class="topic-number">02</span><div><h3>Claude Harness</h3><p>随模型能力删减补偿逻辑，<br>保留成本、交互与安全边界。</p><a href="./ai/agents/anthropic/harnessing-claudes-intelligence/">阅读笔记</a></div></article>
-          <article class="topic"><span class="topic-number">03</span><div><h3>Long-running Apps</h3><p>规划、生成与评估分离，<br>用实际操作形成反馈闭环。</p><a href="./ai/agents/anthropic/harness-design-long-running-apps/">阅读笔记</a></div></article>
-          <article class="topic"><span class="topic-number">04</span><div><h3>Codex Platform</h3><p>Codex 提供执行内核，<br>业务应用保留工作现场。</p><a href="./ai/agents/openai/codex-as-a-platform/">阅读笔记</a></div></article>
-          <article class="topic"><span class="topic-number">05</span><div><h3>Context Engineering</h3><p>写入、选择、压缩与隔离，<br>共同管理有限上下文。</p><a href="./ai/agents/openai/context-engineering-codex-cli/">阅读笔记</a></div></article>
+          <article class="topic"><span class="topic-number">01</span><div><span class="topic-meta">OpenAI · Harness</span><h3>Agents &amp; Harness</h3><p>Agent runtime、tools、context、evaluation 与 feedback loops 如何共同构成执行环境。</p><a href="./ai/agents/openai/harness-engineering/">阅读笔记 →</a></div></article>
+          <article class="topic"><span class="topic-number">02</span><div><span class="topic-meta">Anthropic · Harness</span><h3>Claude Harness</h3><p>随模型能力删减补偿逻辑，同时保留成本、交互与安全边界。</p><a href="./ai/agents/anthropic/harnessing-claudes-intelligence/">阅读笔记 →</a></div></article>
+          <article class="topic"><span class="topic-number">03</span><div><span class="topic-meta">Anthropic · Long-running</span><h3>Long-running Apps</h3><p>规划、生成与评估分离，用实际操作建立长任务的反馈闭环。</p><a href="./ai/agents/anthropic/harness-design-long-running-apps/">阅读笔记 →</a></div></article>
+          <article class="topic"><span class="topic-number">04</span><div><span class="topic-meta">OpenAI · Platform</span><h3>Codex Platform</h3><p>Codex 提供执行内核，业务应用保留工作现场、上下文与控制权。</p><a href="./ai/agents/openai/codex-as-a-platform/">阅读笔记 →</a></div></article>
+          <article class="topic"><span class="topic-number">05</span><div><span class="topic-meta">OpenAI · Context</span><h3>Context Engineering</h3><p>写入、选择、压缩与隔离，如何共同管理 Agent 的有限上下文。</p><a href="./ai/agents/openai/context-engineering-codex-cli/">阅读笔记 →</a></div></article>
+          <article class="topic"><span class="topic-number">06</span><div><span class="topic-meta">ShipWithAI · Claude Code</span><h3>Five-layer Harness</h3><p>Memory、Tools、Permissions、Hooks、Observability 分别承担什么职责。</p><a href="./ai/agents/anthropic/claude-code-harness-engineering/">阅读笔记 →</a></div></article>
         </div>
-        <div class="empty-state" id="topics-empty" hidden aria-live="polite"><h3 id="empty-title"></h3><p>这个领域的笔记正在酝酿中。先从 AI Engineering 开始探索。</p><button type="button" data-category="ai">浏览 AI 笔记</button></div>
       </section>
-      <section class="knowledge-map" aria-labelledby="life-heading">
-        <div class="section-heading"><h2 class="eyebrow" id="life-heading">Life &amp; Learning</h2></div>
-        <article class="topic"><span class="topic-number">01</span><div><h3>一天重整人生</h3><p>Dan Koe 的行为改变观点：<br>辨认隐性目标，以行动和反馈检验方向。</p><a href="./life/behavior-change/fix-your-life-in-one-day/">阅读笔记</a></div></article>
+      <section class="knowledge-map" id="life-learning" aria-labelledby="life-heading">
+        <div class="section-heading"><div><h2 class="eyebrow" id="life-heading">Life &amp; Learning</h2><p class="section-intro">技术之外，保留那些值得反复回看的思考框架。</p></div><span class="eyebrow">1 note</span></div>
+        <div class="topic-grid topic-grid-single">
+          <article class="topic"><span class="topic-number">01</span><div><span class="topic-meta">Dan Koe · Behavior</span><h3>一天重整人生</h3><p>辨认行为背后的隐性目标，用行动与反馈检验真正想走的方向。</p><a href="./life/behavior-change/fix-your-life-in-one-day/">阅读笔记 →</a></div></article>
+        </div>
       </section>
     </main>
     <footer class="site-footer"><span>Built for a deeper understanding</span><span>Source · Understand · Distill · Connect · Review</span></footer>
