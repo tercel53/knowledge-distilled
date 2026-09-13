@@ -1,0 +1,57 @@
+{
+  "title": "Claude Code Harness Engineering：五层 Harness 与渐进建设路径",
+  "source": "ShipWithAI",
+  "source_url": "https://shipwithai.io/blog/claude-code-harness-engineering-guide/",
+  "source_title": "Claude Code Harness Engineering: The Complete Guide",
+  "author": [
+    "ShipWithAI"
+  ],
+  "published_date": "2026-04-20",
+  "learned_date": "2026-09-13",
+  "language": "zh-CN",
+  "source_language": "en",
+  "status": "summarized",
+  "domain": "ai",
+  "category": "agents",
+  "topics": [
+    "claude-code",
+    "harness-engineering",
+    "hooks",
+    "mcp",
+    "observability"
+  ],
+  "core_conclusion": "把 Claude Code 的生产可靠性拆成记忆、工具、权限、运行时约束和可观测性五个问题，并按失败模式渐进补齐，而不是只写更长的 CLAUDE.md。",
+  "outline": [
+    {
+      "id": "core",
+      "title": "五层不是五份配置，而是五种不同的可靠性问题"
+    },
+    {
+      "id": "enforcement",
+      "title": "最重要的变化，是从“告诉模型”走向“在执行路径上约束模型”"
+    },
+    {
+      "id": "order",
+      "title": "作者建议先建立上下文与护栏，再扩大能力"
+    },
+    {
+      "id": "boundaries",
+      "title": "+13.7 说明 Harness 会影响结果，不证明五层模型各自贡献"
+    },
+    {
+      "id": "self-check",
+      "title": "自测：我理解了吗？"
+    },
+    {
+      "id": "source",
+      "title": "按需回到原文"
+    }
+  ],
+  "visuals": [
+    {
+      "id": "layers-map",
+      "type": "html-css",
+      "purpose": "区分五层职责并显示从信息到能力、边界、强制和反馈的关系"
+    }
+  ]
+}
