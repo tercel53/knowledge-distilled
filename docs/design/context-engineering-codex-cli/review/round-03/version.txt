@@ -1,0 +1,17 @@
+Round: 03
+Frozen: 2026-09-13
+Repair budget used: two of two rounds
+First-pass scope: title, main diagram, legend, and adjacent short explanation before long-form details and self-check answers
+Reader background: general Chinese reader interested in the topic but unfamiliar with this article
+Source scope: full article at https://codex.danielvaughan.com/2026/06/10/context-engineering-codex-cli-write-select-compress-isolate-june-2026/
+
+bf809a7f0b3591e989f9221c5b12fc35c1e0191536da6bb744bb33b65c9f9bf3  ai/agents/openai/context-engineering-codex-cli/index.html
+7c7ee8e3fa8864ce0ccaec8ca87381b3c80d84b96653e8915b444378f65ec2c7  ai/agents/openai/context-engineering-codex-cli/note.css
+787ff1f774398bbab05fc22a4a1093323943f24df098e7614c08d88d5012a110  ai/agents/openai/context-engineering-codex-cli/note.js
+c5c8923699b946faf5904ad3beefc7d7da4765c4d192d510711dc535e8c961b6  ai/agents/openai/context-engineering-codex-cli/README.md
+e74dab42bdcf706f61217bf0de323aa0d112f568f5570c344f45df49cc54cc46  ai/agents/openai/context-engineering-codex-cli/metadata.json
+5fbf8a58ff9b6952fe9cd9a9e37825e686b9a54f00d1c3a813755dbf0436b57b  docs/design/context-engineering-codex-cli/content-plan.md
+8a9493453d94b40b3514926c39973f8f24817def12c57a860b585a7d6223f373  assets/css/style.css
+1fec52b70b77c4f1c0cecaa11e8b70013a0b4d7df604ca68ed192e3bbd336dff  assets/css/self-check.css
+
+Changes since round 02: Isolate now uses a shared source, visible branch stem, horizontal fork, and two independent downward arrowheads to Window A and Window B. No other article claim changed.

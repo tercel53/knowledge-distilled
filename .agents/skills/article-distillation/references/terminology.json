@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_date": "2026-09-12",
+  "updated_date": "2026-09-13",
   "terms": [
     {
       "id": "harness",
@@ -78,6 +78,54 @@
             "wording": "reviewed",
             "note": "已对照原文 The reusable part is the agent loop 与开放组件段落；本文不译为“脚手架”，避免误解为一次性模板。"
           }
+        },
+        {
+          "article_title": "Codex CLI 的上下文工程：写入、选择、压缩与隔离",
+          "article_path": "ai/agents/openai/context-engineering-codex-cli/",
+          "source_url": "https://codex.danielvaughan.com/2026/06/10/context-engineering-codex-cli-write-select-compress-isolate-june-2026/",
+          "source_location": "The Shift；What Comes Next",
+          "context_meaning": "比上下文工程更外层的运行系统设计，包含权限策略、沙箱、事件钩子与多代理协调，并间接决定上下文如何被组织。",
+          "chosen_zh": "Harness 工程",
+          "rationale": "沿用仓库既有表达，并在正文中用权限、沙箱、钩子和协调说明该语境的范围。",
+          "local_anchor": "compound",
+          "review": {
+            "source": "verified",
+            "wording": "reviewed",
+            "note": "已对照本篇原文 The Shift 与 What Comes Next；此处强调围绕模型的运行支撑系统，不译为一次性“脚手架”。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "context-engineering",
+      "source_terms": [
+        "context engineering"
+      ],
+      "preferred_zh": "上下文工程",
+      "definition": "持续组织模型每次推理可见的信息环境，包括持久化、按需选择、压缩与边界隔离。",
+      "scope": "Agent 信息供给与上下文窗口管理",
+      "avoid": [
+        {
+          "term": "提示词工程",
+          "reason": "提示词工程主要优化单次请求措辞，不能覆盖文档、工具定义、历史、记忆与权限边界的整体组织。",
+          "scope": "本文四策略框架；不是对提示词工程一词的全局禁用"
+        }
+      ],
+      "usages": [
+        {
+          "article_title": "Codex CLI 的上下文工程：写入、选择、压缩与隔离",
+          "article_path": "ai/agents/openai/context-engineering-codex-cli/",
+          "source_url": "https://codex.danielvaughan.com/2026/06/10/context-engineering-codex-cli-write-select-compress-isolate-june-2026/",
+          "source_location": "引言；The Shift；Strategies 1–4",
+          "context_meaning": "围绕有限上下文窗口，决定信息应写到哪里、何时选入、如何缩短以及哪些内容应放入独立边界。",
+          "chosen_zh": "上下文工程",
+          "rationale": "直译在本篇中能准确覆盖对整个信息环境的系统性组织，并与提示词工程形成明确区分。",
+          "local_anchor": "model",
+          "review": {
+            "source": "verified",
+            "wording": "reviewed",
+            "note": "已核对原文对 context engineering 的定义及 Write / Select / Compress / Isolate 四类操作。"
+          }
         }
       ]
     },
@@ -138,6 +186,21 @@
             "source": "pending",
             "wording": "reviewed",
             "note": "从既有笔记及本次表达修订记录迁移；尚未逐条重新核对原文，复用前需结合当前原文判断。"
+          }
+        },
+        {
+          "article_title": "Codex CLI 的上下文工程：写入、选择、压缩与隔离",
+          "article_path": "ai/agents/openai/context-engineering-codex-cli/",
+          "source_url": "https://codex.danielvaughan.com/2026/06/10/context-engineering-codex-cli-write-select-compress-isolate-june-2026/",
+          "source_location": "Strategy 3: Compress",
+          "context_meaning": "把较早对话或大型工具 schema 提炼成更短表示，使有限窗口保留下一步所需重点。",
+          "chosen_zh": "压缩 / 上下文压缩",
+          "rationale": "图中使用短标签“压缩”，正文明确对象是上下文历史与工具 schema，并保留其有损风险。",
+          "local_anchor": "compress",
+          "review": {
+            "source": "verified",
+            "wording": "reviewed",
+            "note": "已核对原文 Strategy 3 对 automatic compaction 与 schema compaction 的说明。"
           }
         }
       ]

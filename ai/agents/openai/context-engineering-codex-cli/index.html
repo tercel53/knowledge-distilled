@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="用写入、选择、压缩与隔离四个动作理解 Codex CLI 的上下文工程，并辨认其证据边界。">
+  <title>Codex CLI 的上下文工程：写入、选择、压缩与隔离 · Knowledge Distilled</title>
+  <link rel="stylesheet" href="../../../../assets/css/style.css?v=3">
+  <link rel="stylesheet" href="../../../../assets/css/self-check.css?v=1">
+  <link rel="stylesheet" href="./note.css?v=1">
+  <script defer src="./note.js?v=1"></script>
+</head>
+<body class="article-page">
+  <a class="skip-link" href="#reading-main">跳至正文</a>
+  <div class="container">
+    <header class="site-header"><a class="brand" href="../../../../">Knowledge Distilled<span>Personal Knowledge Base</span></a><a class="back-link" href="../../../../">返回知识库</a></header>
+    <header class="article-header" id="thesis">
+      <div class="eyebrow">Codex Knowledge Base · 2026.06.10 · 更新 2026.09.09</div>
+      <h1>Codex CLI 的上下文工程：<br>写入、选择、压缩与隔离</h1>
+      <p class="source-title" lang="en">Context Engineering for Codex CLI in June 2026: The Write-Select-Compress-Isolate Playbook</p>
+      <p class="subtitle">上下文工程的核心不是塞入更多信息，而是持续决定：什么应被保存、何时读入、怎样缩短，以及哪些内容不该共享同一窗口。</p>
+      <p class="reading-context">这篇观点/实践综述把 LangChain 的四策略框架映射到 Codex CLI v0.139 的机制。它提供的是组织上下文决策的词汇与操作清单，不是证明某套配置对所有团队都有效的受控实验。</p>
+      <p class="reading-caution"><strong>阅读范围：</strong>保留四策略的机制、组合关系、Codex 映射和证据边界；省略大部分配置片段与完整引文目录。配置会随版本变化，落地前应回到当前 OpenAI Docs。</p>
+    </header>
+    <div class="reading-layout">
+      <aside class="reading-toc"><nav aria-label="文章目录"><a href="#model">01 / 四个动作</a><a href="#mechanisms">02 / 信息流</a><a href="#compound">03 / 组合效应</a><a href="#boundaries">04 / 证据边界</a><a href="#self-check">05 / 自测</a><a href="#source">06 / 来源</a></nav></aside>
+      <main class="reading-main" id="reading-main">
+        <section class="section" id="model">
+          <div class="eyebrow">01 / 四个动作</div>
+          <h2>四个动作共同管理有限上下文</h2>
+          <p class="thesis-line">它们不是依次执行的流程，而是四种不同的信息操作：外存、读入、缩短、分界。</p>
+          <figure class="context-map" aria-labelledby="context-map-title">
+            <figcaption id="context-map-title">围绕有限上下文窗口的四种信息运动</figcaption>
+            <div class="window-key"><img src="../../../../assets/icons/robot.svg" alt="" width="34" height="34"><span><strong>有限上下文窗口</strong><small>下一步推理真正能看到的信息</small></span></div>
+            <div class="map-shell">
+              <article class="strategy write"><small>WRITE / 写入</small><strong>把关键状态写到窗口外</strong><div class="mini-flow" aria-label="从当前窗口写入外部状态"><span>当前窗口</span><b aria-hidden="true">→</b><span>外部状态</span></div><p>让规则、记忆和计划可以在后续窗口重新读取。</p></article>
+              <article class="strategy select"><small>SELECT / 选择</small><strong>只把下一步所需内容读入</strong><div class="mini-flow" aria-label="从外部资料选择性读入当前窗口"><span>外部资料</span><b aria-hidden="true">→</b><span>当前窗口</span></div><p>按任务加载工具定义、文档和外部资料。</p></article>
+              <article class="strategy compress"><small>COMPRESS / 压缩</small><strong>保留重点，缩短当前表示</strong><div class="mini-flow" aria-label="把窗口内较长内容压缩为较短表示"><span>较长内容</span><b aria-hidden="true">→</b><span>较短表示</span></div><p>摘要历史、精简 schema，并在预算将尽时留下交接状态。</p></article>
+              <article class="strategy isolate"><small>ISOLATE / 隔离</small><strong>让不同任务不共享全部内容</strong><div class="split-flow" aria-label="把共享上下文拆分为窗口 A 和窗口 B 两个独立边界"><span class="split-source">共享上下文</span><i class="branch-stem" aria-hidden="true"></i><span class="branch-targets"><span>窗口 A</span><span>窗口 B</span></span></div><p>使用独立窗口、工具范围、权限与操作系统沙箱。</p></article>
+            </div>
+            <ul class="legend"><li><b>写入 ≠ 压缩：</b>前者保存到外部，后者缩短当前表示。</li><li><b>选择 ≠ 隔离：</b>前者决定读入什么，后者建立不能或不必共享的边界。</li></ul>
+          </figure>
+          <p class="diagram-note">以上为阅读归纳图，不是原文图表。四种操作共同降低信息丢失、噪声占用和任务串扰的风险，但都不是正确性的充分条件。</p>
+        </section>
+        <section class="section" id="mechanisms">
+          <div class="eyebrow">02 / 信息流</div>
+          <h2>每个动作改变不同的信息流</h2>
+          <div class="mechanism-grid">
+            <article class="mechanism" id="write"><h3>写入：把易失会话变成可再读状态</h3><div class="flow"><span>当前会话</span>→<span>AGENTS.md / memories / PLANS.md</span>→<span>后续读取</span></div><p>作者把 <code>AGENTS.md</code> 视为操作策略而非背景介绍。重要约定和进度不再只依赖对话历史，因此能跨压缩或跨会话恢复。</p><p class="muted">代价：外部状态也会过时；写得更多不等于更准确、更容易找到。</p></article>
+            <article class="mechanism" id="select"><h3>选择：需要时才把资料加载进来</h3><div class="flow"><span>完整目录</span>→<span>按任务筛选</span>→<span>相关工具 / 资料</span></div><p>Tool Search、MCP 工具范围和 Web Search 分别在运行时或配置层控制哪些定义与资料进入窗口，处理相关性与时机。</p><p class="muted">关键：完整信息可以存在于外部，但不必每轮全部预装。</p></article>
+            <article class="mechanism" id="compress"><h3>压缩：缩短表示，而不是保证无损</h3><div class="flow"><span>较早历史 / 大 schema</span>→<span>提炼</span>→<span>更短表示</span></div><p>自动上下文压缩摘要较早内容；schema 压缩降低工具定义占用；预算收尾引导促使 Agent 留下当前状态。</p><p class="muted">风险：摘要可能遗漏精确约定，所以关键状态仍适合写入可复核文件。</p></article>
+            <article class="mechanism" id="isolate"><h3>隔离：把串扰与访问能力分层阻断</h3><div class="flow"><span>子任务</span>→<span>独立会话</span>→<span>工具 / 权限 / 文件边界</span></div><p>Subagents 分开会话历史，profiles 限定能力，OS sandbox 限制资源访问。三者不是同一种安全保证。</p><p class="muted">代价：拆分会产生协调与交接成本，简单任务未必值得隔离。</p></article>
+          </div>
+        </section>
+        <section class="section" id="compound">
+          <div class="eyebrow">03 / 组合效应</div>
+          <h2>组合使用，才从技巧变成系统</h2>
+          <p>单独使用某个动作只处理一类风险。组合后，写入、选择、压缩与隔离成为四类互补支点；它们按任务需要触发，并非固定路径。</p>
+          <figure class="compound-map" aria-labelledby="compound-title"><figcaption id="compound-title">基于原文四组组合整理；卡片文字为阅读归纳</figcaption><div class="compound-grid">
+            <article class="compound-card"><strong>写入 × 选择</strong><p>保存完整知识，任务发生时只取回相关部分。</p></article>
+            <article class="compound-card"><strong>写入 × 压缩</strong><p>会话被摘要后，仍可从计划或记忆恢复关键状态。</p></article>
+            <article class="compound-card"><strong>选择 × 隔离</strong><p>每个子任务只暴露自己的工具和资料。</p></article>
+            <article class="compound-card"><strong>压缩 × 隔离</strong><p>各窗口独立压缩，不让一个任务的摘要覆盖另一个。</p></article>
+          </div></figure>
+          <div class="harness-levels" aria-label="提示工程、上下文工程与 Harness 工程的职责层次"><p><strong>提示工程</strong><span>优化一次请求怎样表达。</span></p><p><strong>上下文工程</strong><span>管理每次推理能看到什么。</span></p><p><strong>Harness 工程</strong><span>用权限、沙箱、事件钩子与多代理协调，让这些决策持续发生。</span></p></div>
+        </section>
+        <section class="section" id="boundaries">
+          <div class="eyebrow">04 / 证据边界</div>
+          <h2>框架可用，效果强度仍要另行验证</h2>
+          <div class="evidence-scale">
+            <article><h3>可由官方资料核对的机制</h3><p><code>AGENTS.md</code> 层级、memories、自动压缩、子代理和工具范围等 Codex 能力，可在 OpenAI Docs 中找到对应说明。文章把它们归入四策略，是作者的分析映射。</p></article>
+            <article><h3>不宜当作普遍阈值的数字</h3><p>“Tool Search 减少 85–98% 开销”及“100,000 tokens 仍连贯、30,000–40,000 后退化”等数字缺少统一任务、模型、团队和评价方法。它们是风险提示，不是可靠切换线。</p></article>
+          </div>
+          <p>“超过两个领域就使用 subagents”、每个里程碑更新 <code>PLANS.md</code>，都是作者的实践清单，而非 Codex 必须满足的条件。采用时应根据任务耦合度、协调成本、模型与工具负载实测。</p>
+        </section>
+        <section class="self-check-section" id="self-check">
+          <div class="eyebrow">05 / 自测</div><h2>自测：我理解了吗？</h2><p>先用自己的话回答，再展开参考答案。理解框架不等于接受所有效果数字。</p>
+          <article class="self-check-question" id="check-write-select"><h3>1. 为什么把完整 MCP 工具目录写进 <code>AGENTS.md</code>，不能同时替代“写入”和“选择”？</h3><details><summary>展开参考答案与对照要点</summary><div class="self-check-answer"><p><strong>参考解释：</strong>写入只解决信息有稳定载体的问题；若每轮把完整目录都放进窗口，仍会消耗上下文。选择要求只在当前任务需要时加载相关定义。</p><p><strong>对照要点：</strong>区分“外部存在”与“当前载入”，并指出无关内容的窗口成本。</p><p><strong>容易误解：</strong>选择不是删除完整目录，而是控制它进入窗口的时机与范围。</p><p><strong>回查：</strong><a href="#model">四个动作</a> · <a href="https://codex.danielvaughan.com/2026/06/10/context-engineering-codex-cli-write-select-compress-isolate-june-2026/" target="_blank" rel="noreferrer">原文</a>（Strategy 1 / Strategy 2）。</p></div></details></article>
+          <article class="self-check-question" id="check-write-compress"><h3>2. 自动压缩已经存在，为什么多文件长任务仍可能需要外部计划文件？</h3><details><summary>展开参考答案与对照要点</summary><div class="self-check-answer"><p><strong>参考解释：</strong>压缩把历史提炼成摘要，可能省略精确约定或进度；外部计划提供可重新读取、可检查的状态。两者组合比只依赖摘要更稳健。</p><p><strong>对照要点：</strong>说明压缩有损，以及“写入 + 压缩”的恢复路径。</p><p><strong>容易误解：</strong>计划文件也会过时，仍需维护；它不是自动正确的永久记忆。</p><p><strong>回查：</strong><a href="#compress">压缩</a> · <a href="https://codex.danielvaughan.com/2026/06/10/context-engineering-codex-cli-write-select-compress-isolate-june-2026/" target="_blank" rel="noreferrer">原文</a>（Strategy 3 / The Compounding Effect）。</p></div></details></article>
+          <article class="self-check-question" id="check-isolate"><h3>3. 子代理拥有独立上下文，是否等于它已经获得安全隔离？</h3><details><summary>展开参考答案与对照要点</summary><div class="self-check-answer"><p><strong>参考解释：</strong>不等于。独立会话减少信息串扰；工具范围和 profile 限定能力；OS sandbox 才进一步限制文件与系统资源访问。</p><p><strong>对照要点：</strong>区分上下文组织、能力约束与资源访问控制。</p><p><strong>容易误解：</strong>不能因为使用了 subagent，就推断它无法访问不相关文件或工具；这取决于配置。</p><p><strong>回查：</strong><a href="#isolate">隔离</a> · <a href="https://codex.danielvaughan.com/2026/06/10/context-engineering-codex-cli-write-select-compress-isolate-june-2026/" target="_blank" rel="noreferrer">原文</a>（Strategy 4）。</p></div></details></article>
+          <article class="self-check-question" id="check-evidence"><h3>4. 能否把文章的 30,000–40,000 与 100,000 token 数字当作自己项目的可靠切换阈值？</h3><details><summary>展开参考答案与对照要点</summary><div class="self-check-answer"><p><strong>参考解释：</strong>不能直接照搬。原文没有提供足以复现和外推的统一实验条件。项目阈值应基于自己的模型、任务、工具负载与质量评价实测。</p><p><strong>对照要点：</strong>保留证据强度与外推边界。</p><p><strong>容易误解：</strong>数字证据较弱不等于四策略框架无用；它限制的是效果强度的确定性。</p><p><strong>回查：</strong><a href="#boundaries">证据边界</a> · <a href="https://codex.danielvaughan.com/2026/06/10/context-engineering-codex-cli-write-select-compress-isolate-june-2026/" target="_blank" rel="noreferrer">原文</a>（The Compounding Effect）。</p></div></details></article>
+        </section>
+        <section class="section" id="source">
+          <div class="eyebrow">06 / 来源</div><h2>原文、核对来源与阅读范围</h2>
+          <ul class="source-list"><li><a href="https://codex.danielvaughan.com/2026/06/10/context-engineering-codex-cli-write-select-compress-isolate-june-2026/" target="_blank" rel="noreferrer">原文全文：Context Engineering for Codex CLI in June 2026</a></li><li><a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" target="_blank" rel="noreferrer">OpenAI Docs：AGENTS.md</a></li><li><a href="https://learn.chatgpt.com/docs/customization/memories" target="_blank" rel="noreferrer">OpenAI Docs：Memories</a></li><li><a href="https://learn.chatgpt.com/docs/agent-configuration/subagents" target="_blank" rel="noreferrer">OpenAI Docs：Subagents</a></li></ul>
+          <p>覆盖原文从范式变化、四策略、组合效应到最小清单与 Harness 工程展望的完整主线；省略大部分配置代码与完整引文目录。来源页未显示明确作者署名，因此元数据未猜测作者。</p>
+        </section>
+      </main>
+    </div>
+    <footer class="site-footer article-footer">Distilled for personal understanding. Original content belongs to its respective author and publisher.</footer>
+  </div>
+</body>
+</html>

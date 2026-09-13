@@ -1,0 +1,27 @@
+{
+  "title": "Codex CLI 的上下文工程：写入、选择、压缩与隔离",
+  "source": "Codex Knowledge Base",
+  "source_url": "https://codex.danielvaughan.com/2026/06/10/context-engineering-codex-cli-write-select-compress-isolate-june-2026/",
+  "published_date": "2026-06-10",
+  "updated_date": "2026-09-09",
+  "learned_date": "2026-09-13",
+  "topics": ["context-engineering", "codex-cli", "compaction", "subagents", "harness-engineering"],
+  "status": "summarized",
+  "language": "zh-CN",
+  "source_title": "Context Engineering for Codex CLI in June 2026: The Write-Select-Compress-Isolate Playbook",
+  "source_language": "en",
+  "domain": "ai",
+  "category": "agents",
+  "outline": [
+    {"id": "model", "title": "四个动作共同管理有限上下文"},
+    {"id": "mechanisms", "title": "每个动作改变不同的信息流"},
+    {"id": "compound", "title": "组合使用，才从技巧变成系统"},
+    {"id": "boundaries", "title": "框架可用，效果强度仍要另行验证"},
+    {"id": "self-check", "title": "自测：我理解了吗？"},
+    {"id": "source", "title": "原文、核对来源与阅读范围"}
+  ],
+  "visuals": [
+    {"id": "context-map-title", "type": "html-css", "purpose": "四个动作与有限上下文窗口的输入、外存、压缩和隔离关系"},
+    {"id": "compound-title", "type": "html-css", "purpose": "四个动作两两组合产生的协同效果"}
+  ]
+}

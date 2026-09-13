@@ -1,0 +1,21 @@
+Round: 01
+Frozen: 2026-09-13
+Repair budget: maximum two repair rounds
+First-pass scope: diagrams and adjacent short explanations before long-form details and self-check answers
+Reader background: general Chinese reader interested in the topic but unfamiliar with this article
+Source scope: full article at https://codex.danielvaughan.com/2026/06/10/context-engineering-codex-cli-write-select-compress-isolate-june-2026/
+
+da24755bde9a19e1612161b77ebd29b41b67bfb2184ef8ad1eb43e586a947289  ai/agents/openai/context-engineering-codex-cli/index.html
+2d9ccc3f9f11441ae67f7a2e63ff632a41490b6bd5049bbeb359721eb441140c  ai/agents/openai/context-engineering-codex-cli/note.css
+787ff1f774398bbab05fc22a4a1093323943f24df098e7614c08d88d5012a110  ai/agents/openai/context-engineering-codex-cli/note.js
+a945a1450bf04aea6a8c3dd1d7f541f43f83ecf769a785e7b15bd3975343e353  ai/agents/openai/context-engineering-codex-cli/README.md
+e74dab42bdcf706f61217bf0de323aa0d112f568f5570c344f45df49cc54cc46  ai/agents/openai/context-engineering-codex-cli/metadata.json
+d6b253ffdb310df4b12cc3dd5e66902959fff376360adc8bfedffdc71182164b  docs/design/context-engineering-codex-cli/content-plan.md
+8a9493453d94b40b3514926c39973f8f24817def12c57a860b585a7d6223f373  assets/css/style.css
+1fec52b70b77c4f1c0cecaa11e8b70013a0b4d7df604ca68ed192e3bbd336dff  assets/css/self-check.css
+b6647c3e06a75277ac76cb22dd5f086a3244440c66edb98d4fa836fa3a7c1d58  .agents/skills/article-distillation/SKILL.md
+62a77600cb52cf338020f258d916d8126cbbb7c0df547aa580d995f50958848e  .agents/skills/article-distillation/references/roles/reader.md
+4f1b098da08b8cc1a7b50095ee5732dbcd62bf46897ead138a0f3584d3a7289a  .agents/skills/article-distillation/references/roles/evaluator.md
+4644e0fb9ff67f50f196ee63e865024929ccc85995e0c8b91b164f286c382594  .agents/skills/article-distillation/references/independent-review.md
+
+External limitation: the live source and browser engine are not frozen; the source was read in full on 2026-09-13. Browser screenshot bytes could be observed but the active browser API did not expose a repository save path.
