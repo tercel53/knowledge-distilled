@@ -1,0 +1,28 @@
+{
+  "title": "如果你想成功，就需要一点“妄想”",
+  "source_title": "You need to be delusional if you want to succeed",
+  "source": "The Dan Koe Letter",
+  "source_url": "https://letters.thedankoe.com/p/you-need-to-be-delusional-if-you",
+  "author": ["Dan Koe"],
+  "published_date": "2026-09-12",
+  "learned_date": "2026-09-13",
+  "language": "zh-CN",
+  "source_language": "en",
+  "status": "summarized",
+  "domain": "life",
+  "category": "behavior-change",
+  "core_conclusion": "目标最重要的作用不是作为终点，而是成为注意力的过滤器。足够大、短期、自选且单一的目标会迫使旧路径暴露为不足，再通过删减无关投入与寻找杠杆重组行动；这是观点框架，不是极端目标必然成功的实证结论。",
+  "outline": [
+    {"id": "filter", "title": "目标先改变你看见什么，再改变你做什么", "source_location": "Why realistic goals...；The psychology...；How to enter..."},
+    {"id": "mechanism", "title": "“妄想式目标”真正做的，是打断线性优化", "source_location": "The psychology...；Step 1"},
+    {"id": "practice", "title": "从目标到行动，作者实际上给了“定向—删减—杠杆”三步", "source_location": "Step 1–3"},
+    {"id": "boundaries", "title": "这是一篇有启发性的观点文，不是“极端目标必然成功”的证据", "source_location": "全文证据类型判断"},
+    {"id": "self-check", "title": "能否把作者真正的主张讲出来？", "source_location": "依据全文核心主张编写"},
+    {"id": "source", "title": "原文与阅读范围", "source_location": "正文全文"}
+  ],
+  "visuals": [
+    {"id": "filter-map", "type": "html-css", "purpose": "说明目标通过注意力过滤影响行动选择", "provenance": "作者主张与示例归纳"},
+    {"id": "nonlinear-map", "type": "html-css", "purpose": "说明妄想式目标为何要求当前方法失效并重新搜索路径", "provenance": "Step 1 阅读归纳"},
+    {"id": "practice-map", "type": "html-css", "purpose": "呈现定向、删减、杠杆三步之间的关系", "provenance": "Step 1–3 阅读归纳"}
+  ]
+}
