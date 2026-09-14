@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>pstack 完整指南（第一部分）：验证就是你所需要的一切</title>
+  <link rel="stylesheet" href="../../../../assets/css/style.css">
+  <link rel="stylesheet" href="../../../../assets/css/self-check.css">
+  <link rel="stylesheet" href="note.css">
+  <script src="note.js" defer></script>
+</head>
+<body class="article-page">
+<a class="skip-link" href="#reading-main">跳至正文</a>
+<div class="container">
+  <header class="site-header"><a class="brand" href="../../../../">Knowledge Distilled<span>Personal Knowledge Base</span></a><a class="back-link" href="../../../../">返回知识库</a></header>
+  <header class="article-header">
+    <div class="eyebrow">LAUREN TAN · 2026-09-01 · 工程实践</div>
+    <h1>pstack 完整指南（第一部分）：<wbr>验证就是你所需要的一切</h1>
+    <p lang="en">The Complete Guide to pstack Pt. 1</p>
+    <p class="subtitle">真正释放 Agent 规模化能力的，不是再写一层 Prompt，而是让它能控制真实运行环境、观察结果并拿出证据，自己闭合“实现—验证—修正”循环。</p>
+  </header>
+  <div class="reading-layout">
+    <nav class="contents" aria-label="文章目录"><a href="#loop">验证闭环</a><a href="#lever">可复现控制工具</a><a href="#memory">Feature Map</a><a href="#scale">从闭环到规模化</a><a href="#boundaries">证据与边界</a><a href="#self-check">自测</a><a href="#source">原文与范围</a></nav>
+    <main class="reading-main" id="reading-main">
+      <section class="section" id="loop">
+        <div class="eyebrow">验证闭环</div>
+        <h2>Agent 真正的瓶颈，是改完以后仍然需要人替它确认</h2>
+        <p class="visual-lead">Lauren Tan 把 verification 定义成一种闭环能力：Agent 不只生成修改，还能操作应用、观察真实结果、收集证据，并在失败时继续修正。这样人从每一步的验证者，变成目标与证据的监督者。</p>
+        <figure class="loop-map" id="verification-loop" aria-labelledby="verification-loop-caption">
+          <div class="human-node"><small>Human</small><strong>目标 / 边界</strong><span>告诉 Agent 想达到什么</span></div>
+          <div class="loop-core">
+            <div class="loop-node"><strong>实现修改</strong><span>代码、配置或交互</span></div>
+            <div class="loop-arrow">→</div>
+            <div class="loop-node"><strong>真实运行</strong><span>启动、操作、复现</span></div>
+            <div class="loop-arrow">→</div>
+            <div class="loop-node"><strong>观察证据</strong><span>截图、trace、日志、状态</span></div>
+            <div class="feedback">失败 / 不确定 → 回到实现继续修正</div>
+          </div>
+          <div class="proof-node"><small>Proof</small><strong>可检查的结果</strong><span>成功时把证据交给人，而不是只说“已完成”</span></div>
+          <figcaption id="verification-loop-caption">对 Part 1 主线的阅读归纳。箭头表示工作反馈路径；并不意味着有了验证工具就能保证修改一定正确。</figcaption>
+        </figure>
+        <details class="deep-reading"><summary>展开作者为什么把 verification 当作基础设施</summary><p>作者认为，如果 Agent 无法验证自己的工作，人就会持续承担“启动应用、复现问题、点 UI、看日志、确认结果”的工作，Agent 再强也无法真正自主推进。反过来，一旦 Agent 能验证，就可以持续迭代直到满足任务目标，从而让团队成员——包括非工程人员——也能更安全地委托修改。</p><p>文章用 Grok Bot 与 Cursor 的实践作为背景，并把 verification skill 描述成比普通 Skill 更接近“critical infrastructure”的能力。</p></details>
+        <p class="evidence"><a href="https://x.com/poteto/status/2094457600259842065">原文依据：Part 1 – Verification is all you need</a></p>
+      </section>
+
+      <section class="section" id="lever">
+        <div class="eyebrow">可复现控制工具</div>
+        <h2>高质量验证不是一页 Markdown，而是一套 Agent 可直接调用的控制面</h2>
+        <p class="visual-lead">文章最具体的工程建议是“Build the Lever”：把你手工调试应用时会做的动作，做成稳定 CLI。Agent 不必每次临时写脚本，而是调用一组可组合、可测试、机器可读的命令。</p>
+        <figure class="stack-map" id="verification-stack" aria-labelledby="verification-stack-caption">
+          <div class="stack-layer stack-agent"><small>Verification Skill</small><strong>什么时候验证、验证什么、什么算完成</strong></div>
+          <div class="stack-layer stack-control"><small>Control CLI</small><strong>navigate · click · type · screenshot · trace · doctor</strong><span>可组合、支持 dry-run、错误信息明确、JSON 输出</span></div>
+          <div class="stack-layer stack-runtime"><small>Runtime / Debugging substrate</small><strong>CDP · simulator · logs · perf tools · test data</strong><span>真实应用必须能被启动、控制和观察</span></div>
+          <figcaption id="verification-stack-caption">作者的工程建议被重组为三层：底层提供可观测运行时，中层把操作封装成 Agent 友好的工具，上层才是“如何验证”的 Skill。</figcaption>
+        </figure>
+        <p class="short-note"><strong>关键变化：</strong>工具把“临时推理怎么操作应用”变成“调用稳定接口”。作者认为这能减少 token 消耗，也让验证流程更可复现、更容易测试。</p>
+        <details class="deep-reading"><summary>展开 CLI 的设计要求</summary><p>作者建议优先覆盖 inspection、navigation、interaction、performance、streaming、health/cleanup 等动作；破坏性操作提供 <code>--dry-run</code>，功能用子命令渐进披露，错误信息告诉 Agent 下一步怎么办，帮助文本充分，输出尽量机器可读。</p><p>她甚至建议：如果当前技术栈缺少足够好的调试和控制能力，可以为 Agent 专门补工具；在她看来，运行时可调试性会直接影响 Agent 工程的上限。</p></details>
+        <p class="evidence"><a href="https://x.com/poteto/status/2094457600259842065">原文依据：Make it Reproducible；CLI design guidance</a></p>
+      </section>
+
+      <section class="section" id="memory">
+        <div class="eyebrow">Feature Map</div>
+        <h2>控制工具解决“怎么操作”，Feature Map 解决“应该去哪里操作”</h2>
+        <p class="visual-lead">当应用越来越大，只给 Agent 一把万能遥控器还不够。作者增加了一层可搜索的 Feature Map：告诉 Agent 有哪些功能、用户如何到达、对应控制命令和常见坑。</p>
+        <figure class="memory-map" id="feature-memory" aria-labelledby="feature-memory-caption">
+          <div class="memory-source"><small>Codebase</small><strong>最终事实来源</strong><span>实现、历史决策与真实行为</span></div>
+          <div class="memory-arrow">压缩 / 索引 →</div>
+          <div class="memory-index"><small>Feature Map</small><strong>面向 Agent 的“物化记忆”</strong><span>功能 → 用户路径 → 控制命令 → gotchas</span></div>
+          <div class="memory-arrow">按需查询 →</div>
+          <div class="memory-agent"><small>Agent</small><strong>更快建立局部心智模型</strong><span>不用每个会话从头探索整个应用</span></div>
+          <figcaption id="feature-memory-caption">作者把 Feature Map 称为 materialized memory。它不是另一份业务真相，而是对代码与产品行为的紧凑索引，因此需要持续维护。</figcaption>
+        </figure>
+        <p class="short-note"><strong>为什么维护很重要：</strong>应用在变，控制方式和功能入口也会漂移。作者建议至少每天运行一次 <code>/maintain-verification-skill</code>，让 CLI 与 Feature Map 跟上产品变化。</p>
+        <p class="evidence"><a href="https://x.com/poteto/status/2094457600259842065">原文依据：Keep agents smart with Feature Maps；Invest in your verification skill</a></p>
+      </section>
+
+      <section class="section" id="scale">
+        <div class="eyebrow">从闭环到规模化</div>
+        <h2>并行和自动化是验证成熟后的结果，不是起点</h2>
+        <p class="visual-lead">作者的顺序很明确：先让单个 Agent 能稳定控制并验证应用，再考虑 Cloud Agents、swarm、定时 routines 或自动复现用户反馈。规模化依赖前面的闭环，而不是反过来。</p>
+        <figure class="scale-map" id="scale-ladder" aria-labelledby="scale-ladder-caption">
+          <div class="scale-step"><small>1</small><strong>单 Agent 闭环</strong><span>能真实运行并验证一项修改</span></div>
+          <div class="scale-link">→</div>
+          <div class="scale-step"><small>2</small><strong>隔离并行执行</strong><span>把同一套 dev / verification 能力搬到 Cloud Agents</span></div>
+          <div class="scale-link">→</div>
+          <div class="scale-step"><small>3</small><strong>批量验证</strong><span>用 swarm 增加性能样本或 fuzz 覆盖</span></div>
+          <div class="scale-link">→</div>
+          <div class="scale-step"><small>4</small><strong>自动化触发</strong><span>用户反馈 → 自动复现；条件成熟时再考虑自动修复</span></div>
+          <figcaption id="scale-ladder-caption">这是作者建议的能力依赖关系，不是必然演进路线。Cloud Agents、Cursor Automations 等属于她当前工具环境中的具体实现。</figcaption>
+        </figure>
+        <details class="deep-reading"><summary>展开作者给出的三个使用例子</summary><p><strong>新功能：</strong>让 Agent 用 verification skill 完成修改，并用视频和截图证明结果。<strong>性能：</strong>先 trace 当前状态，再做定向优化，最后用 verification + swarm 验证收益。<strong>用户反馈：</strong>把反馈接入 routines / automations，让 Agent 自动尝试复现；只有验证能力足够可靠时，才进一步考虑自动修复。</p></details>
+        <p class="evidence"><a href="https://x.com/poteto/status/2094457600259842065">原文依据：Cloud Agents；How to use your verification skill</a></p>
+      </section>
+
+      <section class="section" id="boundaries">
+        <div class="eyebrow">证据与边界</div>
+        <h2>最值得迁移的是“闭合反馈”，不是把作者的规模数字当作普遍结论</h2>
+        <div class="boundary-grid"><div><h3>文章直接支持的工程判断</h3><p>真实运行、控制工具、Feature Map 和持续维护可以构成一套更完整的 Agent 验证环境；这些建议有清晰的工程机制与具体实现例子。</p></div><div><h3>文章没有独立证明的效果</h3><p>“每月 2,000 PR”“100–1000x 团队产出”等是作者对自身实践的报告。正文没有对照组、统一质量指标或失败率数据，不能据此推出所有团队会获得同等增益。</p></div></div>
+        <div class="limits"><span><b>验证的是你定义的检查：</b>工具能运行不等于检查目标就一定正确；错误的断言仍可能得到“通过”。</span><span><b>运行时能力决定上限：</b>难启动、难复现、难观测的系统，需要先投入 dev tooling；这本身有建设与维护成本。</span><span><b>Feature Map 会过期：</b>它是压缩索引而不是源代码的替代品，因此必须持续与真实产品同步。</span><span><b>并行不是免费的：</b>文章强调 Cloud Agents 的便利，但并未系统讨论成本、权限、安全与协调开销。</span><span><b>产品依赖要分离：</b>verification-first 是可迁移方法；Cursor Cloud Agents、Automations、Grok Bot routines 是作者当前环境中的具体载体。</span></div>
+        <p class="short-note">因此，可迁移的核心原则是：<strong>先让 Agent 能在真实环境里产生可检查证据，再扩大自主性与并发度。</strong></p>
+      </section>
+
+      <section class="section" id="self-check">
+        <div class="eyebrow">自测</div><h2>你抓住的是“验证闭环”，还是只记住了工具名？</h2><p>先回答，再展开参考答案。理解作者不等于接受她所有效果判断。</p>
+        <article class="self-check-question" id="check-1"><h3>1. 为什么测试通过仍不等于作者所说的“Agent 已经能验证自己的工作”？</h3><details><summary>展开参考答案</summary><div class="self-check-answer"><p><strong>参考解释：</strong>作者要求 Agent 能操作真实应用并观察实际结果。单元测试或静态检查只覆盖预先编码的断言；如果任务涉及 UI、运行时状态、性能或真实交互，还需要启动、复现、操作和收集对应证据。</p><p><strong>对照要点：</strong>验证是“真实执行 + 观察 + 证据”，而不只是“有测试”。</p><p><strong>容易误解：</strong>认为增加更多测试文件就自动等于建立完整 verification skill。</p><p><strong>回查：</strong><a href="#loop">验证闭环</a> · <a href="#lever">可复现控制工具</a> · <a href="https://x.com/poteto/status/2094457600259842065">原文 Part 1</a></p></div></details></article>
+        <article class="self-check-question" id="check-2"><h3>2. 一个 Agent 已经有能点击 UI 的 CLI，为什么作者还要 Feature Map？</h3><details><summary>展开参考答案</summary><div class="self-check-answer"><p><strong>参考解释：</strong>CLI 解决“怎样执行动作”，但大型应用里 Agent 仍要知道“有哪些功能、从用户视角怎么到达、哪个命令控制哪个界面、有哪些例外”。Feature Map 把这些高频探索结果压缩成可搜索索引，减少每次从头建立上下文。</p><p><strong>对照要点：</strong>工具能力和产品知识是两种不同上下文。</p><p><strong>容易误解：</strong>把 Feature Map 当成代码之外的第二份永久真相；作者反而强调它必须持续维护。</p><p><strong>回查：</strong><a href="#memory">Feature Map</a> · <a href="https://x.com/poteto/status/2094457600259842065">原文 Feature Maps</a></p></div></details></article>
+        <article class="self-check-question" id="check-3"><h3>3. 如果验证脚本本身检查错了条件，能否仅凭“Agent 自己跑过验证”确认修改正确？</h3><details><summary>展开参考答案</summary><div class="self-check-answer"><p><strong>参考解释：</strong>不能。verification skill 解决的是让 Agent 有能力执行检查并根据反馈迭代，但检查本身仍可能设计错误。文章强调的是把反馈闭环做成基础设施，不是证明任何自动检查天然可靠。</p><p><strong>对照要点：</strong>“能验证”与“验证目标正确”要分开。</p><p><strong>容易误解：</strong>把 verification-first 理解成只要验证步骤自动化，人就不再需要设计边界和审查证据。</p><p><strong>回查：</strong><a href="#boundaries">证据与边界</a></p></div></details></article>
+        <article class="self-check-question" id="check-4"><h3>4. 为什么作者把 Cloud Agents 和自动修复放在建立 verification skill 之后？</h3><details><summary>展开参考答案</summary><div class="self-check-answer"><p><strong>参考解释：</strong>并行只会放大已有能力。如果单个 Agent 还不能稳定启动应用、控制功能和判断结果，那么同时运行更多 Agent 只会增加需要人兜底的失败。先把单 Agent 的反馈闭环做稳，才有条件把相同能力复制到隔离并行环境和自动触发任务。</p><p><strong>对照要点：</strong>先闭环，再复制闭环。</p><p><strong>容易误解：</strong>把“更多 Agent”本身当作吞吐量提升的充分条件。</p><p><strong>回查：</strong><a href="#scale">从闭环到规模化</a> · <a href="https://x.com/poteto/status/2094457600259842065">原文 Cloud Agents / Automations</a></p></div></details></article>
+      </section>
+
+      <section class="section" id="source"><div class="eyebrow">原文与范围</div><h2>原文与阅读范围</h2><p>已读取 Thread Navigator 展开的完整正文，从系列背景、verification skill 构建、控制 CLI、Cloud Agents、Feature Map，到具体使用方式与维护建议。笔记压缩了命令枚举、安装步骤和产品推广信息，保留“闭环验证 → 工具化控制 → 共享记忆 → 规模化”的主线，并把作者的产出倍数与 PR 数量保留为实践主张而非普遍证据。</p><p><a href="https://x.com/poteto/status/2094457600259842065">The Complete Guide to pstack Pt. 1</a><br>Lauren Tan (@poteto) · X · 2026-09-01</p></section>
+    </main>
+  </div>
+  <footer class="site-footer">个人阅读归纳 · 原作权利归作者所有</footer>
+</div>
+</body>
+</html>

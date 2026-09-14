@@ -1,0 +1,30 @@
+{
+  "title": "pstack 完整指南（第一部分）：验证就是你所需要的一切",
+  "source_title": "The Complete Guide to pstack Pt. 1",
+  "source": "X / @poteto",
+  "source_url": "https://x.com/poteto/status/2094457600259842065",
+  "author": ["Lauren Tan"],
+  "published_date": "2026-09-01",
+  "learned_date": "2026-09-14",
+  "language": "zh-CN",
+  "source_language": "en",
+  "status": "summarized",
+  "domain": "ai",
+  "category": "agents",
+  "core_conclusion": "Agent 工程要先把验证做成基础设施：让 Agent 能控制真实运行环境、观察结果并给出证据，自己闭合实现—验证—修正循环；再用可复现 CLI、Feature Map 与持续维护降低上下文和操作成本，最后才扩大并行与自动化。",
+  "outline": [
+    {"id": "loop", "title": "Agent 真正的瓶颈，是改完以后仍然需要人替它确认", "source_location": "Part 1 – Verification is all you need"},
+    {"id": "lever", "title": "高质量验证不是一页 Markdown，而是一套 Agent 可直接调用的控制面", "source_location": "Make it Reproducible；CLI design guidance"},
+    {"id": "memory", "title": "控制工具解决“怎么操作”，Feature Map 解决“应该去哪里操作”", "source_location": "Keep agents smart with Feature Maps"},
+    {"id": "scale", "title": "并行和自动化是验证成熟后的结果，不是起点", "source_location": "Cloud Agents；How to use your verification skill"},
+    {"id": "boundaries", "title": "最值得迁移的是“闭合反馈”，不是把作者的规模数字当作普遍结论", "source_location": "全文实践主张与证据类型判断"},
+    {"id": "self-check", "title": "你抓住的是“验证闭环”，还是只记住了工具名？", "source_location": "依据全文核心主张编写"},
+    {"id": "source", "title": "原文与阅读范围", "source_location": "正文全文"}
+  ],
+  "visuals": [
+    {"id": "verification-loop", "type": "html-css", "purpose": "说明 Agent 如何通过真实运行与证据闭合实现—验证—修正循环", "provenance": "Part 1 主线阅读归纳"},
+    {"id": "verification-stack", "type": "html-css", "purpose": "说明运行时、控制 CLI 与 verification skill 的分层关系", "provenance": "Make it Reproducible 阅读归纳"},
+    {"id": "feature-memory", "type": "html-css", "purpose": "说明 Feature Map 作为代码库紧凑索引和物化记忆的作用", "provenance": "Feature Maps 章节阅读归纳"},
+    {"id": "scale-ladder", "type": "html-css", "purpose": "说明验证成熟后才扩展到并行、批量验证和自动化", "provenance": "Cloud Agents 与使用示例阅读归纳"}
+  ]
+}
